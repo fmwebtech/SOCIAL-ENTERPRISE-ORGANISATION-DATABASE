@@ -1707,7 +1707,7 @@ label {
 
 .form-control{
   border: 0px solid #e5eaef;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.9);
   color: #fff !important;
 }
 
