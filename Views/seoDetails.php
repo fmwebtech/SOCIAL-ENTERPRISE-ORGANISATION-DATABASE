@@ -17,19 +17,19 @@ Go back</button>
         <hr>
         <div class="row" onclick="goTo('Views/seo_branches.php' , 'seo_specific_details_box')">
           <label class="col-6">Branches</label>
-          <label class="col-6">23</label>
+          <label class="col-6">23 <i class="pull-right fa fa-arrow-right"></i> </label>
         </div>
         <hr>
 
         <div class="row" onclick="goTo('Views/seo_products.php' , 'seo_specific_details_box')">
           <label class="col-6">Products</label>
-          <label class="col-6">2</label>
+          <label class="col-6">452 <i class="pull-right fa fa-arrow-right"></i></label>
         </div>
         <hr>
 
         <div class="row" onclick="goTo('Views/seo_services.php' , 'seo_specific_details_box')">
           <label class="col-6">Services</label>
-          <label class="col-6">-</label>
+          <label class="col-6">24 <i class="pull-right fa fa-arrow-right"></i></label>
         </div>
         <hr>
         <div class="row">

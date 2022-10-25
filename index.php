@@ -84,6 +84,15 @@
       </a>
     </li>
 
+
+     <li>
+      <a href="#" onclick="goTo('Views/home.php' , 'mainContent')">
+        <i class="zmdi zmdi-face"></i> <span>Reports</span>
+      </a>
+    </li>
+
+
+
     <li>
       <a href="login.html" target="_blank">
         <i class="zmdi zmdi-lock"></i> <span>Login</span>
@@ -183,7 +192,7 @@
 <div class="content-wrapper">
   <div class="container-fluid" id="mainContent">
 
-    <?php require  'Views/SEO_table.php'; ?>
+    <?php require  'Views/home.php'; ?>
 
 
     <!--start overlay-->

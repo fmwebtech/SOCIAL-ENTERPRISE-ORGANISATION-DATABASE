@@ -18,16 +18,60 @@
                 <th scope="row">1</th>
                 <td>James Bond</td>
                 <td>Admin</td> 
+
+                <td>
+                  <select class="form-control">
+                    <option> User</option>
+                    <option> Admin</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control">
+                    <option> Active</option>
+                    <option> inactive</option>
+                  </select>
+                </td>
               </tr>
               <tr>
                 <th scope="row">2</th>
                 <td>Maguyva</td>
                 <td>User</td>
+
+                <td>
+                  <select class="form-control">
+                    <option> User</option>
+                    <option> Admin</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control">
+                    <option> Active</option>
+                    <option> inactive</option>
+                  </select>
+                </td>
+
               </tr>
+
+
+
               <tr>
                 <th scope="row">3</th> 
                 <td>Prince Charlse</td>
                 <td>User</td>
+
+                <td>
+                  <select class="form-control">
+                    <option> User</option>
+                    <option> Admin</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="form-control">
+                    <option> Active</option>
+                    <option> inactive</option>
+                  </select>
+                </td>
+
               </tr>
             </tbody>
           </table>
@@ -45,10 +89,12 @@
 
         <h5 class="card-title">Add user</h5>
         <form>
+
+
           <div class="form-group">
-            <label for="exampleInputName" class="sr-only">Name</label>
+            <label for="username" class="sr-only">Name</label>
             <div class="position-relative has-icon-right">
-              <input type="text" id="exampleInputName" class="form-control input-shadow" placeholder="Enter Your Name">
+              <input type="text" id="username" class="form-control input-shadow" placeholder="Enter username">
               <div class="form-control-position">
                 <i class="icon-user"></i>
               </div>
@@ -57,49 +103,38 @@
 
 
           <div class="form-group">
-            <label for="exampleInputEmailId" class="sr-only">Email ID</label>
+            <label for="fullname" class="sr-only">Name</label>
             <div class="position-relative has-icon-right">
-              
-              <select class="form-control input-shadow">
-                <option>User</option>
-                <option>Admin</option>
-              </select>
+              <input type="text" id="fullname" class="form-control input-shadow" placeholder="Enter full name">
               <div class="form-control-position">
-                <i class="zmdi zmdi-accounts-list-alt"></i>
+                <i class="icon-user"></i>
               </div>
             </div>
           </div>
 
+
           <div class="form-group">
-           <label for="exampleInputPassword" class="sr-only">Password</label>
-           <div class="position-relative has-icon-right">
-            <input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="Choose Password">
-            <div class="form-control-position">
-              <i class="icon-lock"></i>
+            <label for="phonenumber" class="sr-only">Name</label>
+            <div class="position-relative has-icon-right">
+              <input type="text" id="phonenumber" class="form-control input-shadow" placeholder="Enter phone number">
+              <div class="form-control-position">
+                <i class="icon-user"></i>
+              </div>
             </div>
-          </div> 
-        </div>
+          </div>
 
-         <div class="form-group">
-           <label for="exampleInputPassword" class="sr-only">Password</label>
-           <div class="position-relative has-icon-right">
-            <input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="Confirm Password">
-            <div class="form-control-position">
-              <i class="icon-lock"></i>
-            </div>
-          </div> 
-        </div>
 
-       
 
-       <button type="button" class="btn btn-light btn-block waves-effect waves-light">Create</button>
-       
-      
 
-  </form>
-</div>
-</div>
-</div>
+
+          <button type="button" class="btn btn-light btn-block waves-effect waves-light">Add user</button>
+
+
+
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>
