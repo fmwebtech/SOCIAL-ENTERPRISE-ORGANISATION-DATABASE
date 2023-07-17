@@ -34,8 +34,8 @@ class Branch{
 		}
 	}
 
-    function save($name,$address)
-			if($this->userNameExists($name))
+    function save($name,$address){
+			if($this->nameExists($name))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -84,13 +84,13 @@ class Branch{
 		}
 	}
 
-	function getUsers($name)
+	function getBranch($name)
 	{
 		try{
 			$branchArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE NAME=?');
-			$stmt->bindParam(1,$type);
+			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -130,7 +130,7 @@ class Branch{
 	
 
 
-
+}
 
 
 

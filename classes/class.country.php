@@ -32,7 +32,7 @@ class Country{
 		}
 	}
 
-    function save($name,$code)
+    function save($name,$code){
 			if($this->codeExists($code))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
@@ -126,7 +126,7 @@ class Country{
 	}
 	
 
-
+}
 
 
 
