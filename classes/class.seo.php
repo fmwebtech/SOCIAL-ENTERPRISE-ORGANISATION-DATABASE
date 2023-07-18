@@ -59,7 +59,7 @@ class Seo {
             $stmt->bindParam(5, $hqCountry);
             $stmt->bindParam(6, $countryFounded);
             $stmt->bindParam(7, $incomePerAnnum);
-            $stmt->bindParam(8, $expenditurePeAnnum);
+            $stmt->bindParam(8, $expenditurePerAnnum);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
