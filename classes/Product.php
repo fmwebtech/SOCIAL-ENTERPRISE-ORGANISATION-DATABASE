@@ -36,7 +36,7 @@ class PRODUCTS {
 		}
 	}
 
-    function save($name,$currency,$seoId,$price)
+    function save($name,$currency,$seoId,$price){
 			if($this->productExits($seoId))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
@@ -63,7 +63,7 @@ class PRODUCTS {
 		}
 	}
 
-	function edit($seoId,$name,$currency,price,$status) 
+	function edit($id, $seoId,$name,$currency,$price,$status) 
 	{
 			if($this->safeToEdit($seoId,$currency,$price,$name)) 
 			{
@@ -187,7 +187,7 @@ class PRODUCTS {
 
 
 
-
+}
 
 
 
