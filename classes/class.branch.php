@@ -10,6 +10,7 @@ class Branch{
     var $status;
     var $regDate;
 
+	//
 
 
 	//The constructor method initializes the object and retrieves the country data from the database based on the provided ID
