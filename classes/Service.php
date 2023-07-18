@@ -18,7 +18,7 @@ class SERVICES {
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICE] WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ class SERVICES {
 			
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [SERVICE]([NAME],CURRENCY,SOE_ID,PRICE,STATUS) 
+			$stmt = $Myconnection->prepare('INSERT INTO [SERVICES]([NAME],CURRENCY,SOE_ID,PRICE,STATUS) 
 											VALUES(?,?,?,?"new")'); 
 			
 			$stmt->bindParam(1,$name);
@@ -74,7 +74,7 @@ class SERVICES {
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE [service] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [serviceS] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
@@ -95,7 +95,7 @@ class SERVICES {
 		try{
 			$serviceArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICE] WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(1,$seoId);
 			$stmt->bindParam(1,$currency);
@@ -105,7 +105,7 @@ class SERVICES {
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				$product = new SERVICE();
+				$product = new SERVICES();
 				$product->id = $v['ID'];
                 $product->seoId= $v['SEO_ID'];
 				$product->name = $v['NAME'];
@@ -127,7 +127,7 @@ class SERVICES {
 	function productExists($name){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICE] WHERE [NAME]=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -147,7 +147,7 @@ class SERVICES {
 	function safeToEdit($seoId,$name,$currency,$price,$status){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICE] WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
 			$stmt->bindParam(3,$currency);
@@ -172,7 +172,7 @@ class SERVICES {
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM [SERVICE] WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM [SERVICES] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;

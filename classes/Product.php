@@ -18,7 +18,7 @@ class PRODUCTS {
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCT WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -74,7 +74,7 @@ class PRODUCTS {
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE product	SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE PRODUCTS	SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
@@ -95,7 +95,7 @@ class PRODUCTS {
 		try{
 			$branchArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICE] WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(1,$seoId);
 			$stmt->bindParam(1,$currency);
@@ -147,7 +147,7 @@ class PRODUCTS {
 	function safeToEdit($seoId,$name,$currency,$price,$status){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCT WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
 			$stmt->bindParam(3,$currency);
@@ -172,7 +172,7 @@ class PRODUCTS {
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM PRODUCT WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM PRODUCTS WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;
