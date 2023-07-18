@@ -63,7 +63,7 @@ class SERVICES {
 		}
 	}
 
-	function edit($seoId,$name,$currency,price,$status) 
+	function edit($seoId,$name,$currency,$price,$status) 
 	{
 			if($this->safeToEdit($seoId,$currency,$price,$name)) 
 			{
@@ -74,7 +74,7 @@ class SERVICES {
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE [serviceS] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
@@ -124,7 +124,7 @@ class SERVICES {
 
     // issues which this function due to the unknown operation
 
-	function productExists($name){
+	function serviceExists($name){
 		try{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?');
