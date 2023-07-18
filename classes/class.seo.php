@@ -1,25 +1,26 @@
 <?php
 require_once('settings/connetionsetting.php');
 
-class SEO {
+class Seo {
     var $id;
     var $name;
     var $established;
     var $ownership;
     var $governance;
-    var $hqcountry;
-    var $countryfounded;
-    var $incomeperannum;
-    var $expenditureperannum;
+    var $hqCountry;
+    var $countryFounded;
+    var $incomePerAnnum;
+    var $expenditurePerAnnum;
     var $status;
     var $regDate;
 
     function __construct($id = NULL) {
         if ($id == NULL) {
+
             // do nothing
         } else {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM SEO WHERE ID=?');
+            $stmt = $Myconnection->prepare('SELECT * FROM Seo WHERE ID=?');
             $stmt->bindParam(1, $id);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -30,18 +31,18 @@ class SEO {
                 $this->established = $v['ESTABLISHED'];
                 $this->ownership = $v['OWNERSHIP'];
                 $this->governance = $v['GOVERNANCE'];
-                $this->hqcountry = $v['HQCOUNTRY'];
-                $this->countryfounded = $v['COUNTRYFOUNDED'];
-                $this->incomeperannum = $v['INCOMEPERANNUM'];
-                $this->expenditureperannum = $v['EXPENDITUREPERANNUM'];
+                $this->hqCountry = $v['HQCOUNTRY'];
+                $this->countryFounded = $v['COUNTRYFOUNDED'];
+                $this->incomePerAnnum = $v['INCOMEPERANNUM'];
+                $this->expenditurePerAnnum = $v['EXPENDITUREPERANNUM'];
                 $this->status = $v['STATUS'];
                 $this->regDate = $v['REGDATE'];
             }
         }
     }
 
-    function save($id, $name, $established, $ownership, $governance, $hqcountry, $countryfounded, $incomeperannum, $expenditureperannum) {
-        if ($this->idExists($id)) {
+    function save($name, $established, $ownership, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum) {
+        if ($this->SeoExists($name,$ownership)) {
             echo 'The username you chose is already taken, choose a different username.';
             return false;
         } else {
@@ -49,19 +50,16 @@ class SEO {
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('INSERT INTO user(ID, NAME, ESTABLISHED, OWNERSHIP, GOVERNANCE, HQCOUNTRY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM, REGDATE, STATUS) 
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "new")');
-            $stmt->bindParam(1, $id);
-            $stmt->bindParam(2, $name);
-            $stmt->bindParam(3, $established);
-            $stmt->bindParam(4, $ownership);
-            $stmt->bindParam(5, $governance);
-            $stmt->bindParam(6, $hqcountry);
-            $stmt->bindParam(7, $countryfounded);
-            $stmt->bindParam(8, $incomeperannum);
-            $stmt->bindParam(9, $expenditureperannum);
-            $stmt->bindParam(10, $regDate);
-            $stmt->bindParam(11, $status);
+            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, OWNERSHIP, GOVERNANCE, HQCOUNTRY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?,"new")');
+            $stmt->bindParam(1, $name);
+            $stmt->bindParam(2, $established);
+            $stmt->bindParam(3, $ownership);
+            $stmt->bindParam(4, $governance);
+            $stmt->bindParam(5, $hqCountry);
+            $stmt->bindParam(6, $countryFounded);
+            $stmt->bindParam(7, $incomePerAnnum);
+            $stmt->bindParam(8, $expenditurePeAnnum);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
@@ -69,60 +67,101 @@ class SEO {
             return false;
         }
     }
+    //new code to check the existance of the parameter passed above
+    function SeoExists($name,$ownership){
+		try{
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM seo WHERE NAME=?AND OWNERSHIP=?');
+			$stmt->bindParam(1,$name);
+            $stmt->bindParam(2,$ownership);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				return true;
+			}
+			return false;
+		}catch(Exception $e)
+		{
+			return true;
+		}
+	}
 
-    function edit($id, $name, $established, $ownership, $governance, $hqcountry, $countryfounded, $incomeperannum, $expenditureperannum) {
+    function edit($id, $name, $established, $ownership, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
         if ($this->safeToEdit($id, $name)) {
-            echo 'The username you chose is already taken, choose a different username.';
+            echo 'The name you chose is already taken, choose a different name.';
             return false;
         } else {
             // do nothing
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE user SET USERNAME=?, TYPE=?, FIRST_NAME=?, LAST_NAME=?, GRADE=?, GENDER=?, DATE_OF_BIRTH=?, STATUS=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
-            $stmt->bindParam(3, $incomeperannum);
-            $stmt->bindParam(4, $expenditureperannum);
-            $stmt->bindParam(5, $countryfounded);
+            $stmt->bindParam(3, $incomePerAnnum);
+            $stmt->bindParam(4, $expenditurePerAnnum);
+            $stmt->bindParam(5, $countryFounded);
             $stmt->bindParam(6, $established);
-            $stmt->bindParam(7, $hqcountry);
-            $stmt->bindParam(8, $regDate);
-            $stmt->bindParam(9, $status);
-            $stmt->bindParam(10, $id);
-            $stmt->bindParam(11, $ownership);
+            $stmt->bindParam(7, $hqCountry);
+            $stmt->bindParam(8, $status);
+            $stmt->bindParam(9, $id);
+            $stmt->bindParam(10,$ownership);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
             return false;
         }
     }
+    //NEW CODE FOR SafeEdit function
 
-    function getUsers($type) {
+    function safeToEdit($id,$name){
+		try{
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM seo WHERE [NAME]=? AND ID<>?');
+			$stmt->bindParam(1,$name);
+			$stmt->bindParam(2,$id);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				return false;
+			}
+			return true;
+		}catch(Exception $e)
+		{
+			return false;
+		}
+	}
+	
+
+    function getSeo($name) {
         try {
             $SEOArray = array();
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM SEO WHERE TYPE=?');
-            $stmt->bindParam(1, $type);
+            $stmt = $Myconnection->prepare('SELECT * FROM Seo WHERE [NAME]=?');
+            $stmt->bindParam(1, $name);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
             foreach ($results as $k => $v) {
-                $seo = new SEO();
+                $seo = new Seo();
                 $seo->id = $v['ID'];
                 $seo->name = $v['NAME'];
                 $seo->established = $v['ESTABLISHED'];
                 $seo->ownership = $v['OWNERSHIP'];
                 $seo->governance = $v['GOVERNANCE'];
-                $seo->hqcountry = $v['HQCOUNTRY'];
-                $seo->countryfounded = $v['COUNTRYFOUNDED'];
-                $seo->incomeperannum = $v['INCOMEPERANNUM'];
-                $seo->expenditureperannum = $v['EXPENDITUREPERANNUM'];
+                $seo->hqCountry = $v['HQCOUNTRY'];
+                $seo->countryFounded = $v['COUNTRYFOUNDED'];
+                $seo->incomePerAnnum = $v['INCOMEPERANNUM'];
+                $seo->expenditurePerAnnum = $v['EXPENDITUREPERANNUM'];
                 $seo->status = $v['STATUS'];
                 $seo->regDate = $v['REGDATE'];
                 $seoArray[] = $seo;
             }
-            return $SEOArray;
+            return $seoArray;
         } catch (Exception $e) {
             return false;
         }
