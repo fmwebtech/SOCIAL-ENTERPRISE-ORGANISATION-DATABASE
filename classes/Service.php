@@ -1,7 +1,7 @@
 <?php
 
 require_once('settings/connetionsetting.php');
-class SERVICE {
+class SERVICES {
 
     var $id;
     var $seoId;

@@ -1,7 +1,7 @@
 <?php
 
 require_once('settings/connetionsetting.php');
-class PRODUCT {
+class PRODUCTS {
 
     var $id;
     var $seoId;
