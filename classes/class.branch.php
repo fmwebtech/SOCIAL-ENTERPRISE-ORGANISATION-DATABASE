@@ -1,7 +1,7 @@
 <?php
 
 require_once('settings/connetionsetting.php');
-class Branch{
+class BRANCH{
 
     var $id;
     var $seoCountryId; //camel casing
@@ -157,7 +157,7 @@ function safeToEdit($id,$name){
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				$branch = new Branch();
+				$branch = new BRANCH();
 				$branch->id = $v['ID'];
                 $branch->seoCountryId= $v['SEO_COUNTRY_ID'];
 				$branch->name = $v['NAME'];
