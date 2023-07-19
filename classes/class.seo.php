@@ -18,7 +18,9 @@ class Seo {
         if ($id == NULL) {
 
             // do nothing
-        } else {
+        } 
+        else
+         {
             global $Myconnection;
             $stmt = $Myconnection->prepare('SELECT * FROM Seo WHERE ID=?');
             $stmt->bindParam(1, $id);
@@ -42,13 +44,17 @@ class Seo {
     }
 
     function save($name, $established, $ownership, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum) {
-        if ($this->SeoExists($name,$ownership)) {
+        if ($this->SeoExists($name,$ownership)) 
+        {
             echo 'The username you chose is already taken, choose a different username.';
             return false;
-        } else {
+        } 
+        else 
+        {
             // do nothing
         }
-        try {
+        try
+        {
             global $Myconnection;
             $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, OWNERSHIP, GOVERNANCE, HQCOUNTRY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
                                             VALUES (?, ?, ?, ?, ?, ?, ?, ?,"new")');
