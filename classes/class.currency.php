@@ -1,5 +1,5 @@
 <?php
-require_once('settings/connectionsetting.php'); // Use forward slash (/) for directory separator
+require_once('settings/connectionsetting.php'); 
 
 class CURRENCY {
     var $id;
