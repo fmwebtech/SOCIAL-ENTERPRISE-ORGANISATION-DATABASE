@@ -1,6 +1,6 @@
 <?php
 //Frank
-require_once('settings/connetionsetting.php');
+require_once('settings\connectionsetting.php');
 class COUNTRY{
 
     var $id;
@@ -11,12 +11,14 @@ class COUNTRY{
 
     function __construct($id=NULL)
 	{
-		if($id==NULL){
+
+		if($id==NULL)
+		{
 			//do nothing
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM country WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -34,25 +36,27 @@ class COUNTRY{
 
 
 	//CREATE FUNCTION FOR CODE =CODEEXIST=
-    function save($name,$code){
-			if($this->countryExists($code))
-			{
-				echo 'The name you chose is already taken, choose a different name.';
-				return false;
-			}else{
-				//do nothing
-			}
-			
-		try{
+
+    function save($name,$code)
+{
+		if($this->countryExists($code))
+		{
+			echo 'The name you chose is already taken, choose a different name.';
+			return false;
+		}
+		
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO country([NAME], [CODE] ,[STATUS]) 
-											VALUES(?,?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO COUNTRY([NAME], [CODE] ,[STATUS]) 
+											VALUES(?,?,'new')");
 			
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$code);			
 			$stmt->execute();
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			echo $e->getMessage();
 			return false;
@@ -61,21 +65,27 @@ class COUNTRY{
 
 
 
-	function countryExists($code) {
-		try {
+	function countryExists($code) 
+	{
+		try
+		 {
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [CODE] = ? ');
+			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE [CODE] = ? ');
 			$stmt->bindParam(1, $code);			
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
 	
-			foreach ($results as $k => $v) {
+			foreach ($results as $k => $v)
+			 {
 				return true;
 			}
 	
 			return false;
-		} catch (Exception $e) {
+		} 
+		catch (Exception $e)
+		 {
+			echo $e->getMessage();
 			return true;
 		}
 	}
@@ -96,7 +106,7 @@ class COUNTRY{
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE country	SET NAME=?,CODE =?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE COUNTRY	SET NAME=?,CODE =?,STATUS=? WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$code);
