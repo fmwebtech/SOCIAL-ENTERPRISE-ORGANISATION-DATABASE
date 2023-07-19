@@ -1,10 +1,10 @@
 <?php
 
 require_once('settings/connetionsetting.php');
-class SERVICES{
+class SERVICES {
 
     var $id;
-    var $seo_id;
+    var $seoId;
     var $name;
     var $currency;
 	var $price;
@@ -18,7 +18,7 @@ class SERVICES{
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM SERVICES WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -26,7 +26,7 @@ class SERVICES{
 			foreach($results as $k=>$v)
 			{ // 			
 				$this->id = $v['ID'];
-				$this->seo_id= $v['SEO_ID'];
+				$this->seoId= $v['SEO_ID'];
 				$this->name = $v['NAME'];
 				$this->currency = $v['CURRENCY'];
 				$this->price = $v['PRICE'];
@@ -36,8 +36,8 @@ class SERVICES{
 		}
 	}
 
-    function save($name,$currency)
-			if($this->userNameExists($name))
+    function save($name,$currency,$seoId,$price)
+			if($this->serviceExits($seoId))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -47,11 +47,13 @@ class SERVICES{
 			
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO branch(NAME,CURRENCY,STATUS) 
-											VALUES(?,?,?,"new")');
+			$stmt = $Myconnection->prepare('INSERT INTO [SERVICES]([NAME],CURRENCY,SOE_ID,PRICE,STATUS) 
+											VALUES(?,?,?,?"new")'); 
 			
 			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$currency);			
+			$stmt->bindParam(2,$currency);
+			$stmt->bindParam(3,$seoId);
+			$stmt->bindParam(4,$price);			
 			$stmt->execute();
 			return true;
 		}catch(Exception $e)
@@ -61,9 +63,9 @@ class SERVICES{
 		}
 	}
 
-	function edit($id,$seo_id,$name,$currency,price,$status)
+	function edit($seoId,$name,$currency,$price,$status) 
 	{
-			if($this->safeToEdit($id,$name))
+			if($this->safeToEdit($seoId,$currency,$price,$name)) 
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -72,10 +74,12 @@ class SERVICES{
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE branch	SET NAME=?,ADDRESS=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$address);
+			$stmt->bindParam(2,$seoId);
+			$stmt->bindParam(2,$currency);
+			$stmt->bindParam(2,$price);
 			$stmt->bindParam(3,$status);
 			$stmt->bindParam(4,$id);
 			$stmt->execute();
@@ -86,41 +90,89 @@ class SERVICES{
 		}
 	}
 
-	function getUsers($name)
+	function getService($name,$seoId,$currency,$price)
 	{
 		try{
-			$branchArray = array();
+			$serviceArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE NAME=?');
-			$stmt->bindParam(1,$type);
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
+			$stmt->bindParam(1,$name);
+			$stmt->bindParam(1,$seoId);
+			$stmt->bindParam(1,$currency);
+			$stmt->bindParam(1,$price);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				$product = new PRODUCTS();
+				$product = new SERVICES();
 				$product->id = $v['ID'];
-                $product->seo_country_id= $v['SEO_COUNTRY_ID'];
+                $product->seoId= $v['SEO_ID'];
 				$product->name = $v['NAME'];
-				$product->address = $v['ADDRESS'];			
+				$product->currency = $v['CURRENCY'];
+				$product->price = $v['PRICE'];			
 				$product->status = $v['STATUS'];
 				$product->regDate = $v['REGDATE'];
-				$productArray[] =$product;
+				$serviceArray[] =$service;
 			}
-			return $productArray;
+			return $serviceArray;
 		}catch(Exception $e)
 		{
 			return false;
 		}
 	}
 
+    // issues which this function due to the unknown operation
+
+	function serviceExists($name){
+		try{
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?');
+			$stmt->bindParam(1,$name);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				return true;
+			}
+			return false;
+		}catch(Exception $e)
+		{
+			return true;
+		}
+	}
+	
+	
+	function safeToEdit($seoId,$name,$currency,$price,$status){
+		try{
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
+			$stmt->bindParam(1,$name);
+			$stmt->bindParam(2,$seoId);
+			$stmt->bindParam(3,$currency);
+			$stmt->bindParam(1,$price);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				return false;
+			}
+			return true;
+		}catch(Exception $e)
+		{
+			return false;
+		}
+	}
+	
 
 
     function delete($id)
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM product WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM [SERVICES] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;
