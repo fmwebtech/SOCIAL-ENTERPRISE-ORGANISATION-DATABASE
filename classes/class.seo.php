@@ -1,5 +1,5 @@
 <?php
-require_once('settings/connetionsetting.php');
+require_once('settings\connectionsetting.php');
 
 class Seo {
     var $id;
@@ -8,9 +8,11 @@ class Seo {
     var $ownership;
     var $governance;
     var $hqCountry;
+    var $creaedBy;
     var $countryFounded;
     var $incomePerAnnum;
     var $expenditurePerAnnum;
+    var $modifiedBy;
     var $status;
     var $regDate;
 
@@ -34,14 +36,16 @@ class Seo {
                 $this->hqCountry = $v['HQCOUNTRY'];
                 $this->countryFounded = $v['COUNTRYFOUNDED'];
                 $this->incomePerAnnum = $v['INCOMEPERANNUM'];
+                $this->createdBy = $v['CREATED_BY'];
+                $this->modifiedBy = $v['MODIFIED_BY'];
                 $this->expenditurePerAnnum = $v['EXPENDITUREPERANNUM'];
                 $this->status = $v['STATUS'];
                 $this->regDate = $v['REGDATE'];
-            }
-        }
+            }                
     }
+}
 
-    function save($name, $established, $ownership, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum) {
+    function save($name, $established, $ownership, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum) {
         if ($this->SeoExists($name,$ownership)) {
             echo 'The username you chose is already taken, choose a different username.';
             return false;
@@ -50,16 +54,17 @@ class Seo {
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, OWNERSHIP, GOVERNANCE, HQCOUNTRY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?,"new")');
+            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, [OWNERSHIP],  GOVERNANCE, HQCOUNTRY,CREATED_BY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
+                                            VALUES (?, ?, ?, ?, ?, ?, ?,?, ?,"new")');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $established);
             $stmt->bindParam(3, $ownership);
             $stmt->bindParam(4, $governance);
             $stmt->bindParam(5, $hqCountry);
-            $stmt->bindParam(6, $countryFounded);
-            $stmt->bindParam(7, $incomePerAnnum);
-            $stmt->bindParam(8, $expenditurePerAnnum);
+            $stmt->bindParam(6, $createdBy);
+            $stmt->bindParam(7, $countryFounded);
+            $stmt->bindParam(8, $incomePerAnnum);
+            $stmt->bindParam(9, $expenditurePerAnnum);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
@@ -88,7 +93,7 @@ class Seo {
 		}
 	}
 
-    function edit($id, $name, $established, $ownership, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
+    function edit($id, $name, $established, $ownership,$modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
         if ($this->safeToEdit($id, $name)) {
             echo 'The name you chose is already taken, choose a different name.';
             return false;
@@ -97,7 +102,7 @@ class Seo {
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, MODIFIED_BY=?,INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
             $stmt->bindParam(3, $incomePerAnnum);
@@ -105,9 +110,10 @@ class Seo {
             $stmt->bindParam(5, $countryFounded);
             $stmt->bindParam(6, $established);
             $stmt->bindParam(7, $hqCountry);
-            $stmt->bindParam(8, $status);
-            $stmt->bindParam(9, $id);
-            $stmt->bindParam(10,$ownership);
+            $stmt->bindParam(8, $modifiedBy);
+            $stmt->bindParam(9, $status);
+            $stmt->bindParam(10, $id);
+            $stmt->bindParam(11,$ownership);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
@@ -157,6 +163,8 @@ class Seo {
                 $seo->countryFounded = $v['COUNTRYFOUNDED'];
                 $seo->incomePerAnnum = $v['INCOMEPERANNUM'];
                 $seo->expenditurePerAnnum = $v['EXPENDITUREPERANNUM'];
+                $seo->createdBy = $v['CREATED_BY'];
+                $seo->modifiedBy= $v['MODIFIED_BY'];
                 $seo->status = $v['STATUS'];
                 $seo->regDate = $v['REGDATE'];
                 $seoArray[] = $seo;
