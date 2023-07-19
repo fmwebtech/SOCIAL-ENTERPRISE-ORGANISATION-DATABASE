@@ -50,6 +50,7 @@ class Seo {
      {
         if ($this->SeoExists($name,$ownership)) {
 
+
             echo 'The username you chose is already taken, choose a different username.';
             return false;
         } 

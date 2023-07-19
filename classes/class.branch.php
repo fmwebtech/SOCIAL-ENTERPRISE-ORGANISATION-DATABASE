@@ -1,6 +1,6 @@
 <?php
 
-require_once('settings/connetionsetting.php');
+require_once('settings\connectionsetting.php');
 class BRANCH{
 
     var $id;
