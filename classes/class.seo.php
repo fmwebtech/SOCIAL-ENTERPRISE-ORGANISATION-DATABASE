@@ -8,7 +8,7 @@ class Seo {
     var $ownership;
     var $governance;
     var $hqCountry;
-    var $creaedBy;
+    var $createdBy;
     var $countryFounded;
     var $incomePerAnnum;
     var $expenditurePerAnnum;
@@ -20,7 +20,9 @@ class Seo {
         if ($id == NULL) {
 
             // do nothing
-        } else {
+        } 
+        else
+         {
             global $Myconnection;
             $stmt = $Myconnection->prepare('SELECT * FROM Seo WHERE ID=?');
             $stmt->bindParam(1, $id);
@@ -44,15 +46,19 @@ class Seo {
             }                
     }
 }
-
-    function save($name, $established, $ownership, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum) {
+    function save($name, $established, $ownership, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum)
+     {
         if ($this->SeoExists($name,$ownership)) {
+
             echo 'The username you chose is already taken, choose a different username.';
             return false;
-        } else {
+        } 
+        else 
+        {
             // do nothing
         }
-        try {
+        try
+        {
             global $Myconnection;
             $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, [OWNERSHIP],  GOVERNANCE, HQCOUNTRY,CREATED_BY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
                                             VALUES (?, ?, ?, ?, ?, ?, ?,?, ?,"new")');
