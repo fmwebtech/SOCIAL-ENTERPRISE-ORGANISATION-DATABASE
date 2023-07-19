@@ -36,8 +36,8 @@ class SERVICES {
 		}
 	}
 
-    function save($name,$currency,$seoId,$price)
-			if($this->serviceExits($seoId))
+    function save($name,$currency,$seoId,$price){
+			if($this->serviceExists($name))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -63,7 +63,7 @@ class SERVICES {
 		}
 	}
 
-	function edit($seoId,$name,$currency,$price,$status) 
+	function edit($id, $seoId,$name,$currency,$price,$status) 
 	{
 			if($this->safeToEdit($seoId,$currency,$price,$name)) 
 			{
@@ -105,14 +105,14 @@ class SERVICES {
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				$product = new SERVICES();
-				$product->id = $v['ID'];
-                $product->seoId= $v['SEO_ID'];
-				$product->name = $v['NAME'];
-				$product->currency = $v['CURRENCY'];
-				$product->price = $v['PRICE'];			
-				$product->status = $v['STATUS'];
-				$product->regDate = $v['REGDATE'];
+				$service = new SERVICES();
+				$service->id = $v['ID'];
+                $service->seoId= $v['SEO_ID'];
+				$service->name = $v['NAME'];
+				$service->currency = $v['CURRENCY'];
+				$service->price = $v['PRICE'];			
+				$service->status = $v['STATUS'];
+				$service->regDate = $v['REGDATE'];
 				$serviceArray[] =$service;
 			}
 			return $serviceArray;
@@ -127,7 +127,7 @@ class SERVICES {
 	function serviceExists($name){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM services WHERE [NAME]=?');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -144,7 +144,7 @@ class SERVICES {
 	}
 	
 	
-	function safeToEdit($seoId,$name,$currency,$price,$status){
+	function safeToEdit($seoId,$name,$currency,$price,){
 		try{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
@@ -187,7 +187,7 @@ class SERVICES {
 
 
 
-
+}
 
 
 
