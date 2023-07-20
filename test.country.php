@@ -12,7 +12,7 @@ $mycountry = new COUNTRY();
 
 
 
-// $outcome = $mycountry-> save('South Africa', 'SA');
+//$outcome = $mycountry-> save('South Africa', 'SA');
 
 // if($outcome)
 // {

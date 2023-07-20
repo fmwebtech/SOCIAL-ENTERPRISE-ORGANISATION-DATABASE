@@ -5,7 +5,24 @@ require_once('classes\class.Product.php');
 $myProduct = new PRODUCTS();
 
 //save($name,$currency,$seoId,$price,$createdBy)
-$myProduct -> save('Mukupa','zm','','70','');
+
+$myProduct -> save('Hillary','5','2','70','3');
+
+
+
+
+// $outcome = $myProduct-> save('Mukupa','zm','','70','');
+
+// if($outcome)
+// {
+//         echo "Saved Successufully";
+// }
+// else
+// {
+//         echo "Not Saved";
+// }
+
+
 
 //$myProduct -> name;
 
