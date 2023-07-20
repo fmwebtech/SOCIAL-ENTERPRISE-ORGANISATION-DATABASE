@@ -119,7 +119,9 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
 	// ISSUE
 	function edit($id, $seoId, $countryId, $name, $address, $createdBy, $modifiedBy, $status)
 {
-    if ($this->safeToEdit($id, $name))
+
+	
+    if ($this->safeToEdit($id,$seoId, $address,$name, $countryId))
 	 {
         echo 'The name you chose is already taken, choose a different name.';
         return false;
@@ -150,37 +152,34 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
     }
 }
 
-function safeToEdit($id,$name)
+function safeToEdit($id,$seoId, $address, $name, $countryId)
 {
-	try
-	{
-		global $Myconnection;
-		$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [NAME]=? AND [ID]<>?');
-		$stmt->bindParam(1,$name);
-		$stmt->bindParam(2,$id);
-		$stmt->execute();
-		$stmt->setFetchMode(PDO::FETCH_ASSOC);
-		$results = $stmt->fetchAll();
+    try
+    {
+        global $Myconnection;
+        $stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [NAME]=? AND [ADDRESS]=? AND [SEO_ID]=? AND [COUNTRY_ID]=? AND [ID]<>?');
+        $stmt->bindParam(1, $name);
+        $stmt->bindParam(2, $address);
+        $stmt->bindParam(3, $seoId);
+        $stmt->bindParam(4, $countryId);
+		$stmt->bindParam(5,$id);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll();
+
 		foreach($results as $k=>$v)
 		{
 			return false;
 		}
 		return true;
-	}
-	catch(Exception $e)
+	}catch(Exception $e)
 	{
+		echo $e->getMessage();
 		return false;
 	}
 }
 
 
-
-
-
-
-
-
-	//MAKE ANOTHER FUNCTION FOR COUNTRY AND 
 	function getBranch($seoId, $countryId)
 	{
 		try

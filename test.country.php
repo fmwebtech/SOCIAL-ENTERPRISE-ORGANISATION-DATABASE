@@ -31,7 +31,37 @@ $mycountry = new COUNTRY();
 //$mycountry-> edit(2, 'Malawi','MW','EDITED');
 
 
-$mycountry->getCountry('MW');
+$outcome = $mycountry->getCountry();
+var_dump($outcome);
+// if($outcome)
+// {
+//     echo 'Countries Retrieved';
+// }
+// else
+
+// {
+//     echo 'Countries not Retrived';
+// }
+
+
+
+
+// $outcome = $mycountry->delete(2);
+
+// if($outcome)
+// {
+//     echo 'Countriy Deleted';
+// }
+// else
+
+// {
+//     echo 'Country not Deleted';
+// }
+
+
+
+
+
 
 
 ?>

@@ -139,6 +139,7 @@ class COUNTRY{
 			return true;
 		}catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -171,6 +172,7 @@ class COUNTRY{
 		}
 		catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -189,6 +191,7 @@ class COUNTRY{
 			}
 			catch(Exception $e)
 			{
+				echo $e->getMessage();
 				return false;
 			}
 	}
