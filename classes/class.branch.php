@@ -4,24 +4,33 @@ require_once('settings\connectionsetting.php');
 class BRANCH{
 
     var $id;
-    var $seoCountryId; //camel casing
-    var $name;
+    var $seoId;
+	var $countryId;
+	var $name;
     var $address;
+	var $createdBy;
+	var $modifiedBy;
+    
     var $status;
     var $regDate;
 
-	//
+	
 
 
 	//The constructor method initializes the object and retrieves the country data from the database based on the provided ID
     function __construct($id=NULL)
 	{
-		if($id==NULL){
+
+	
+
+		if($id=NULL)
+		{
 			//do nothing
-		}else
+		}
+		else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -29,41 +38,57 @@ class BRANCH{
 			foreach($results as $k=>$v)
 			{ // 			
 				$this->id = $v['ID'];
-				$this->seoCountryId= $v['SEO_COUNTRY_ID'];
+				$this->seoId= $v['SEO_ID'];
+				$this->countryId= $v['COUNTRY_ID'];
 				$this->name = $v['NAME'];
 				$this->address = $v['ADDRESS'];
+				$this->createdBy=$v['CREATED_BY'];
+				$this->modifiedBy=$v['MODIFIED_BY'];
 				$this->status = $v['STATUS'];
 				$this->regDate = $v['REGDATE'];
 			}
 		}
 	}
-// SAVE SEOCOUNTRYID ASWELL
+// SAVE SEO_id and COUNTRYID ASWELL
 // A BRANCH UNIQUENESS
-function save($seoCountryId, $name, $address) {
-    if ($this->branchExists($name, $address)) {
+
+function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
+ {
+    if ($this->branchExists($name, $address)) 
+	{
         echo 'The name you chose is already taken, choose a different name.';
         return false;
-    } else {
+    } 
+	else 
+	{
         //do nothing
     }
 
-    try {
+    try 
+	{
         global $Myconnection;
-        $stmt = $Myconnection->prepare('INSERT INTO branch( SEO_COUNTRY_ID, [NAME], [ADDRESS], [STATUS]) 
-                                        VALUES (?, ?, ?, "new")');
-        $stmt->bindParam(1, $seoCountryId);
-        $stmt->bindParam(2, $name);
-        $stmt->bindParam(3, $address);
+        $stmt = $Myconnection->prepare("INSERT INTO BRANCH( [SEO_ID], [COUNTRY_ID], [NAME], [ADDRESS], [CREATED_BY], [MODIFIED_BY], [STATUS]) 
+                                        VALUES (?, ?, ?, ?, ?, ?, 'new')");
+        $stmt->bindParam(1, $seoId);
+		$stmt->bindParam(2, $countryId);
+		$stmt->bindParam(3, $name);
+		$stmt->bindParam(4, $address);
+        $stmt->bindParam(5, $createdBy);
+        $stmt->bindParam(6, $modifiedBy);
         $stmt->execute();
         return true;
-    } catch (Exception $e) {
+    } 
+	catch (Exception $e) 
+	{
         echo $e->getMessage();
         return false;
     }
 }
 	// new code
-	function branchExists($name, $address) {
-		try {
+	function branchExists($name, $address) 
+	{
+		try
+		 {
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [NAME] = ? AND [ADDRESS] = ?');
 			$stmt->bindParam(1, $name);
@@ -92,35 +117,45 @@ function save($seoCountryId, $name, $address) {
 
 
 	// ISSUE
-	function edit($id, $seoCountryId, $name, $address, $status)
+	function edit($id, $seoId, $countryId, $name, $address, $createdBy, $modifiedBy, $status)
 {
-    if ($this->safeToEdit($id, $name)) {
+    if ($this->safeToEdit($id, $name))
+	 {
         echo 'The name you chose is already taken, choose a different name.';
         return false;
-    } else {
+    } else 
+	{
         //do nothing
     }
 
-    try {
+    try 
+	{
         global $Myconnection;
-        $stmt = $Myconnection->prepare('UPDATE branch SET SEO_COUNTRY_ID=?, [NAME]=?, [ADDRESS]=?, [STATUS]=? WHERE ID=?');
+        $stmt = $Myconnection->prepare('UPDATE BRANCH SET [SEO_ID] =?, [COUNTRY_ID] = ?, [NAME]=?, [ADDRESS]=?, [CREATED_BY] = ?, [MODIFIED_BY] = ?, [STATUS]=? WHERE [ID] =?');
 
-        $stmt->bindParam(1, $seoCountryId);
-        $stmt->bindParam(2, $name);
-        $stmt->bindParam(3, $address);
-        $stmt->bindParam(4, $status);
-        $stmt->bindParam(5, $id);
+        $stmt->bindParam(1, $seoId);
+		$stmt->bindParam(2, $countryId);
+		$stmt->bindParam(3, $name);
+		$stmt->bindParam(4, $address);
+        $stmt->bindParam(5, $createdBy);
+        $stmt->bindParam(6, $modifiedBy);
+		$stmt->bindParam(7, $status);
+        $stmt->bindParam(8, $id);
         $stmt->execute();
         return true;
-    } catch (Exception $e) {
+    }
+	 catch (Exception $e) 
+	 {
         return false;
     }
-}//hi
+}
 
-function safeToEdit($id,$name){
-	try{
+function safeToEdit($id,$name)
+{
+	try
+	{
 		global $Myconnection;
-		$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [NAME]=? AND ID<>?');
+		$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [NAME]=? AND [ID]<>?');
 		$stmt->bindParam(1,$name);
 		$stmt->bindParam(2,$id);
 		$stmt->execute();
@@ -131,7 +166,8 @@ function safeToEdit($id,$name){
 			return false;
 		}
 		return true;
-	}catch(Exception $e)
+	}
+	catch(Exception $e)
 	{
 		return false;
 	}
@@ -145,13 +181,15 @@ function safeToEdit($id,$name){
 
 
 	//MAKE ANOTHER FUNCTION FOR COUNTRY AND 
-	function getBranch($seoCountryId)
+	function getBranch($seoId, $countryId)
 	{
-		try{
+		try
+		{
 			$branchArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE SEO_COUNTRY_ID=?');
-			$stmt->bindParam(1,$seoCountryId);
+			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [SEO_ID]=? AND [COUNTRY_ID]=?');
+			$stmt->bindParam(1,$seoId);
+			$stmt->bindParam(2,$countryId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -159,15 +197,19 @@ function safeToEdit($id,$name){
 			{
 				$branch = new BRANCH();
 				$branch->id = $v['ID'];
-                $branch->seoCountryId= $v['SEO_COUNTRY_ID'];
+                $branch->seoId= $v['SEO_ID'];
+				$branch->countryId=$v['COUNTRY_ID'];
 				$branch->name = $v['NAME'];
-				$branch->address = $v['ADDRESS'];			
+				$branch->address = $v['ADDRESS'];
+				$branch->createdBy=$v['CREATED_BY'];
+				$branch->modifiedBy=$v['MODIFIED_BY'];
 				$branch->status = $v['STATUS'];
 				$branch->regDate = $v['REGDATE'];
 				$branchArray[] =$branch;
 			}
 			return $branchArray;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			return false;
 		}
@@ -177,13 +219,16 @@ function safeToEdit($id,$name){
 
     function delete($id)
 	{
-			try{
+			try
+			{
 				global $Myconnection;
 				$stmt = $Myconnection->prepare('DELETE FROM branch WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;
-			}catch(Exception $e)
+			
+			}
+			catch(Exception $e)
 			{
 				return false;
 			}

@@ -7,4 +7,6 @@ $Myconnection = new PDO("sqlsrv:server=$iudicbiwugfijhdgfiwe;database=$ifuweifwi
 $Myconnection -> setAttribute(PDO::ATTR_ERRMODE, 
 PDO::ERRMODE_EXCEPTION);
 //echo (explode('/',$_SERVER['PHP_SELF'])[sizeof(explode('/',$_SERVER['PHP_SELF']))-1]);
+
+
 ?>

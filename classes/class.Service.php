@@ -8,6 +8,8 @@ class SERVICES {
     var $name;
     var $currency;
 	var $price;
+	var $modifiedBy;
+	var $createdBy;
     var $status;
     var $regDate;
 
@@ -29,6 +31,8 @@ class SERVICES {
 				$this->seoId= $v['SEO_ID'];
 				$this->name = $v['NAME'];
 				$this->currency = $v['CURRENCY'];
+				$this->modifiedBy = $v['MODIFIED_BY'];
+				$this->createdBy = $v['CREATED_BY'];
 				$this->price = $v['PRICE'];
 				$this->status = $v['STATUS'];
 				$this->regDate = $v['REGDATE'];
@@ -36,8 +40,8 @@ class SERVICES {
 		}
 	}
 
-    function save($name,$currency,$seoId,$price) 
-			if($this->serviceExits($seoId))
+    function save($name,$currency,$seoId,$price,$createdBy){
+			if($this->serviceExists($name))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -47,13 +51,14 @@ class SERVICES {
 			
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [SERVICES]([NAME],CURRENCY,SOE_ID,PRICE,STATUS) 
-											VALUES(?,?,?,?"new")'); 
+			$stmt = $Myconnection->prepare('INSERT INTO [SERVICES]([NAME],CREATED_BY,CURRENCY,SOE_ID,PRICE,STATUS) 
+											VALUES(?,?,?,?,?,"new")'); 
 			
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$currency);
 			$stmt->bindParam(3,$seoId);
-			$stmt->bindParam(4,$price);			
+			$stmt->bindParam(4,$price);
+			$stmt->bindParam(5,$createdBy);			
 			$stmt->execute();
 			return true;
 		}catch(Exception $e)
@@ -63,9 +68,9 @@ class SERVICES {
 		}
 	}
 
-	function edit($seoId,$name,$currency,$price,$status) 
+	function edit($id, $seoId,$name,$currency,$price,$status,$modifiedBy) 
 	{
-			if($this->safeToEdit($seoId,$currency,$price,$name)) 
+			if($this->safeToEdit($seoId,$currency,$price,$name,$modifiedBy)) 
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -74,14 +79,15 @@ class SERVICES {
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,MODIFIED_BY=?,PRICE=? WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
-			$stmt->bindParam(2,$currency);
-			$stmt->bindParam(2,$price);
-			$stmt->bindParam(3,$status);
-			$stmt->bindParam(4,$id);
+			$stmt->bindParam(3,$currency);
+			$stmt->bindparam(4,$modifiedBy);
+			$stmt->bindParam(5,$price);
+			$stmt->bindParam(6,$status);
+			$stmt->bindParam(7,$id);
 			$stmt->execute();
 			return true;
 		}catch(Exception $e)
@@ -105,14 +111,14 @@ class SERVICES {
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				$product = new SERVICES();
-				$product->id = $v['ID'];
-                $product->seoId= $v['SEO_ID'];
-				$product->name = $v['NAME'];
-				$product->currency = $v['CURRENCY'];
-				$product->price = $v['PRICE'];			
-				$product->status = $v['STATUS'];
-				$product->regDate = $v['REGDATE'];
+				$service = new SERVICES();
+				$service->id = $v['ID'];
+                $service->seoId= $v['SEO_ID'];
+				$service->name = $v['NAME'];
+				$service->currency = $v['CURRENCY'];
+				$service->price = $v['PRICE'];			
+				$service->status = $v['STATUS'];
+				$service->regDate = $v['REGDATE'];
 				$serviceArray[] =$service;
 			}
 			return $serviceArray;
@@ -127,7 +133,7 @@ class SERVICES {
 	function serviceExists($name){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM services WHERE [NAME]=?');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -144,12 +150,13 @@ class SERVICES {
 	}
 	
 	
-	function safeToEdit($seoId,$name,$currency,$price,$status){
+	function safeToEdit($seoId,$name,$currency,$price,$modifiedBy){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEOID=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES] WHERE [NAME]=?,SEOID=?,MODIFIED=?,CURRENCY=?,PRICE=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
+			$stmt->bindparam(4,$modified_by);
 			$stmt->bindParam(3,$currency);
 			$stmt->bindParam(1,$price);
 			$stmt->execute();
@@ -166,6 +173,9 @@ class SERVICES {
 		}
 	}
 	
+
+   
+
 
 
     function delete($id)
@@ -187,7 +197,7 @@ class SERVICES {
 
 
 
-
+}
 
 
 

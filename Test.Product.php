@@ -5,7 +5,9 @@ require_once('classes\class.Product.php');
 $myProduct = new PRODUCTS();
 
 //save($name,$currency,$seoId,$price,$createdBy)
-$myProduct -> save('Hillary','zmk','','50','')
+$myProduct -> save('Mukupa','zm','','70','');
+
+//$myProduct -> name;
 
 //edit($id, $seoId,$name,$currency,$price,$status) 
 
