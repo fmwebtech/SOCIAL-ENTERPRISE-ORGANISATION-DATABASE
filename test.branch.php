@@ -1,7 +1,7 @@
 <?php
 require_once('classes\class.branch.php');
 
-$mybranch = new BRANCH();
+$mybranch = new BRANCH(2);
 
 
 
@@ -12,7 +12,8 @@ $mybranch = new BRANCH();
 //getBranch($seoCountryId)
 //delete($id)
 
-$mybranch ->save(1, 'Frank', 'CBU');
+//$mybranch ->save(1, 'Frank', 'CBU');
+//$mybranch ->name;
 
 
 
