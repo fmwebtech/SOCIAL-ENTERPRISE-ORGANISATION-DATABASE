@@ -1,7 +1,7 @@
 <?php
 require_once('settings/connectionsetting.php');
 
-class SEO_COUNTRY {
+class seoCountry {
     var $id;
     var $seoId;
     var $countryId;
@@ -31,12 +31,12 @@ class SEO_COUNTRY {
 
     function save($countryId, $seoId) {
         if ($this->seoCountryExists($seoId)) {
-            echo 'The seoId you chose is already taken, choose a different seoId.';
+            echo 'This Records Exist';
             return false;
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('INSERT INTO SEO_COUNTRY (COUNTRY_ID, SEO_ID, STATUS) VALUES(?, ?, "new")');
+            $stmt = $Myconnection->prepare("INSERT INTO SEO_COUNTRY (COUNTRY_ID, SEO_ID, STATUS) VALUES(?, ?, 'new')");
             $stmt->bindParam(1, $countryId);
             $stmt->bindParam(2, $seoId);
             $stmt->execute();
@@ -47,23 +47,28 @@ class SEO_COUNTRY {
         }
     }
 
-    function edit($id, $countryId, $seoId, $status) {
-        if ($this->safeToEdit($id, $seoId)) {
-            echo 'The seoId you chose is already taken, choose a different seoId.';
+    function edit($id, $countryId, $seoId, $status, $modifiedBy) {
+        if ($this->safeToEdit($id, $seoId, $countryId))
+         {
+
+            echo 'The Record exist';
+
             return false;
         } else {
             // do nothing
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO_COUNTRY SET COUNTRY_ID=?, SEO_ID=?, STATUS=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO_COUNTRY SET COUNTRY_ID=?, SEO_ID=?, STATUS=?, MODIFIED_BY=? WHERE ID=?');
             $stmt->bindParam(1, $countryId);
             $stmt->bindParam(2, $seoId);
             $stmt->bindParam(3, $status);
-            $stmt->bindParam(4, $id);
+            $stmt->bindParam(4, $modifiedBy);
+            $stmt->bindParam(5, $id);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
+            echo $e->getMessage();
             return false;
         }
     }
@@ -85,12 +90,13 @@ class SEO_COUNTRY {
         }
     }
 
-    function safeToEdit($id, $seoId) {
+    function safeToEdit($id,$seoId,$countryId) {
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=? AND ID<>?');
-            $stmt->bindParam(1, $seoId);
-            $stmt->bindParam(2, $id);
+            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=?, COUNTRY_ID=?, AND ID<>?');
+            $stmt->bindParam(1,$seoId);
+            $stmt->bindParam(2,$id);
+            $stmt->bindParam(3,$countryId);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
@@ -103,9 +109,9 @@ class SEO_COUNTRY {
         }
     }
 
-    function getSeoCountry($countryId) {
+    function getSeoCountryByCountryId($countryId) {
         try {
-            $seoCountryArray = array();
+            $seoCountryByIdArray = array();
             global $Myconnection;
             $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE COUNTRY_ID=?');
             $stmt->bindParam(1, $countryId);
@@ -116,7 +122,7 @@ class SEO_COUNTRY {
                 $seoCountry = new seoCountry();
                 $seoCountry->id = $v['ID'];
                 $seoCountry->countryId = $v['COUNTRY_ID'];
-                $seoCountyr->seoId = $v['SEO_ID'];
+                $seoCountry->seoId = $v['SEO_ID'];
                 $seoCountry->status = $v['STATUS'];
                 $seoCountry->regDate = $v['REGDATE'];
                 $seoCountryArray[] = $seoCountry;
@@ -126,7 +132,53 @@ class SEO_COUNTRY {
             return false;
         }
     }
-
+    function getSeoCountryBySeoId($seoId) {
+        try {
+            $seoCountryArray = array();
+            global $Myconnection;
+            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=?');
+            $stmt->bindParam(1, $seoId);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll();
+            foreach ($results as $k => $v) {
+                $seoCountry = new seoCountry();
+                $seoCountry->id = $v['ID'];
+                $seoCountry->countryId = $v['COUNTRY_ID'];
+                $seoCountry->seoId = $v['SEO_ID'];
+                $seoCountry->status = $v['STATUS'];
+                $seoCountry->regDate = $v['REGDATE'];
+                $seoCountryArray[] = $seoCountry;
+            }
+            return $seoCountryArray;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+    function getSeoCountryBySeoIdAndCountryId($seoId,$countryId) {
+        try {
+            $seoCountryArray = array();
+            global $Myconnection;
+            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=? AND COUNTRY_ID=?');
+            $stmt->bindParam(1, $seoId);
+            $stmt->bindParam(2,$countryId);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll();
+            foreach ($results as $k => $v) {
+                $seoCountry = new seoCountry();
+                $seoCountry->id = $v['ID'];
+                $seoCountry->countryId = $v['COUNTRY_ID'];
+                $seoCountry->seoId = $v['SEO_ID'];
+                $seoCountry->status = $v['STATUS'];
+                $seoCountry->regDate = $v['REGDATE'];
+                $seoCountryArray[] = $seoCountry;
+            }
+            return $seoCountryArray;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
     function delete($id) {
         try {
             global $Myconnection;

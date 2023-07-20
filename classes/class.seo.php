@@ -48,11 +48,10 @@ class Seo {
             }                
     }
 }
-    function save($name, $established, $ownership,$primaryCountry, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum)
+    function save($name,$governance,$incomePerAnnum,$primaryCountry, $expenditurePerAnnum, $countryFounded, $established, $hqCountry,$createdBy,$ownership)
      {
-        if ($this->SeoExists($name,$ownership)) {
-
-
+        if ($this->seoExists($name))
+        {
             echo 'The name you chose is already taken, choose a different name';
 
             return false;
@@ -64,19 +63,19 @@ class Seo {
         try
         {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, [OWNERSHIP], PRIMARYCOUNTRY, GOVERNANCE, HQCOUNTRY,CREATED_BY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
-                                            VALUES (?, ?, ?, ?, ?, ?, ?,?,?, ?,"new")');
-            $stmt->bindParam(1, $name);
-            $stmt->bindParam(2, $established);
-            $stmt->bindParam(3, $ownership);
-            $stmt->bindParam(4, $primaryCountry);
-            $stmt->bindParam(5, $governance);
-            $stmt->bindParam(6, $hqCountry);
-            $stmt->bindParam(7, $createdBy);
-            $stmt->bindParam(8, $countryFounded);
-            $stmt->bindParam(9, $incomePerAnnum);
-            $stmt->bindParam(10, $expenditurePerAnnum);
-            $stmt->execute();
+            $stmt = $Myconnection->prepare("INSERT INTO  SEO ( [NAME],GOVERNANCE,INCOMEPERANNUM, PRIMARYCOUNTRY, EXPENDITUREPERANNUM, COUNTRYFOUNDED, ESTABLISHED, HQCOUNTRY,CREATED_BY,[OWERNERSHIP], STATUS) 
+                                            VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?,'new')");
+             $stmt->bindParam(1, $name);
+             $stmt->bindParam(2, $governance);
+             $stmt->bindParam(3, $incomePerAnnum);
+             $stmt->bindParam(4, $primaryCountry);
+             $stmt->bindParam(5, $expenditurePerAnnum);
+             $stmt->bindParam(6, $countryFounded);
+             $stmt->bindParam(7, $established);
+             $stmt->bindParam(8, $hqCountry);
+             $stmt->bindParam(9, $createdBy);
+             $stmt->bindParam(10,$ownership);
+             $stmt->execute();
             return true;
         } catch (Exception $e) {
 
@@ -85,12 +84,13 @@ class Seo {
         }
     }
     //new code to check the existance of the parameter passed above
-    function SeoExists($name,$ownership){
-		try{
+    function seoExists($name)
+    {
+		try
+        {
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM seo WHERE NAME=?AND OWNERSHIP=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM seo WHERE NAME=?');
 			$stmt->bindParam(1,$name);
-            $stmt->bindParam(2,$ownership);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -99,14 +99,18 @@ class Seo {
 				return true;
 			}
 			return false;
-		}catch(Exception $e)
+
+		}
+        catch(Exception $e)
 		{
 			return true;
 		}
 	}
 
     function edit($id, $name, $established, $ownership,$primaryCountry, $modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
-        if ($this->safeToEdit($id, $name)) {
+        
+        if (!$this->safeToEdit($id, $name)) 
+        {
             echo 'The name you chose is already taken, choose a different name.';
             return false;
         } else {
@@ -114,7 +118,7 @@ class Seo {
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?,PRIMARYCOUNTRY=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, MODIFIED_BY=?,INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,GOVERNANCE=?,INCOMEPERANNUM=?, PRIMARYCOUNTRY=?, EXPENDITUREPERANNUM=?, COUNTRYFOUNDED=?, ESTABLISHED=?, HQCOUNTRY=?,MODIFIED_BY=?,[STATUS]=? WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
             $stmt->bindParam(3, $incomePerAnnum);
@@ -126,7 +130,6 @@ class Seo {
             $stmt->bindParam(9, $modifiedBy);
             $stmt->bindParam(10, $status);
             $stmt->bindParam(11, $id);
-            $stmt->bindParam(12,$ownership);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
@@ -135,12 +138,14 @@ class Seo {
     }
     //NEW CODE FOR SafeEdit function
 
-    function safeToEdit($id,$name){
-		try{
+    function safeToEdit($Id,$name)
+    {
+		try
+        {
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM seo WHERE [NAME]=? AND ID<>?');
-			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$id);
+			$stmt = $Myconnection->prepare('SELECT * FROM SEO WHERE [NAME]=? AND ID !=?');
+            $stmt->bindParam(1,$name);
+			$stmt->bindParam(2,$Id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -158,7 +163,7 @@ class Seo {
 
     function getSeo($name) {
         try {
-            $SEOArray = array();
+            $seoArray = array();
             global $Myconnection;
             $stmt = $Myconnection->prepare('SELECT * FROM Seo WHERE [NAME]=?');
             $stmt->bindParam(1, $name);
