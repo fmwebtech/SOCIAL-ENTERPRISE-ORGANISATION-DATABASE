@@ -15,6 +15,8 @@ class PRODUCTS {
     
     function __construct($id=NULL)
 	{
+
+
 		if($id==NULL){
 			//do nothing
 		}else
@@ -40,8 +42,9 @@ class PRODUCTS {
 		}
 	}
 
-    function save($name,$currency,$seoId,$price,$createdBy){
-			if($this->productExists($seoId))
+    function save($name,$currency,$seoId,$price,$createdBy)
+	{
+			if($this->productExists($name))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -68,7 +71,7 @@ class PRODUCTS {
 		}
 	}
 
-	function edit($id, $seoId,$name,$currency,$price,$modifiedBy,$status) 
+	function edit($id, $seoId,$name,$currency,$price,$modifiedBy,) 
 	{
 			if($this->safeToEdit($seoId,$currency,$price,$name,$modifiedBy)) 
 			{
@@ -96,16 +99,13 @@ class PRODUCTS {
 		}
 	}
 
-	function getProduct($name,$seoId,$currency,$price)
+	function getProduct($seoId)
 	{
 		try{
-			$branchArray = array();
+			$productArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?');
-			$stmt->bindParam(1,$name);
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE SEO_ID=?');
 			$stmt->bindParam(1,$seoId);
-			$stmt->bindParam(1,$currency);
-			$stmt->bindParam(1,$price);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -130,10 +130,12 @@ class PRODUCTS {
 
     // issues which this function due to the unknown operation
 
-	function productExists($name){
-		try{
+	function productExists($name)
+	{
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM user WHERE [NAME]=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCT WHERE [NAME]=?');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -143,7 +145,8 @@ class PRODUCTS {
 				return true;
 			}
 			return false;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			return true;
 		}
