@@ -6,6 +6,7 @@ class Seo {
     var $name;
     var $established;
     var $ownership;
+    var $primaryCountry;
     var $governance;
     var $hqCountry;
     var $createdBy;
@@ -34,6 +35,7 @@ class Seo {
                 $this->name = $v['NAME'];
                 $this->established = $v['ESTABLISHED'];
                 $this->ownership = $v['OWNERSHIP'];
+                $this->primaryCountry = $v['PRIMARYCOUNTRY'];
                 $this->governance = $v['GOVERNANCE'];
                 $this->hqCountry = $v['HQCOUNTRY'];
                 $this->countryFounded = $v['COUNTRYFOUNDED'];
@@ -46,12 +48,13 @@ class Seo {
             }                
     }
 }
-    function save($name, $established, $ownership, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum)
+    function save($name, $established, $ownership,$primaryCountry, $governance, $hqCountry, $creaedBy, $countryFounded, $incomePerAnnum, $expenditurePerAnnum)
      {
         if ($this->SeoExists($name,$ownership)) {
 
 
-            echo 'The username you chose is already taken, choose a different username.';
+            echo 'The name you chose is already taken, choose a different name';
+
             return false;
         } 
         else 
@@ -61,20 +64,22 @@ class Seo {
         try
         {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, [OWNERSHIP],  GOVERNANCE, HQCOUNTRY,CREATED_BY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
-                                            VALUES (?, ?, ?, ?, ?, ?, ?,?, ?,"new")');
+            $stmt = $Myconnection->prepare('INSERT INTO user(NAME, ESTABLISHED, [OWNERSHIP], PRIMARYCOUNTRY, GOVERNANCE, HQCOUNTRY,CREATED_BY, COUNTRYFOUNDED, INCOMEPERANNUM, EXPENDITUREPERANNUM,STATUS) 
+                                            VALUES (?, ?, ?, ?, ?, ?, ?,?,?, ?,"new")');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $established);
             $stmt->bindParam(3, $ownership);
-            $stmt->bindParam(4, $governance);
-            $stmt->bindParam(5, $hqCountry);
-            $stmt->bindParam(6, $createdBy);
-            $stmt->bindParam(7, $countryFounded);
-            $stmt->bindParam(8, $incomePerAnnum);
-            $stmt->bindParam(9, $expenditurePerAnnum);
+            $stmt->bindParam(4, $primaryCountry);
+            $stmt->bindParam(5, $governance);
+            $stmt->bindParam(6, $hqCountry);
+            $stmt->bindParam(7, $createdBy);
+            $stmt->bindParam(8, $countryFounded);
+            $stmt->bindParam(9, $incomePerAnnum);
+            $stmt->bindParam(10, $expenditurePerAnnum);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
+
             echo $e->getMessage();
             return false;
         }
@@ -100,7 +105,7 @@ class Seo {
 		}
 	}
 
-    function edit($id, $name, $established, $ownership,$modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
+    function edit($id, $name, $established, $ownership,$primaryCountry, $modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
         if ($this->safeToEdit($id, $name)) {
             echo 'The name you chose is already taken, choose a different name.';
             return false;
@@ -109,18 +114,19 @@ class Seo {
         }
         try {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, MODIFIED_BY=?,INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,[OWNERSHIP]=?,PRIMARYCOUNTRY=?, COUNTRYFOUNDED=?, GOVERNANCE=?, ESTABLISHED=?, EXPENDITUREPERANNU=?, MODIFIED_BY=?,INCOMEPERANNUM=?, HQCOUNTRY=?, [STATUS]=? WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
             $stmt->bindParam(3, $incomePerAnnum);
-            $stmt->bindParam(4, $expenditurePerAnnum);
-            $stmt->bindParam(5, $countryFounded);
-            $stmt->bindParam(6, $established);
-            $stmt->bindParam(7, $hqCountry);
-            $stmt->bindParam(8, $modifiedBy);
-            $stmt->bindParam(9, $status);
-            $stmt->bindParam(10, $id);
-            $stmt->bindParam(11,$ownership);
+            $stmt->bindParam(4, $primaryCountry);
+            $stmt->bindParam(5, $expenditurePerAnnum);
+            $stmt->bindParam(6, $countryFounded);
+            $stmt->bindParam(7, $established);
+            $stmt->bindParam(8, $hqCountry);
+            $stmt->bindParam(9, $modifiedBy);
+            $stmt->bindParam(10, $status);
+            $stmt->bindParam(11, $id);
+            $stmt->bindParam(12,$ownership);
             $stmt->execute();
             return true;
         } catch (Exception $e) {
@@ -165,6 +171,7 @@ class Seo {
                 $seo->name = $v['NAME'];
                 $seo->established = $v['ESTABLISHED'];
                 $seo->ownership = $v['OWNERSHIP'];
+                $seo->primaryCountry = $v['PRIMARYCOUNTRY'];
                 $seo->governance = $v['GOVERNANCE'];
                 $seo->hqCountry = $v['HQCOUNTRY'];
                 $seo->countryFounded = $v['COUNTRYFOUNDED'];
