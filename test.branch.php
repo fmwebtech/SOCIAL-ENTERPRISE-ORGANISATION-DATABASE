@@ -88,7 +88,7 @@ $mybranch = new BRANCH(2);
 
 
 
-$outcome = $mybranch->delete(4);
+$outcome = $mybranch->delete(1);
 var_dump($outcome);
 
 if($outcome)
