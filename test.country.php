@@ -10,9 +10,28 @@ $mycountry = new COUNTRY();
 //safeToEdit($id,$code)
 
 
-//$mycountry-> save('Zambia', 'ZM');
 
-$mycountry-> edit(2, 'Malawi','MW','EDITED');
+
+// $outcome = $mycountry-> save('South Africa', 'SA');
+
+// if($outcome)
+// {
+//         echo "Saved Successufully";
+// }
+// else
+// {
+//         echo "Not Saved";
+// }
+
+
+//var_dump($outcome);
+
+
+
+//$mycountry-> edit(2, 'Malawi','MW','EDITED');
+
+
+$mycountry->getCountry('MW');
 
 
 ?>

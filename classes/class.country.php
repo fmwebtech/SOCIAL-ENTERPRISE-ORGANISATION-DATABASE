@@ -114,8 +114,10 @@ class COUNTRY{
 			$stmt->bindParam(4,$id);
 			$stmt->execute();
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -145,15 +147,13 @@ class COUNTRY{
 
 
 
-
-	//GETcOUNTRY
-	function getCountry($code)
+	function getCountry()
 	{
-		try{
+		try
+		{
 			$countryArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM country WHERE CODE=?');
-			$stmt->bindParam(1,$code);
+			$stmt = $Myconnection->prepare('SELECT * FROM country');
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -168,7 +168,8 @@ class COUNTRY{
 				$countryArray[] =$country;
 			}
 			return $countryArray;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			return false;
 		}
@@ -178,13 +179,15 @@ class COUNTRY{
 
     function delete($id)
 	{
-			try{
+			try
+			{
 				global $Myconnection;
 				$stmt = $Myconnection->prepare('DELETE FROM country WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;
-			}catch(Exception $e)
+			}
+			catch(Exception $e)
 			{
 				return false;
 			}
