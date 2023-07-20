@@ -85,7 +85,7 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
     }
 }
 	// new code
-	function branchExists($name, $address) 
+function branchExists($name, $address) 
 	{
 		try
 		 {
@@ -117,15 +117,16 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
 
 
 	// ISSUE
-	function edit($id, $seoId, $countryId, $name, $address, $createdBy, $modifiedBy, $status)
-{
+function edit($id, $seoId, $countryId, $name, $address, $modifiedBy, $status)
+	{
 
 	
-    if ($this->safeToEdit($id,$seoId, $address,$name, $countryId))
+    if (!$this->safeToEdit($id,$seoId, $address,$name, $countryId))
 	 {
-        echo 'The name you chose is already taken, choose a different name.';
+        echo 'The Branch you chose is already taken, choose a different Branch.';
         return false;
-    } else 
+    } 
+	else 
 	{
         //do nothing
     }
@@ -133,16 +134,15 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
     try 
 	{
         global $Myconnection;
-        $stmt = $Myconnection->prepare('UPDATE BRANCH SET [SEO_ID] =?, [COUNTRY_ID] = ?, [NAME]=?, [ADDRESS]=?, [CREATED_BY] = ?, [MODIFIED_BY] = ?, [STATUS]=? WHERE [ID] =?');
+        $stmt = $Myconnection->prepare('UPDATE BRANCH SET [SEO_ID] =?, [COUNTRY_ID] = ?, [NAME]=?, [ADDRESS]=?, [MODIFIED_BY] = ?, [STATUS]=? WHERE [ID] =?');
 
         $stmt->bindParam(1, $seoId);
 		$stmt->bindParam(2, $countryId);
 		$stmt->bindParam(3, $name);
 		$stmt->bindParam(4, $address);
-        $stmt->bindParam(5, $createdBy);
-        $stmt->bindParam(6, $modifiedBy);
-		$stmt->bindParam(7, $status);
-        $stmt->bindParam(8, $id);
+        $stmt->bindParam(5, $modifiedBy);
+		$stmt->bindParam(6, $status);
+        $stmt->bindParam(7, $id);
         $stmt->execute();
         return true;
     }
@@ -172,7 +172,8 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 			return false;
 		}
 		return true;
-	}catch(Exception $e)
+	}
+	catch(Exception $e)
 	{
 		echo $e->getMessage();
 		return false;
@@ -189,6 +190,76 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [SEO_ID]=? AND [COUNTRY_ID]=?');
 			$stmt->bindParam(1,$seoId);
 			$stmt->bindParam(2,$countryId);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				$branch = new BRANCH();
+				$branch->id = $v['ID'];
+                $branch->seoId= $v['SEO_ID'];
+				$branch->countryId=$v['COUNTRY_ID'];
+				$branch->name = $v['NAME'];
+				$branch->address = $v['ADDRESS'];
+				$branch->createdBy=$v['CREATED_BY'];
+				$branch->modifiedBy=$v['MODIFIED_BY'];
+				$branch->status = $v['STATUS'];
+				$branch->regDate = $v['REGDATE'];
+				$branchArray[] =$branch;
+			}
+			return $branchArray;
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+	}
+
+
+	function getBranchByCountry($countryId)
+	{
+		try
+		{
+			$branchArray = array();
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE  [COUNTRY_ID]=?');
+			$stmt->bindParam(1,$countryId);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				$branch = new BRANCH();
+				$branch->id = $v['ID'];
+                $branch->seoId= $v['SEO_ID'];
+				$branch->countryId=$v['COUNTRY_ID'];
+				$branch->name = $v['NAME'];
+				$branch->address = $v['ADDRESS'];
+				$branch->createdBy=$v['CREATED_BY'];
+				$branch->modifiedBy=$v['MODIFIED_BY'];
+				$branch->status = $v['STATUS'];
+				$branch->regDate = $v['REGDATE'];
+				$branchArray[] =$branch;
+			}
+			return $branchArray;
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+	}
+
+
+
+
+	function getBranchBySeo($seoId)
+	{
+		try
+		{
+			$branchArray = array();
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [SEO_ID]=? ');
+			$stmt->bindParam(1,$seoId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
