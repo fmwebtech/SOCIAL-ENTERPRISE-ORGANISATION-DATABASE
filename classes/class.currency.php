@@ -22,7 +22,8 @@ class CURRENCY
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
-            foreach ($results as $k => $v) {
+            foreach ($results as $k => $v) 
+            {
                 $this->id = $v['ID'];
                 $this->createdBy = $v['CREATED_BY'];
                 $this->name = $v['NAME'];
@@ -51,15 +52,14 @@ function save($name, $createdBy,)
     $stmt->execute();
     return true;
 }
-catch (Exception $e)
-{
+ catch (Exception $e)
+  {
     echo $e->getMessage();
-    return false;
-}
+    return false;   
+  }  
 }
     function currencyExists($name, $createdBy)
      {
-
         try
          {
            global $Myconnection;
@@ -69,14 +69,13 @@ catch (Exception $e)
         $stmt->execute();         $stmt->setFetchMode(PDO::FETCH_ASSOC);         $results = $stmt->fetchAll();         foreach ($results as $k => $v) {
                  return true;
             }
-
            return false;
 
          } catch (Exception $e)
        {
             return true;
        }
-    }
+     }
 
      function edit($id, $name, $modifiedBy, $status)
     {
@@ -97,13 +96,12 @@ catch (Exception $e)
           $stmt->bindParam(5, $id);
           $stmt->execute();
           return true;
-        } 
-        catch (Exception $e)
+        } catch (Exception $e)
 
-         {
+       {
           return false;
-      }
-     }
+       }
+    }
 
     function safeToEdit($id, $name)
     {
@@ -116,11 +114,13 @@ catch (Exception $e)
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
-            foreach ($results as $k => $v) {
+            foreach ($results as $k => $v)
+             {
                 return false;
             }
             return true;
         } catch (Exception $e)
+        
         {
             return false;
         }
@@ -136,7 +136,8 @@ catch (Exception $e)
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
-            foreach ($results as $k => $v) {
+            foreach ($results as $k => $v) 
+            {
                 $currency = new CURRENCY();
                 $currency->id = $v['ID'];
                 $currency->name = $v['NAME'];
@@ -162,7 +163,9 @@ catch (Exception $e)
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return true;
-        } catch (Exception $e) {
+        }
+         catch (Exception $e)
+         {
             return false;
         }
     }
