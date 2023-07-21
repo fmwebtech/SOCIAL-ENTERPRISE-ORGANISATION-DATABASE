@@ -1,7 +1,7 @@
 <?php
-
 require_once('settings\connectionsetting.php');
-class PRODUCTS {
+class PRODUCTS 
+{
 
     var $id;
     var $seoId;
@@ -17,9 +17,7 @@ class PRODUCTS {
 	{
 
 
-		if($id==NULL){
-			//do nothing
-		}else
+		if($id!=NULL)
 		{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE ID=?');
@@ -44,18 +42,21 @@ class PRODUCTS {
 
     function save($name,$currency,$seoId,$price,$createdBy)
 	{
-			if($this->productExists($name))
+			if($this->productExists($name, $seoId))
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
-			}else{
+			}
+			else
+			{
 				//do nothing
 			}
 			
-		try{
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [SERVICE]([NAME],CREATED_BY,CURRENCY,SOE_ID,PRICE,STATUS) 
-											VALUES(?,?,?,?,?,"new")'); 
+			$stmt = $Myconnection->prepare("INSERT INTO [PRODUCTS]([NAME],CURRENCY,SEO_ID,PRICE,CREATED_BY,STATUS) 
+											VALUES(?,?,?,?,?,'new')"); 
 			
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$currency);
@@ -64,48 +65,55 @@ class PRODUCTS {
 			$stmt->bindParam(5,$createdBy);			
 			$stmt->execute();
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			echo $e->getMessage();
 			return false;
 		}
 	}
 
-	function edit($id, $seoId,$name,$currency,$price,$modifiedBy,) 
+	function edit($id,$seoId,$name,$currency,$price,$modifiedBy,$status ) 
 	{
-			if($this->safeToEdit($seoId,$currency,$price,$name,$modifiedBy)) 
+			if($this->safeToEdit($id,$seoId,$name)) 
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
-			}else{
+			}
+			else
+			{
 				//do nothing
 			}
-		try{
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE PRODUCTS	SET [NAME]=?,SEO_ID=?,CURRENCY=?,PRICE=?,MODIFIED_BY=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE PRODUCTS	SET SEO_ID=?,[NAME]=?,CURRENCY=?,PRICE=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
 
-			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$seoId);
-			$stmt->bindParam(2,$currency);
-			$stmt->bindParam(2,$price);
-			$stmt->bindparam(4,$modifiedBy);
-			$stmt->bindParam(3,$status);
-			$stmt->bindParam(4,$id);
+			$stmt->bindParam(1,$seoId);
+			$stmt->bindParam(2,$name);
+			$stmt->bindParam(3,$currency);
+			$stmt->bindParam(4,$price);
+		 	$stmt->bindparam(5,$modifiedBy);
+			$stmt->bindParam(6,$status);
+			$stmt->bindParam(7,$id);
 			$stmt->execute();
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
 
 	function getProduct($seoId)
 	{
-		try{
+		try
+		{
 			$productArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE SEO_ID=?');
-			$stmt->bindParam(1,$seoId);
+			$stmt->bindparam(1,$seoId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -122,7 +130,8 @@ class PRODUCTS {
 				$productArray[] =$product;
 			}
 			return $productArray;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			return false;
 		}
@@ -130,13 +139,14 @@ class PRODUCTS {
 
     // issues which this function due to the unknown operation
 
-	function productExists($name)
+	function productExists($name, $seoId)
 	{
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCT WHERE [NAME]=?');
-			$stmt->bindParam(1,$name);
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=? AND SEO_ID=?');
+			$stmt->bindParam(1,$name,);
+			$stmt->bindParam(2,$seoId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -153,15 +163,15 @@ class PRODUCTS {
 	}
 	
 	
-	function safeToEdit($seoId,$name,$currency,$price,$modifiedBy){
-		try{
+	function safeToEdit($id,$seoId,$name)
+	{
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=?,SEOID=?,MODIFIED=?,CURRENCY=?,PRICE=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=? AND SEOID=? AND ID!=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);
-			$stmt->bindparam(4,$modified_by);
-			$stmt->bindParam(3,$currency);
-			$stmt->bindParam(1,$price);
+			$stmt->bindparam(3,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -170,7 +180,8 @@ class PRODUCTS {
 				return false;
 			}
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			return false;
 		}
@@ -180,13 +191,15 @@ class PRODUCTS {
 
     function delete($id)
 	{
-			try{
+			try
+			{
 				global $Myconnection;
 				$stmt = $Myconnection->prepare('DELETE FROM PRODUCTS WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				return true;
-			}catch(Exception $e)
+			}
+			catch(Exception $e)
 			{
 				return false;
 			}
