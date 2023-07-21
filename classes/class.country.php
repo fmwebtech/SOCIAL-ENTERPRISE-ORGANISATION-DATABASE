@@ -1,7 +1,8 @@
 <?php
 //Frank
 require_once('settings\connectionsetting.php');
-class COUNTRY{
+class COUNTRY
+{
 
     var $id;
     var $name;
@@ -12,10 +13,7 @@ class COUNTRY{
     function __construct($id=NULL)
 	{
 
-		if($id==NULL)
-		{
-			//do nothing
-		}else
+		if($id!=NULL)
 		{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE ID=?');
@@ -24,7 +22,7 @@ class COUNTRY{
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
-			{ // 			
+			{ 		
 				$this->id = $v['ID'];				
 				$this->name = $v['NAME'];
 				$this->code = $v['CODE'];
@@ -35,7 +33,7 @@ class COUNTRY{
 	}
 
 
-	//CREATE FUNCTION FOR CODE =CODEEXIST=
+	
 
     function save($name,$code)
 {
@@ -101,8 +99,10 @@ class COUNTRY{
 			{
 				echo 'The code you chose is already taken, choose a different code.';
 				return false;
-			}else{
-				//do nothing
+			}
+			else
+			{
+				
 			}
 		try{
 			global $Myconnection;
@@ -123,7 +123,8 @@ class COUNTRY{
 	}
 
 
-	function safeToEdit($id,$code){
+	function safeToEdit($id,$code)
+	{
 		try{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [CODE]=? AND ID<>?');
@@ -137,7 +138,8 @@ class COUNTRY{
 				return false;
 			}
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			echo $e->getMessage();
 			return false;
@@ -177,7 +179,6 @@ class COUNTRY{
 		}
 	}
 
-//testing
 
     function delete($id)
 	{

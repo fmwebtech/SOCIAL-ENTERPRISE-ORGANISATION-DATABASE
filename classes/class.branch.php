@@ -1,7 +1,8 @@
 <?php
 
 require_once('settings\connectionsetting.php');
-class BRANCH{
+class BRANCH
+{
 
     var $id;
     var $seoId;
@@ -23,11 +24,8 @@ class BRANCH{
 
 	
 
-		if($id=NULL)
-		{
-			//do nothing
-		}
-		else
+		if($id!=NULL)
+		
 		{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE ID=?');
@@ -36,7 +34,7 @@ class BRANCH{
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
-			{ // 			
+			{ 			
 				$this->id = $v['ID'];
 				$this->seoId= $v['SEO_ID'];
 				$this->countryId= $v['COUNTRY_ID'];
@@ -49,8 +47,6 @@ class BRANCH{
 			}
 		}
 	}
-// SAVE SEO_id and COUNTRYID ASWELL
-// A BRANCH UNIQUENESS
 
 function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
  {
@@ -61,7 +57,7 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
     } 
 	else 
 	{
-        //do nothing
+    
     }
 
     try 
@@ -84,7 +80,7 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
         return false;
     }
 }
-	// new code
+	
 function branchExists($name, $address) 
 	{
 		try
@@ -100,9 +96,10 @@ function branchExists($name, $address)
 			foreach ($results as $k => $v) {
 				return true;
 			}
-	
 			return false;
-		} catch (Exception $e) {
+		}
+		 catch (Exception $e) 
+		 {
 			return true;
 		}
 	}
@@ -120,8 +117,7 @@ function branchExists($name, $address)
 function edit($id, $seoId, $countryId, $name, $address, $modifiedBy, $status)
 	{
 
-	
-    if (!$this->safeToEdit($id,$seoId, $address,$name, $countryId))
+	  if (!$this->safeToEdit($id,$seoId, $address,$name, $countryId))
 	 {
         echo 'The Branch you chose is already taken, choose a different Branch.';
         return false;

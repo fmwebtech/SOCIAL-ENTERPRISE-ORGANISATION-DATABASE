@@ -12,10 +12,6 @@ class LOGS
     var $data;
     var $regDate;
 
-	//
-
-
-	//The constructor method initializes the object and retrieves the country data from the database based on the provided ID
     function __construct($id=NULL)
 	{
 		if($id!=NULL)
@@ -40,8 +36,7 @@ class LOGS
 			}
 		}
 	}
-// SAVE SEOCOUNTRYID ASWELL
-// A BRANCH UNIQUENESS
+
 function save($user, $computer, $class, $function,$data)
  {
     try
@@ -62,15 +57,6 @@ function save($user, $computer, $class, $function,$data)
         return false;
     }
 }
-
-
-
-
-
-
-
-
-	//MAKE ANOTHER FUNCTION FOR COUNTRY AND 
 	function getLogs()
 	{
 		try
@@ -136,7 +122,8 @@ function save($user, $computer, $class, $function,$data)
 
     function getLogsByClass($class)
 	{
-		try{
+		try
+		{
 			$branchArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE CLASS=? ');
@@ -199,7 +186,6 @@ function save($user, $computer, $class, $function,$data)
     function getLogsByDateRange($startDate,$endDate)
 	{
 		try
-        
         {
 			$branchArray = array();
 			global $Myconnection;
