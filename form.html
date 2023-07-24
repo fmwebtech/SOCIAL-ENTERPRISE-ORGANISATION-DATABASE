@@ -110,7 +110,7 @@
     <input type="number"name="ownership" required="ownernship">
     <br>
     <button type="submit" name="mybutton">Add Country</button>
-    
+    xxxxxxxif($myCurrency->edit($id, $name, $modifiedBy, $status))
 </form>
 </body>
 </html>
@@ -121,8 +121,19 @@
  
 <h1>GET COMPANANY</h1>
 
-<form action="ajax.getCurrency.php" method="POST">
-
+<form action="ajax.editCurrency.php" method="POST">
+    <label>id</label>
+    <input type="number" name="id" required placeholder="Enter Id">
+    <br>
+    <label>name</label>
+    <input type="text" name="name" required placeholder="Enter name">
+    <br>
+    <label>modifiedBy</label>
+    <input type="text" name="modifiedBy" required placeholder="Enter modifiedBy">
+    <br>
+    <label>status</label>
+    <input type="text" name="status" required placeholder="Enter status">
+    <br>
     <button type="submit" name="mybutton">Click Here</button>
    
 </form>

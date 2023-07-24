@@ -1,7 +1,7 @@
 <?php
 require_once('classes\class.Seo.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST')
 {
 
 extract($_POST);
@@ -13,7 +13,7 @@ if($mySeo->delete($id))
 else
 {
 
-    echo 'Not saved, Something Went Wrong'
+    echo 'Not saved, Something Went Wrong';
 }
 }
 

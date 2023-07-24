@@ -71,7 +71,8 @@ function save($name, $createdBy,)
             }
            return false;
 
-         } catch (Exception $e)
+         } 
+         catch (Exception $e)
        {
             return true;
        }
@@ -79,7 +80,7 @@ function save($name, $createdBy,)
 
      function edit($id, $name, $modifiedBy, $status)
     {
-        if ($this->safeToEdit($id, $name))
+        if (!$this->safeToEdit($id, $name))
          {
              echo 'The name you chose is already taken, choose a different name.';
              return false;
@@ -88,19 +89,19 @@ function save($name, $createdBy,)
        try
         {
           global $Myconnection;
-          $stmt = $Myconnection->prepare('UPDATE CURRENCY SET [NAME]=?, CREATED_BY=?, MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
+          $stmt = $Myconnection->prepare('UPDATE CURRENCY SET [NAME]=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
           $stmt->bindParam(1, $name);
-          $stmt->bindParam(2, $createdBy);
-          $stmt->bindParam(3, $modifiedBy);
-          $stmt->bindParam(4, $status);
-          $stmt->bindParam(5, $id);
+          $stmt->bindParam(2, $modifiedBy);
+          $stmt->bindParam(3, $status);
+          $stmt->bindParam(4, $id);
           $stmt->execute();
           return true;
-        } catch (Exception $e)
-
-       {
+        }
+        catch (Exception $e)
+        {
+            echo $e->getMessage();
           return false;
-       }
+        }
     }
 
     function safeToEdit($id, $name)

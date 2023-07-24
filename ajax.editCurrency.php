@@ -1,7 +1,8 @@
 <?php
 require_once('classes\class.currency.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST')
+{
 extract($_POST);
 $myCurrency = new CURRENCY();
 if($myCurrency->edit($id, $name, $modifiedBy, $status))
@@ -12,7 +13,7 @@ if($myCurrency->edit($id, $name, $modifiedBy, $status))
 else
 {
 
-    echo 'Not saved, Something Went Wrong'
+    echo 'OOPS, Something Went Wrong';
 }
-
+}
 ?>

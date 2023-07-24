@@ -1,7 +1,7 @@
 <?php
 require_once('classes\class.seo.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST'){
 extract($_POST);
 $myCurrency = new CURRENCY();
 if($mySeo->delete($id))
@@ -12,7 +12,8 @@ if($mySeo->delete($id))
 else
 {
 
-    echo 'Not saved, Something Went Wrong'
+    echo 'Not saved, Something Went Wrong';
+}
 }
 
 ?>
