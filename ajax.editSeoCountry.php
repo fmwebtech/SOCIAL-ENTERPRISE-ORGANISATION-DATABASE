@@ -1,9 +1,10 @@
 <?php
 require_once('classes\class.seoCountry.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    
 extract($_POST);
-$myCurrency = new CURRENCY();
+$myseoCountry = new seoCountry();
 if($myseoCountry->edit($id, $countryId, $seoId, $status, $modifiedBy))
 {
     echo'Edit Sucessfully';
@@ -12,7 +13,8 @@ if($myseoCountry->edit($id, $countryId, $seoId, $status, $modifiedBy))
 else
 {
 
-    echo 'Not saved, Something Went Wrong'
+    echo 'Not saved, Something Went Wrong';
+}
 }
 
 ?>

@@ -1,18 +1,20 @@
 <?php
-require_once('classes\class.seo.php');
+require_once('classes\class.Currency.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
-extract($_POST);
-$myCurrency = new CURRENCY();
-if($mySeo->save($name, $createdBy,))
+if($_SERVER['REQUEST_METHOD']=='POST')
 {
-    echo'The Currency Has Been Added';
+    extract($_POST);
+$myCurrency = new CURRENCY();
+if($myCurrency->save($name, $createdBy,))
+{
+    echo 'The Currency Has Been Added';
 }
-
 else
 {
-
-    echo 'Not saved, Something Went Wrong'
+    echo 'Not saved, Something Went Wrong';
 }
+}
+
+
 
 ?>

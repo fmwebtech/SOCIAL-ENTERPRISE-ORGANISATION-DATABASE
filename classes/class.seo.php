@@ -164,14 +164,13 @@ class SEO
 	}
 	
 
-    function getSeo($name) 
+    function getSeo() 
     {
         try 
         {
             $seoArray = array();
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM SEO WHERE [NAME]=?');
-            $stmt->bindParam(1, $name);
+            $stmt = $Myconnection->prepare('SELECT * FROM SEO');
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
@@ -181,7 +180,7 @@ class SEO
                 $seo->id = $v['ID'];
                 $seo->name = $v['NAME'];
                 $seo->established = $v['ESTABLISHED'];
-                $seo->ownership = $v['OWNERSHIP'];
+                $seo->ownership = $v['OWERNERSHIP'];
                 $seo->primaryCountry = $v['PRIMARYCOUNTRY'];
                 $seo->governance = $v['GOVERNANCE'];
                 $seo->hqCountry = $v['HQCOUNTRY'];

@@ -1,10 +1,12 @@
 <?php
 require_once('classes\class.seoCountry.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
+if($_SERVER['REQUEST_METHOD']=='POST')
+{
+
 extract($_POST);
 $myseoCountry = new seoCountry();
-if($myseoCountry->save($countryId, $seoId))
+if($myseoCountry->save( $countryId, $seoId))
 {
     echo'Saved';
 }
@@ -12,7 +14,8 @@ if($myseoCountry->save($countryId, $seoId))
 else
 {
 
-    echo 'Not saved, Something Went Wrong'
+    echo 'Not saved  Something Went Wrong';
+}
 }
 
 ?>

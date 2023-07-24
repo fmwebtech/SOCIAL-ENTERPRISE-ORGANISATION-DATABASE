@@ -16,13 +16,6 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         echo 'Ooops something went wrong';
     }
 
-
-
-}
-else
-{
-    echo 'Ooops something went wrong';
-
 }
 
 

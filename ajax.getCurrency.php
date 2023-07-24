@@ -1,18 +1,31 @@
 <?php
-require_once('classes\class.currency.php');
 
-if($SERVER['REQUEST_METHOD']=='POST')
-extract($_POST);
-$myCurrency = new CURRENCY();
-if($myCurrency->getCurrency())
+require_once('classes\class.Currency.php');
+if($_SERVER['REQUEST_METHOD']=='POST')
 {
-    echo'Done';
-}
+    extract($_POST);
 
+    $myCurrency= new CURRENCY();
+    $fetchedCurrency= array();
+
+    $fetchedCurrency=$myCurrency->getCurrency();
+    
+        foreach($fetchedCurrency as $currency)
+        {
+                echo '<tr><td>'.$currency->name.'</td> <td>'.$currency->status.'</td> </tr>';
+        }       
+   
+
+}
 else
 {
+    echo 'Ooops something went wrong';
 
-    echo 'Not saved, Something Went Wrong'
 }
+
+
+
+
+
 
 ?>
