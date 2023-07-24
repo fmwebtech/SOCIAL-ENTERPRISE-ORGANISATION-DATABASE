@@ -7,6 +7,8 @@ class COUNTRY
     var $id;
     var $name;
     var $code;
+	var $createdBy;
+	var $modifiedBy;
     var $status;
     var $regDate;
 
@@ -26,6 +28,8 @@ class COUNTRY
 				$this->id = $v['ID'];				
 				$this->name = $v['NAME'];
 				$this->code = $v['CODE'];
+				$this->createdBy = $v['CREATED_BY'];
+				$this->modifiedBy = $v['MODIFIED_BY'];
 				$this->status = $v['STATUS'];
 				$this->regDate = $v['REGDATE'];
 			}
@@ -35,7 +39,7 @@ class COUNTRY
 
 	
 
-    function save($name,$code)
+    function save($name,$code, $createdBy, $modifiedBy)
 {
 		if($this->countryExists($code))
 		{
@@ -46,11 +50,13 @@ class COUNTRY
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare("INSERT INTO COUNTRY([NAME], [CODE] ,[STATUS]) 
-											VALUES(?,?,'new')");
+			$stmt = $Myconnection->prepare("INSERT INTO COUNTRY([NAME], [CODE], [CREATED_BY],[MODIFIED_BY] ,[STATUS]) 
+											VALUES(?,?,?,?,'new')");
 			
 			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$code);			
+			$stmt->bindParam(2,$code);
+			$stmt->bindParam(3,$createdBy);
+			$stmt->bindParam(4,$modifiedBy);			
 			$stmt->execute();
 			return true;
 		}
@@ -93,9 +99,9 @@ class COUNTRY
 
 
 
-	function edit($id,$name,$code,$status)
+	function edit($id, $name, $code,  $modifiedBy, $status)
 	{
-			if($this->safeToEdit($id,$code))
+			if(!$this->safeToEdit($id,$code))
 			{
 				echo 'The code you chose is already taken, choose a different code.';
 				return false;
@@ -106,12 +112,13 @@ class COUNTRY
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE COUNTRY	SET NAME=?,CODE =?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE COUNTRY	SET [NAME]=?,[CODE] =?, [MODIFIED_BY]=?, [STATUS]=? WHERE ID=?');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$code);
-			$stmt->bindParam(3,$status);
-			$stmt->bindParam(4,$id);
+			$stmt->bindParam(3,$modifiedBy);
+			$stmt->bindParam(4,$status);
+			$stmt->bindParam(5,$id);
 			$stmt->execute();
 			return true;
 		}
@@ -127,7 +134,7 @@ class COUNTRY
 	{
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [CODE]=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE [CODE]=? AND ID<>?');
 			$stmt->bindParam(1,$code);
 			$stmt->bindParam(2,$id);
 			$stmt->execute();
@@ -165,7 +172,9 @@ class COUNTRY
 				$country = new COUNTRY();
 				$country->id = $v['ID'];
                 $country->code= $v['CODE'];
-				$country->name = $v['NAME'];		
+				$country->name = $v['NAME'];
+				$country->createdBy = $v['CREATED_BY'];
+				$country->modifiedBy = $v['MODIFIED_BY'];		
 				$country->status = $v['STATUS'];
 				$country->regDate = $v['REGDATE'];
 				$countryArray[] =$country;

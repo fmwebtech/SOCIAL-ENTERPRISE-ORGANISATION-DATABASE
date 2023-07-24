@@ -6,6 +6,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
 
+$myProduct = new PRODUCTS();
+
 if($myProduct->delete($id))
 {
     echo 'Product Deleted !!';

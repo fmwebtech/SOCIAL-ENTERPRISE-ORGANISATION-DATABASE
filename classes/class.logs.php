@@ -61,7 +61,7 @@ function save($user, $computer, $class, $function,$data)
 	{
 		try
         {
-			$branchArray = array();
+			$logsArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM logs ');
 			$stmt->execute();
@@ -83,6 +83,7 @@ function save($user, $computer, $class, $function,$data)
 		}
         catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -92,9 +93,9 @@ function save($user, $computer, $class, $function,$data)
 	{
 		try
         {
-			$branchArray = array();
+			$logsArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE USER=? ');
+			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE [USER]=? ');
             $stmt->bindParam(1,$user);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -115,6 +116,7 @@ function save($user, $computer, $class, $function,$data)
 		}
         catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -124,7 +126,7 @@ function save($user, $computer, $class, $function,$data)
 	{
 		try
 		{
-			$branchArray = array();
+			$logsArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE CLASS=? ');
             $stmt->bindParam(1,$class);
@@ -147,6 +149,7 @@ function save($user, $computer, $class, $function,$data)
 		}
         catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -155,7 +158,7 @@ function save($user, $computer, $class, $function,$data)
 	{
 		try
         {
-			$branchArray = array();
+			$logsArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE CLASS=? AND [FUNCTION]= ? ');
             $stmt->bindParam(1,$class);
@@ -179,6 +182,7 @@ function save($user, $computer, $class, $function,$data)
 		}
         catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -187,7 +191,7 @@ function save($user, $computer, $class, $function,$data)
 	{
 		try
         {
-			$branchArray = array();
+			$logsArray = array();
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM logs WHERE CAST(REGDATE AS DATE) >= ? AND CAST(REGDATE AS DATE) <= ? ');
             $stmt->bindParam(1,$startDate);
@@ -211,6 +215,7 @@ function save($user, $computer, $class, $function,$data)
 		}
         catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}

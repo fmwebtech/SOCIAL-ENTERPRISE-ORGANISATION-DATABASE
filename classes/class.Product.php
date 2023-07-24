@@ -73,7 +73,7 @@ class PRODUCTS
 		}
 	}
 
-	function edit($id,$seoId,$name,$currency,$price,$modifiedBy,$status ) 
+	function edit($id,$seoId,$name,$currency,$price,$modifiedBy ) 
 	{
 			if($this->safeToEdit($id,$seoId,$name)) 
 			{

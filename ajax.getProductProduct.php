@@ -6,19 +6,35 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
 
-if($myProduct->getProduct($seoId))
+$myproduct = new PRODUCTS();
+$fetchedproduct= array();
+
+if(isset($_POST['seoId']))
 {
-    echo 'Product Has Been Retrived !!';
+    
+    $fetchedproduct  = $myproduct->getproduct($seoId);
 }
- 
+
 else
- {
-      echo 'Product Not Retrived   ';
- }
-
-} 
-
-else 
 {
-    echo 'Oops No connection !!';
+    echo "Nothing is passed";
+}
+
+
+foreach($fetchedproduct as $product)
+{
+        echo '<tr><td>'.$product->id;
+        echo '<tr><td>'.$product->seoId;
+        echo '<tr><td>'.$product->name;
+        echo '<tr><td>'.$product->currency;
+        echo '<tr><td>'.$product->price;
+
+}        
+
+
+}
+else
+{
+echo 'Ooops something went wrong';
+
 }

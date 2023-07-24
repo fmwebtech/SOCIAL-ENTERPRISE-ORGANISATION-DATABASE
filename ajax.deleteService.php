@@ -6,7 +6,9 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
 
-if($myProduct->delete($id))
+$myservice = new SERVICES();
+
+if($myservice->delete($id))
 {
     echo 'Service Has Been Deleted !!';
 }
