@@ -84,7 +84,7 @@ class SERVICES {
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,MODIFIED_BY=?,PRICE=?,STATUS=? WHERE ID=? ');
+			$stmt = $Myconnection->prepare('UPDATE [SERVICES] SET [NAME]=?,SEO_ID=?,CURRENCY=?,MODIFIED_BY=?,PRICE=?,[STATUS]=? WHERE ID=? ');
 
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$seoId);

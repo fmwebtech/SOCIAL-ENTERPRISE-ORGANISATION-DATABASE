@@ -4,7 +4,10 @@ require_once('classes\class.Product.php');
 
 if ($_SERVER['REQUEST_METHOD']=='POST')
 {
+    
 extract($_POST);
+
+$myProduct = new PRODUCTS();
 
 if($myProduct->save($name,$currency,$seoId,$price,$createdBy))
 {

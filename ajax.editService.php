@@ -5,8 +5,9 @@ require_once('classes\class.Service.php');
 if ($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
+ $myservice = new SERVICES();
 
-if($myProduct->edit($id, $seoId,$name,$currency,$price,$status,$modifiedBy))
+if($myservice->edit($id, $seoId,$name,$currency,$price,$status,$modifiedBy))
 {
     echo 'Service Has Been Edtied !!';
 }
