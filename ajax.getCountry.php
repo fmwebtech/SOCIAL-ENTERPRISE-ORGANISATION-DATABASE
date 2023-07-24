@@ -6,17 +6,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     extract($_POST);
 
     $mycountry = new COUNTRY();
+    $fetchedcountry= array();
 
     if($mycountry->getCountry())
     {
-         echo 'Country has been Retrieved';
+        foreach($fetchedcountry as $country)
+        {
+                echo '<tr><td>'.$country->name.'</td> <td>'.$country->details.'</td> </tr>';
+        }        
     }
+    
     else
     {
         echo 'Ooops something went wrong';
     }
-
-
+   
 
 }
 else

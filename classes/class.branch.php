@@ -212,41 +212,6 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 	}
 
 
-	function getBranchByCountry($countryId)
-	{
-		try
-		{
-			$branchArray = array();
-			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE  [COUNTRY_ID]=?');
-			$stmt->bindParam(1,$countryId);
-			$stmt->execute();
-			$stmt->setFetchMode(PDO::FETCH_ASSOC);
-			$results = $stmt->fetchAll();
-			foreach($results as $k=>$v)
-			{
-				$branch = new BRANCH();
-				$branch->id = $v['ID'];
-                $branch->seoId= $v['SEO_ID'];
-				$branch->countryId=$v['COUNTRY_ID'];
-				$branch->name = $v['NAME'];
-				$branch->address = $v['ADDRESS'];
-				$branch->createdBy=$v['CREATED_BY'];
-				$branch->modifiedBy=$v['MODIFIED_BY'];
-				$branch->status = $v['STATUS'];
-				$branch->regDate = $v['REGDATE'];
-				$branchArray[] =$branch;
-			}
-			return $branchArray;
-		}
-		catch(Exception $e)
-		{
-			return false;
-		}
-	}
-
-
-
 
 	function getBranchBySeo($seoId)
 	{

@@ -6,14 +6,31 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     extract($_POST);
     $mylogs = new LOGS();
     $fetchedlogs= array();
-    if(isset($_POST['id']))
+
+    if(isset($_POST['class']) AND isset($_POST['function']))
     {
-        $fetchedlogs  = $mylogs->getLogsById($id);
+        $fetchedlogs  = $mylogs->getLogsByClassAndFunction($class,$function);
     }
-    else if(isset($_POST['class']) AND isset($_POST['function']))
+
+
+    else if(isset($_POST['class']) AND !isset($_POST['function']))
     {
-        $fetchedlogs  = $mylogs->getLogsByClasAndFunction($class,$function);
+    $fetchedlogs  = $mylogs->getLogsByClass($class);
+
     }
+    
+    
+    else if(isset($_POST['dateRange']))
+    {
+        $fetchedlogs  = $mylogs->getLogsByDateRange($startDate, $endDate);
+    }
+
+
+    else if(isset($_POST['user']))
+    {
+        $fetchedlogs  = $mylogs->getLogsByUser($user);
+    }
+
     else
     {
         $fetchedlogs  = $mylogs->getLogs();
