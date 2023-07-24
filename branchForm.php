@@ -82,7 +82,7 @@
 
 
 
-<html>
+<!--<html>
     <head>
 <title>Branch Form</title>
 </head>
@@ -123,6 +123,38 @@
    
 
     <button type="submit" name="mybutton">Get branch</button>
+
+
+
+
+
+
+</body>
+</html> -->
+
+
+<html>
+    <head>
+<title>Branch Form</title>
+</head>
+<body>
+
+<h1>GET Branch</h1>
+
+
+
+<form action="ajax.deleteBranch.php" method="post">
+    
+
+    <label>delete branch:</label>
+    <input type="text" name="id" required placeholder="id">
+    <br>
+
+    
+
+   
+
+    <button type="submit" name="mybutton">Delete branch</button>
 </form>
 
 

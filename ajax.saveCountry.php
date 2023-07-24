@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
     $mycountry = new COUNTRY();
 
-    if($mycountry->save($name,$code))
+    if($mycountry->save($name,$code,$createdBy,$modifiedBy))
     {
          echo 'Country has been Saved';
     }

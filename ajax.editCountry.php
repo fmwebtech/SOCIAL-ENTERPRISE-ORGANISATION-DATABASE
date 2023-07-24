@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
     $mycountry = new COUNTRY();
 
-    if($mycountry->edit($id,$name,$code,$status))
+    if($mycountry->edit($id,$name,$code,$modifiedBy,$status))
     {
          echo 'Country has been Edited';
     }
