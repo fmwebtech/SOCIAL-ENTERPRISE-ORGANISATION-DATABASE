@@ -19,7 +19,7 @@ var $regDate;
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profile WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [PROFILE] WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -47,7 +47,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO profile(NAME,STATUS) 
+			$stmt = $Myconnection->prepare('INSERT INTO [PROFILE](NAME,STATUS) 
 											VALUES(?,"new")');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
@@ -78,7 +78,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE profile SET NAME=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [PROFILE] SET NAME=?,STATUS=? WHERE ID=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$status);
 			$stmt->bindParam(3,$id);
@@ -96,7 +96,7 @@ var $regDate;
 	function profileExists($name){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profile WHERE NAME=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [PROFILE] WHERE NAME=?');
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ var $regDate;
 	function safeToEdit($id,$name){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profile WHERE NAME=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [PROFILE] WHERE NAME=? AND ID<>?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$id);
 			$stmt->execute();
@@ -139,7 +139,7 @@ var $regDate;
 		try{
 			$profileArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profile');
+			$stmt = $Myconnection->prepare('SELECT * FROM [PROFILE]');
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -166,7 +166,7 @@ var $regDate;
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM profile WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM [PROFILE] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','DELETE',json_encode($_POST));

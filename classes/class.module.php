@@ -22,7 +22,7 @@ var $regDate;
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM module WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE] WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -54,7 +54,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO module(NAME,URL,PARENTID,ICON,ORDERING,STATUS) 
+			$stmt = $Myconnection->prepare('INSERT INTO [MODULE](NAME,URL,PARENTID,ICON,ORDERING,STATUS) 
 											VALUES(?,?,?,?,?,"new")');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$url);
@@ -87,7 +87,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE module SET NAME=?,URL=?,PARENTID=?,ICON=?,ORDERING=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [MODULE] SET NAME=?,URL=?,PARENTID=?,ICON=?,ORDERING=?,STATUS=? WHERE ID=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$url);
 			$stmt->bindParam(3,$parentId);
@@ -109,7 +109,7 @@ var $regDate;
 	function moduleExists($name,$url){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM module WHERE NAME=? AND URL=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE] WHERE NAME=? AND URL=?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$url);
 			$stmt->execute();
@@ -130,7 +130,7 @@ var $regDate;
 	function safeToEdit($id,$name,$url){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM module WHERE NAME=? AND URL=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE] WHERE NAME=? AND URL=? AND ID<>?');
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$url);
 			$stmt->bindParam(3,$id);
@@ -154,7 +154,7 @@ var $regDate;
 		try{
 			$moduleArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `module`');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE]');
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
@@ -184,7 +184,7 @@ var $regDate;
 		{
 			$module=null;
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `module` WHERE URL=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE] WHERE URL=?');
 			$stmt->bindParam(1,$url);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -214,7 +214,7 @@ var $regDate;
 		try{
 			$moduleArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM module WHERE PARENTID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [MODULE] WHERE PARENTID=?');
 			$stmt->bindParam(1,$parentId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -248,7 +248,7 @@ var $regDate;
 			try
 			{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM module WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM [MODULE] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','DELETE',json_encode($_POST));

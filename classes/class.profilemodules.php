@@ -20,7 +20,7 @@ var $regDate;
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profilemodules WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			 $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -48,7 +48,7 @@ var $regDate;
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO profilemodules(PROFILEID,MODULEID,STATUS) 
+			$stmt = $Myconnection->prepare('INSERT INTO PROFILEMODULES(PROFILEID,MODULEID,STATUS) 
 											VALUES(?,?,"new")');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
@@ -78,7 +78,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE profilemodules	SET PROFILEID=?,MODULEID=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE PROFILEMODULES	SET PROFILEID=?,MODULEID=?,STATUS=? WHERE ID=?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->bindParam(3,$status);
@@ -97,7 +97,7 @@ var $regDate;
 	function thisExists($profileId,$moduleId){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profilemodules WHERE PROFILEID=? AND MODULEID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES WHERE PROFILEID=? AND MODULEID=?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->execute();
@@ -118,7 +118,7 @@ var $regDate;
 	function safeToEdit($id,$profileId,$moduleId){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profilemodules WHERE PROFILEID=? AND MODULEID=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES WHERE PROFILEID=? AND MODULEID=? AND ID<>?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->bindParam(3,$id);
@@ -144,11 +144,11 @@ var $regDate;
 			$stmt=null;
 			if($profileId==null)
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM profilemodules');
+				$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES');
 				
 			}else
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM profilemodules WHERE PROFILEID=?');
+				$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES WHERE PROFILEID=?');
 				$stmt->bindParam(1,$profileId);
 			}
 			$ppsArray = array();
@@ -183,7 +183,7 @@ var $regDate;
 		{
 			
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM profilemodules WHERE PROFILEID=? AND MODULEID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PROFILEMODULES WHERE PROFILEID=? AND MODULEID=?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->execute();
@@ -207,7 +207,7 @@ var $regDate;
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM profilemodules WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM PROFILEMODULES WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','DELETE',json_encode($_POST));

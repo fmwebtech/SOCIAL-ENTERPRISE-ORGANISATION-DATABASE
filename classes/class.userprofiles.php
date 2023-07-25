@@ -22,7 +22,7 @@ var $regDate;
 		else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM userprofiles WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			 $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -50,7 +50,7 @@ var $regDate;
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO userprofiles(USERID,PROFILEID,STATUS) 
+			$stmt = $Myconnection->prepare('INSERT INTO USERPROFILES(USERID,PROFILEID,STATUS) 
 											VALUES(?,?,"new")');
 			$stmt->bindParam(1,$userId);
 			$stmt->bindParam(2,$profileId);
@@ -79,7 +79,7 @@ var $regDate;
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE userprofiles	SET PROFILEID=?,USERID=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE USERPROFILES	SET PROFILEID=?,USERID=?,STATUS=? WHERE ID=?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$userId);
 			$stmt->bindParam(3,$status);
@@ -98,7 +98,7 @@ var $regDate;
 	function thisExists($userId,$profileId){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM userprofiles WHERE PROFILEID=? AND USERID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE PROFILEID=? AND USERID=?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$userId);
 			$stmt->execute();
@@ -119,7 +119,7 @@ var $regDate;
 	function safeToEdit($id,$profileId,$userId){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM userprofiles WHERE PROFILEID=? AND USERID=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE PROFILEID=? AND USERID=? AND ID<>?');
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$userId);
 			$stmt->bindParam(3,$id);
@@ -145,12 +145,12 @@ var $regDate;
 			$stmt=null;
 			if($userId==null)
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM userprofiles');
+				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES');
 				
 			}
 			else
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM userprofiles WHERE USERID=?');
+				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE USERID=?');
 				$stmt->bindParam(1,$userId);
 			}
 			$ppsArray = array();
@@ -182,7 +182,7 @@ var $regDate;
 	{
 			try{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM userprofiles WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM USERPROFILES WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','DELETE',json_encode($_POST));

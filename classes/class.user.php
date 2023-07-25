@@ -1,7 +1,6 @@
 <?php
-require_once("context.php");
-require_once(CONTEXT.'settings/connetionsetting.php');
-require_once(CONTEXT."classes/class.logs.php");
+require_once('settings/connetionsetting.php');
+require_once("classes/class.logs.php");
 require_once('class.resetkey.php');
 class USER{
 	
@@ -10,10 +9,9 @@ var $email;
 var $password;
 var $firstName;
 var $lastName;
-var $departmentId;
 var $status;
 var $regDate;
-//	ID	FIRSTNAME	LASTNAME	EMAIL	PASSWORD	DEPARTMENTID	STATUS	REGDATE	
+//	ID	FIRSTNAME	LASTNAME	EMAIL	PASSWORD	STATUS	REGDATE	
 
 
 
@@ -24,7 +22,7 @@ var $regDate;
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `user` WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER] WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -35,14 +33,13 @@ var $regDate;
 				$this->email = $v['EMAIL'];
 				$this->firstName = $v['FIRSTNAME'];
 				$this->lastName = $v['LASTNAME'];
-				$this->departmentId = $v['DEPARTMENTID'];
 				$this->status = $v['STATUS'];
 				$this->regDate = $v['REGDATE'];
 			}
 		}
 	}
 	
-	function save($firstName,$lastName,$email,$password,$departmentId)
+	function save($firstName,$lastName,$email,$password)
 	{
 			if($this->userNameExists($email))
 			{
@@ -54,16 +51,15 @@ var $regDate;
 			$password = MD5($password);
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO `user`(FIRSTNAME,LASTNAME,EMAIL,PASSWORD,DEPARTMENTID,STATUS) 
-											VALUES(?,?,?,?,?,"new")');
+			$stmt = $Myconnection->prepare('INSERT INTO [USER](FIRSTNAME,LASTNAME,EMAIL,PASSWORD,STATUS) 
+											VALUES(?,?,?,?,"new")');
 			$stmt->bindParam(1,$firstName);
 			$stmt->bindParam(2,$lastName);
 			$stmt->bindParam(3,$email);
 			$stmt->bindParam(4,$password);
-			$stmt->bindParam(5,$departmentId);
-			(new RESETKEY())->save($email,'resetpassword.php',"You have been registered as a user on procure arc. kindly create your credentials to log into the system.");
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','SAVE',json_encode($_POST));
 			$stmt->execute();
+			(new RESETKEY())->save($email,'resetpassword.php',"You have been registered as a user on social enterprise organisation database. kindly create your credentials to log into the system.");
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -73,7 +69,7 @@ var $regDate;
 	}
 	
 	
-	function edit($id,$firstName,$lastName,$email,$departmentId,$status="edited")
+	function edit($id,$firstName,$lastName,$email,$status="edited")
 	{
 			if(!$this->safeToEdit($id,$email))
 			{
@@ -82,19 +78,18 @@ var $regDate;
 			}else{
 				//do nothing
 			}
-		try{
+		try
+		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE `user`	SET FIRSTNAME=?,LASTNAME=?,EMAIL=?,DEPARTMENTID=?,STATUS=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [USER]	SET FIRSTNAME=?,LASTNAME=?,EMAIL=?,STATUS=? WHERE ID=?');
 			$stmt->bindParam(1,$firstName);
 			$stmt->bindParam(2,$lastName);
 			$stmt->bindParam(3,$email);
-			$stmt->bindParam(4,$departmentId);
-			$stmt->bindParam(5,$status);
-			$stmt->bindParam(6,$id);
+			$stmt->bindParam(4,$status);
+			$stmt->bindParam(5,$id);
 			$stmt->execute();
-			
 			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','EDIT',json_encode($_POST));
-			 return true;
+			return true;
 		}catch(Exception $e)
 		{
 			return false;
@@ -106,11 +101,11 @@ var $regDate;
 			$password = MD5($password);
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE user	SET PASSWORD=? WHERE EMAIL=?');
+			$stmt = $Myconnection->prepare('UPDATE [USER] SET PASSWORD=? WHERE EMAIL=?');
 			$stmt->bindParam(1,$password);
 			$stmt->bindParam(2,$email);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','updatepassword',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD','PASSWORD CHANGED');
 			return true;
 		}catch(Exception $e)
 		{
@@ -124,11 +119,11 @@ var $regDate;
 			$password = MD5($password);
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE `user` SET PASSWORD=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE [USER] SET PASSWORD=? WHERE ID=?');
 			$stmt->bindParam(1,$password);
 			$stmt->bindParam(2,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','updatepassword2',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD2','PASSWORD CHANGED');
 			return true;
 		}catch(Exception $e)
 		{
@@ -145,7 +140,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `user` WHERE EMAIL=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER] WHERE EMAIL=?');
 			$stmt->bindParam(1,$email);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -166,7 +161,7 @@ var $regDate;
 	function safeToEdit($id,$email){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `user` WHERE EMAIL=? AND ID<>?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER] WHERE EMAIL=? AND ID<>?');
 			$stmt->bindParam(1,$email);
 			$stmt->bindParam(2,$id);
 			$stmt->execute();
@@ -190,7 +185,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM `user` WHERE EMAIL=? AND PASSWORD=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER] WHERE EMAIL=? AND PASSWORD=?');
 			$stmt->bindParam(1,$email);
 			$stmt->bindParam(2,$password);
 			$stmt->execute();
@@ -198,13 +193,13 @@ var $regDate;
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','authenticate','The user logged in successfuly');
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','The user logged in successfuly');
 
 				
 				return new USER($v['ID']);
 				break;
 			}
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','authenticate','Authentication failed.');
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','Authentication failed.');
 			return false;
 		}catch(Exception $e)
 		{
@@ -213,19 +208,12 @@ var $regDate;
 	}
 	
 	
-	function getUsers($departmentId=null)
+	function getUsers()
 	{
-		try{
+		try
+		{
 			global $Myconnection;
-			$stmt=null;
-			if($departmentId==null)
-			{
-				$stmt = $Myconnection->prepare('SELECT * FROM `user`');
-			}else
-			{
-				$stmt = $Myconnection->prepare('SELECT * FROM `user` WHERE DEPARTMENTID=?');
-				$stmt->bindParam(1,$departmentId);
-			}
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER]');
 			$stmt->execute();
 			$usersArray = array();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -237,7 +225,6 @@ var $regDate;
 				$user->email = $v['EMAIL'];
 				$user->firstName = $v['FIRSTNAME'];
 				$user->lastName = $v['LASTNAME'];
-				$user->departmentId = $v['DEPARTMENTID'];
 				$user->status = $v['STATUS'];
 				$user->regDate = $v['REGDATE'];
 				$usersArray[] =$user;
@@ -254,7 +241,7 @@ var $regDate;
 			try
 			{
 				global $Myconnection;
-				$stmt = $Myconnection->prepare('DELETE FROM `user` WHERE ID=?');
+				$stmt = $Myconnection->prepare('DELETE FROM [USER] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','DELETE',json_encode($_POST));

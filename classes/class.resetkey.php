@@ -1,7 +1,7 @@
 <?php
 require_once('settings/connetionsetting.php');
 require_once("classes/class.logs.php");
-require_once("classes/class.preferences.php");
+require_once("phpmailer/sendMail.php");
 class RESETKEY{
 	
 	
@@ -20,7 +20,7 @@ var $regDate;
 		}else
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM resetkey WHERE ID=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM RESETKEY WHERE ID=?');
 			$stmt->bindParam(1,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ var $regDate;
 			{ // 			
 				$this->id = $v['ID'];
 				$this->email = $v['EMAIL'];
-				$this->resetkey = $v['RESETKEY '];
+				$this->resetkey = $v['RESETKEY'];
 				$this->status = $v['STATUS'];
 				$this->regDate = $v['REGDATE'];
 			}
@@ -39,7 +39,7 @@ var $regDate;
 	function save($email,$returnPath,$message)
 	{
 			$resetkey = md5($email.date_format(new DateTime(),'yiusd')); // generate new reset key
-			$preferences = new PREFERENCES();
+			$appURL =  'http://'.$_SERVER['SERVER_ADDR'].'/'.explode('/',$_SERVER['PHP_SELF'])[1];
 		try
 		{
 			global $Myconnection;
@@ -49,9 +49,10 @@ var $regDate;
 			$stmt->bindParam(2,$resetkey);
 			$stmt->execute();
 			// send to recipient.
-			@mail($email,"AUTOPRO",$message.' To complete this action please go to : '.$preferences->appURL.'/'.$returnPath.'?z='.$resetkey.' or click <a href="'.$preferences->appURL.'/'.$returnPath.'?z='.$resetkey.'">here</a>');
+			sendmail($email,"SEOD",$message.' To complete this action please go to : '.$appURL.'/'.$returnPath.'?z='.$resetkey.'');
 			return true;
-		}catch(Exception $e)
+		}
+		catch(Exception $e)
 		{
 			//echo $e->getMessage();
 			return false;
@@ -62,7 +63,7 @@ var $regDate;
 	function resetkeyExists($email,$resetkey){
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM resetkey WHERE EMAIL=? AND RESETKEY=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM RESETKEY WHERE EMAIL=? AND RESETKEY=?');
 			$stmt->bindParam(1,$email);
 			$stmt->bindParam(2,$resetkey);
 			$stmt->execute();
@@ -86,7 +87,7 @@ var $regDate;
 		{
 			$resetkeyArray = array();
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM resetkey WHERE RESETKEY=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM RESETKEY WHERE RESETKEY=?');
 			$stmt->bindParam(1,$resetkey);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -108,49 +109,7 @@ var $regDate;
 		}
 	}
 	
-	function userExists($email)
-	{
-		try
-		{
-			$resetkeyArray = array();
-			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM user WHERE EMAIL=?');
-			$stmt->bindParam(1,$email);
-			$stmt->execute();
-			$stmt->setFetchMode(PDO::FETCH_ASSOC);
-			$results = $stmt->fetchAll();
-			foreach($results as $k=>$v)
-			{
-				return true;
-			}
-			return false;
-		}catch(Exception $e)
-		{
-			return false;
-		}
-	}
-	
-	function supplierExists($email)
-	{
-		try
-		{
-			$resetkeyArray = array();
-			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM supplier WHERE EMAIL=?');
-			$stmt->bindParam(1,$email);
-			$stmt->execute();
-			$stmt->setFetchMode(PDO::FETCH_ASSOC);
-			$results = $stmt->fetchAll();
-			foreach($results as $k=>$v)
-			{
-				return true;
-			}
-			return false;
-		}catch(Exception $e)
-		{
-			return false;
-		}
-	}
+
 	
 
 	function delete($email)
@@ -158,7 +117,7 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('DELETE FROM resetkey WHERE EMAIL=?');
+			$stmt = $Myconnection->prepare('DELETE FROM RESETKEY WHERE EMAIL=?');
 			$stmt->bindParam(1,$email);
 			$stmt->execute();
 			return true;

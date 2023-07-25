@@ -1,7 +1,7 @@
 <?php
 require_once('settings/connectionsetting.php');
 
-class seoCountry
+class SEOCOUNTRY
 {
     var $id;
     var $seoId;
@@ -47,7 +47,7 @@ class seoCountry
             $stmt->bindParam(2, $seoId);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'seoCountry','SAVE',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','SAVE',json_encode($_POST));
 
         } 
         catch (Exception $e) 
@@ -78,7 +78,7 @@ class seoCountry
             $stmt->bindParam(5, $id);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'seoCountry','EDIT',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','EDIT',json_encode($_POST));
 
         } catch (Exception $e)
         {
@@ -146,7 +146,7 @@ class seoCountry
             $results = $stmt->fetchAll();
             foreach ($results as $k => $v) 
             {
-                $seoCountry = new seoCountry();
+                $seoCountry = new SEOCOUNTRY();
                 $seoCountry->id = $v['ID'];
                 $seoCountry->countryId = $v['COUNTRY_ID'];
                 $seoCountry->seoId = $v['SEO_ID'];
@@ -175,7 +175,7 @@ class seoCountry
             $results = $stmt->fetchAll();
             foreach ($results as $k => $v) 
             {
-                $seoCountry = new seoCountry();
+                $seoCountry = new SEOCOUNTRY();
                 $seoCountry->id = $v['ID'];
                 $seoCountry->countryId = $v['COUNTRY_ID'];
                 $seoCountry->seoId = $v['SEO_ID'];
@@ -204,7 +204,7 @@ class seoCountry
             $results = $stmt->fetchAll();
             foreach ($results as $k => $v)
             {
-                $seoCountry = new seoCountry();
+                $seoCountry = new SEOCOUNTRY();
                 $seoCountry->id = $v['ID'];
                 $seoCountry->countryId = $v['COUNTRY_ID'];
                 $seoCountry->seoId = $v['SEO_ID'];
@@ -228,7 +228,7 @@ class seoCountry
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'seoCountry','DELETE',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','DELETE',json_encode($_POST));
 
         }
          catch (Exception $e)
