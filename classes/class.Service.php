@@ -62,6 +62,9 @@ class SERVICES {
 			$stmt->bindParam(4,$price);
 			$stmt->bindParam(5,$createdBy);			
 			$stmt->execute();
+
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','SAVE',json_encode($_POST));
+
 			return true;
 		}
 		catch(Exception $e)
@@ -94,6 +97,9 @@ class SERVICES {
 			$stmt->bindParam(6,$status);
 			$stmt->bindParam(7,$id);
 			$stmt->execute();
+
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','EDIT',json_encode($_POST));
+
 			return true;
 		}
 		catch(Exception $e)
@@ -126,6 +132,9 @@ class SERVICES {
 				$service->regDate = $v['REGDATE'];
 				$serviceArray[] =$service;
 			}
+
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','GETSERVICE',json_encode($_POST));
+
 			return $serviceArray;
 		}
 		catch(Exception $e)
@@ -198,6 +207,9 @@ class SERVICES {
 				$stmt = $Myconnection->prepare('DELETE FROM [SERVICES] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
+
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','DELETE',json_encode($_POST));
+
 				return true;
 			}
 			catch(Exception $e)
