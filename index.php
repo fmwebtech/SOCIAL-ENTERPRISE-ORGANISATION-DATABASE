@@ -1,7 +1,7 @@
 
 <?php
 	@session_start();
-	if(!isset($_SESSION['semail']))
+	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
 	}

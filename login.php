@@ -76,7 +76,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			  <div class="form-group">
 			  <label for="exampleInputUsername" class="sr-only">Email Address</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="email" id="Username" name="email" class="form-control input-shadow" placeholder="Enter email address">
+				  <input type="email" id="Username" required name="email" class="form-control input-shadow" placeholder="Enter email address">
 				  <div class="form-control-position">
 					  <i class="icon-user"></i>
 				  </div>
@@ -85,7 +85,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			  <div class="form-group">
 			  <label for="exampleInputPassword" class="sr-only">Password</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="password" id="Password" name="password" class="form-control input-shadow" placeholder="Enter Password">
+				  <input type="password" id="Password" required  name="password" class="form-control input-shadow" placeholder="Enter Password">
 				  <div class="form-control-position">
 					  <i class="icon-lock"></i>
 				  </div>
@@ -106,12 +106,11 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			<div class="form-row">
 			 <div class="form-group col-6">
 			   <div class="icheck-material-white">
-                <input type="checkbox" id="user-checkbox" checked="" />
-                <label for="user-checkbox">Remember me</label>
+                <p class="danger"><?php echo $message;?></p>
 			  </div>
 			 </div>
 			 <div class="form-group col-6 text-right">
-			  <p class="danger"><?php echo $message;?></p>
+			  
 			 </div>
 			</div>
 			
