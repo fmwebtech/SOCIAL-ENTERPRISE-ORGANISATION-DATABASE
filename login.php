@@ -4,6 +4,7 @@ $message = '';
 require_once('classes/class.user.php');
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
+	extract($_POST);
 	$user = (new USER())->authenticate($email,$password);
 	if($user)
 	{
