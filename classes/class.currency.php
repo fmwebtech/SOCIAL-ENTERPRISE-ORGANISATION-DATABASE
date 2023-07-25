@@ -101,7 +101,7 @@ function save($name, $createdBy,)
           $stmt->bindParam(4, $id);
           $stmt->execute();
           return true;
-          (new LOGS())->edit($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','EDIT',json_encode($_POST));
+          (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','EDIT',json_encode($_POST));
 
         }
         catch (Exception $e)
@@ -171,7 +171,7 @@ function save($name, $createdBy,)
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return true;
-            (new LOGS())->delete($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','DELETE',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','DELETE',json_encode($_POST));
 
         }
          catch (Exception $e)
