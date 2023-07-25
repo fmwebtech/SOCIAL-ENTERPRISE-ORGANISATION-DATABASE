@@ -53,7 +53,7 @@ var $regDate;
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],'PROFILEMODULE.SAVE','Data : profileId='.$profileId.',moduleId='.$moduleId);
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -84,8 +84,8 @@ var $regDate;
 			$stmt->bindParam(3,$status);
 			$stmt->bindParam(4,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],'PROFILEMODULE.EDIT','Data : id='.$id.',profileId='.$profileId.',moduleId='.$moduleId);
-			return true;
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','EDIT',json_encode($_POST));	
+					return true;
 		}catch(Exception $e)
 		{
 			return false;
@@ -210,7 +210,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM profilemodules WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],'PROFILEMODULE.DELETE','Data : id='.$id);
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{

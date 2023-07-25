@@ -1,6 +1,6 @@
 <?php
-require_once('settings/connetionsetting.php');
-require_once("classes/class.logs.php");
+require_once('settings\connetionsetting.php');
+require_once("classes\class.logs.php");
 class MODULE{
 	
 	
@@ -62,7 +62,7 @@ var $regDate;
 			$stmt->bindParam(4,$icon);
 			$stmt->bindParam(5,$ordering);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],'MODULE.SAVE','Data : name='.$name.',url='.$url.',parentId='.$parentId.',icon='.$icon.',ordering='.$ordering);
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -96,7 +96,7 @@ var $regDate;
 			$stmt->bindParam(6,$status);
 			$stmt->bindParam(7,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],'MODULE.EDIT','Data : name='.$name.',id='.$id.',url='.$url.',parentId='.$parentId.',icon='.$icon.',ordering='.$ordering);
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -251,7 +251,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM module WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],'MODULE.DELETE','Data :id='.$id);
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{

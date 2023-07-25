@@ -52,12 +52,6 @@ var $regDate;
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			
-			
-			(new LOGS())->save($_SESSION['email'],'PROFILE.SAVE','Data : name='.$name);
-			
-			//USER COMPUTER CLASS FUNCTION DATA
-			
-		
 			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','SAVE',json_encode($_POST));
 			
 			return true;
@@ -89,7 +83,7 @@ var $regDate;
 			$stmt->bindParam(2,$status);
 			$stmt->bindParam(3,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],'PROFILE.EDIT','Data : name='.$name.',id='.$id);
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -175,7 +169,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM profile WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],'PROFILE.DELETE','Data :id='.$id);
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{
