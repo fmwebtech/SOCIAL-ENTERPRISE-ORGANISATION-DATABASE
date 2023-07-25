@@ -1,6 +1,6 @@
   <?php
   @session_start();
-  require_once('classes/user.php');
+  require_once('classes/class.user.php');
   $myUserObject = new USER($_SESSION['id']);
   
   ?>
