@@ -44,13 +44,15 @@ function save($name, $createdBy,)
 
     try
 {
+
     global $Myconnection;
     $stmt = $Myconnection->prepare("INSERT INTO CURRENCY([NAME], CREATED_BY, STATUS) VALUES (?, ?, 'new')");
     $stmt->bindParam(1, $name);
     $stmt->bindParam(2, $createdBy);
-
     $stmt->execute();
     return true;
+
+    (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','SAVE',json_encode($_POST));
 }
  catch (Exception $e)
   {
@@ -66,8 +68,11 @@ function save($name, $createdBy,)
         $stmt = $Myconnection->prepare('SELECT * FROM CURRENCY WHERE [NAME]=? AND CREATED_BY=?');
         $stmt->bindParam(1, $name);
         $stmt->bindParam(2, $createdBy);
-        $stmt->execute();         $stmt->setFetchMode(PDO::FETCH_ASSOC);         $results = $stmt->fetchAll();         foreach ($results as $k => $v) {
-                 return true;
+        $stmt->execute();         
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);         
+        $results = $stmt->fetchAll();         
+        foreach ($results as $k => $v) {
+        return true;
             }
            return false;
 
@@ -96,6 +101,8 @@ function save($name, $createdBy,)
           $stmt->bindParam(4, $id);
           $stmt->execute();
           return true;
+          (new LOGS())->edit($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','EDIT',json_encode($_POST));
+
         }
         catch (Exception $e)
         {
@@ -164,6 +171,8 @@ function save($name, $createdBy,)
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return true;
+            (new LOGS())->delete($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','DELETE',json_encode($_POST));
+
         }
          catch (Exception $e)
          {

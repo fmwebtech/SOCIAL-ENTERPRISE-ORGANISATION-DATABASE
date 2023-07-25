@@ -83,7 +83,7 @@
 
 
 
-<form action="ajax.deleteService.php" method="post">
+<!-- <form action="ajax.deleteService.php" method="post">
     
 
     <label>id:</label>
@@ -92,7 +92,7 @@
 
 
 	<button type="submit" name="mybutton">Get branch</button>
-</form>
+</form> -->
 
 
 
