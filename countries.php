@@ -1,10 +1,34 @@
 
 <?php
 	@session_start();
+
+    require_once('classes\class.country.php');
+    extract($_POST);
+    $mycountry = new COUNTRY();
+    $fetchedcountry= array();
+
+    $fetchedcountry = $mycountry->getCountry();
+    
+       
+       
+       
+
+
+
 	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
+
+
+
+
+
+
 	}
+
+            
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +90,122 @@
 	
 	
 	
-	 <!--content comes here           hello         -->
+	 <!--content comes here-->
+     <div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Country Table</h5>
+        <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Country Name</th>
+                <th scope="col">Country Code</th> 
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $entryNumber = 1; // Initialize the entry number
+              foreach ($fetchedcountry as $country) {
+                echo '<tr>
+                        <th scope="row">' . $entryNumber . '</th>
+                        <td>' . $country->name . '</td>
+                        <td>' . $country->code . '</td>
+                      </tr>';
+                $entryNumber++; // Increment the entry number for the next row
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="AddSEOModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title text-dark">Add COUNTRY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Country Name</b>
+					<input type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter SEO name">
+				</div>
+
+				<div class="form-group">
+					<b class="col-6">Country Code</b>
+					<input type="number" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+				</div>
+
+				
+
+
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<!--content comes here-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
