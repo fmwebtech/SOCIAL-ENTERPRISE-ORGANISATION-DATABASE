@@ -2,27 +2,9 @@
 <?php
 	@session_start();
 
-    require_once('classes\class.country.php');
-    extract($_POST);
-    $mycountry = new COUNTRY();
-    $fetchedcountry= array();
-
-    $fetchedcountry = $mycountry->getCountry();
-    
-       
-       
-       
-
-
-
 	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
-
-
-
-
-
 
 	}
 
@@ -92,32 +74,23 @@
 	
 	 <!--content comes here-->
      <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-12">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Country Table</h5>
-        <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button>
+        <h5 class="card-title">Country Table
+        <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Country Name</th>
-                <th scope="col">Country Code</th> 
+                <th scope="col">Country Code</th>
+                <th scope="col">Action</th>  
               </tr>
             </thead>
             <tbody>
-              <?php
-              $entryNumber = 1; // Initialize the entry number
-              foreach ($fetchedcountry as $country) {
-                echo '<tr>
-                        <th scope="row">' . $entryNumber . '</th>
-                        <td>' . $country->name . '</td>
-                        <td>' . $country->code . '</td>
-                      </tr>';
-                $entryNumber++; // Increment the entry number for the next row
-              }
-              ?>
+              
             </tbody>
           </table>
         </div>
@@ -138,19 +111,19 @@
 		<div class="modal-content">
 			<div class="modal-header">
 
-				<h4 class="modal-title text-dark">Add COUNTRY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">Add COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
 			</div>
 			<div class="modal-body">
 
 
 				<div class="form-group">
 					<b class="col-6">Country Name</b>
-					<input type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter SEO name">
+					<input type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country name">
 				</div>
 
 				<div class="form-group">
 					<b class="col-6">Country Code</b>
-					<input type="number" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+					<input type="text" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country code">
 				</div>
 
 				
