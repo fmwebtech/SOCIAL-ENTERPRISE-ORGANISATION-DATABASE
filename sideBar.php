@@ -57,17 +57,7 @@
 
 
 
-    <li>
-      <a href="login.html" target="_blank">
-        <i class="zmdi zmdi-lock"></i> <span>Login</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#" target="_blank">
-        <i class="zmdi zmdi-lock"></i> <span>Log out</span>
-      </a>
-    </li>
+   
 
       <!--  <li>
         <a href="register.html" target="_blank">
