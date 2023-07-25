@@ -1,5 +1,5 @@
 <?php
-require_once('settings\connetionsetting.php');
+require_once('settings/connectionsetting.php');
 require_once("classes\class.logs.php");
 class MODULE{
 	
