@@ -1,6 +1,7 @@
 <?php
 
 require_once('settings\connectionsetting.php');
+require_once('classes\class.logs.php');
 class BRANCH
 {
 
@@ -72,7 +73,13 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
         $stmt->bindParam(5, $createdBy);
         $stmt->bindParam(6, $modifiedBy);
         $stmt->execute();
+
+		(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','SAVE',json_encode($_POST));
+
+
         return true;
+
+	
     } 
 	catch (Exception $e) 
 	{
@@ -140,6 +147,9 @@ function edit($id, $seoId, $countryId, $name, $address, $modifiedBy, $status)
 		$stmt->bindParam(6, $status);
         $stmt->bindParam(7, $id);
         $stmt->execute();
+
+		(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','EDIT',json_encode($_POST));
+
         return true;
     }
 	 catch (Exception $e) 
@@ -256,6 +266,8 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 				$stmt = $Myconnection->prepare('DELETE FROM branch WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
+
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','DELETE',json_encode($_POST));
 				return true;
 			
 			}

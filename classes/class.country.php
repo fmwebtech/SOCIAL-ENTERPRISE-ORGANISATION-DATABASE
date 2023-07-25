@@ -1,6 +1,7 @@
 <?php
 //Frank
 require_once('settings\connectionsetting.php');
+require_once('classes\class.logs.php');
 class COUNTRY
 {
 
@@ -58,6 +59,8 @@ class COUNTRY
 			$stmt->bindParam(3,$createdBy);
 			$stmt->bindParam(4,$modifiedBy);			
 			$stmt->execute();
+
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','SAVE',json_encode($_POST));
 			return true;
 		}
 		catch(Exception $e)
@@ -120,6 +123,8 @@ class COUNTRY
 			$stmt->bindParam(4,$status);
 			$stmt->bindParam(5,$id);
 			$stmt->execute();
+
+			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','EDIT',json_encode($_POST));
 			return true;
 		}
 		catch(Exception $e)
@@ -197,6 +202,7 @@ class COUNTRY
 				$stmt = $Myconnection->prepare('DELETE FROM country WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
+				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','DELETE',json_encode($_POST));
 				return true;
 			}
 			catch(Exception $e)
