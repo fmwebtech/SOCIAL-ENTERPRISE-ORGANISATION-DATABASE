@@ -63,7 +63,7 @@ var $regDate;
 	}
 	
 	
-	function edit($id,$name,$status=null)
+	function edit($id,$name,$status='edited')
 	{
 			if(!$this->safeToEdit($id,$name))
 			{
@@ -84,7 +84,7 @@ var $regDate;
 			$stmt->bindParam(2,$status);
 			$stmt->bindParam(3,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -170,12 +170,12 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM [PROFILE] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{
 				
-				if(strpos($e->getMessage(),'Integrity constraint'))
+				if(strpos($e->getMessage(),'statement conflicted'))
 				{
 				
 				echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
