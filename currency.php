@@ -1,17 +1,8 @@
 
 <?php
-	@session_start();
 
-	if(!isset($_SESSION['email']))
-	{
-		header('location:login.php');
-
-	}
-
-            
-
-
-?>
+  
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +13,7 @@
   <meta name="author" content=""/>
   <title>SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
   <!-- loader-->
-  <link href="assets/css/pace.min.css" rel="stylesheet"/>
+  <link href="assets/css/pace.min.css" rel="stylesheet"/s>
   <script src="assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
@@ -66,43 +57,38 @@
     <div class="card mt-3">
     <div class="card-content">
 	
-	
+    <div class="row">
+
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">CURRENCY MANAGEMENT <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add CURRENCY</button></h5>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Currency Name</th>
+              <th scope="col">Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 	
 	
 	
 	
 	
 	 <!--content comes here-->
-     <div class="row">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Country Table
-        <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Country Name</th>
-                <th scope="col">Country Code</th>
-                <th scope="col">Action</th>  
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
+  
 <!-- add branch Modal -->
 <div class="modal fade text-dark" id="AddSEOModal" role="dialog">
 	<div class="modal-dialog">
@@ -111,73 +97,27 @@
 		<div class="modal-content">
 			<div class="modal-header">
 
-				<h4 class="modal-title text-dark">Add COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				<h4 class="modal-title text-dark">ADD CURRENCY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
 
 
 				<div class="form-group">
-					<b class="col-6">Country Name</b>
-					<input type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country name">
+					<b class="col-6">currency name</b>
+					<input type="text" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
 				</div>
-
-				<div class="form-group">
-					<b class="col-6">Country Code</b>
-					<input type="text" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country code">
-				</div>
-
-				
-
 
 
 			</div>
 			<div class="modal-footer">
 
-				<button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
+				<button type="button" onclick="confirm('Save?');"  class="btn btn-info">Add</button>
 				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
 			</div>
 		</div>
 
 	</div>
 </div>
-
-
-<!--content comes here-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
