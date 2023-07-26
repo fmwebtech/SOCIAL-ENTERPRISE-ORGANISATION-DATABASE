@@ -23,11 +23,34 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     if($fetchedcountry = $mycountry->getCountry())
     {
        
-       
+       $count=1;
         foreach($fetchedcountry as $country)
         {
            
-                echo '<tr><td>'.$country->name.'</td> <td>'.$country->code.'</td> </tr>';
+                echo '<tr>
+                <td>'.$count.'</td>
+                <td>'.$country->name.'</td>
+                 <td>'.$country->code.'</td> 
+                 <td>
+
+                 <button onclick="editCountry(\''.$country->id.'\')" class="btn btn-success">
+                 <i class="zmdi zmdi-edit"></i> Edit </button>
+             
+                 
+                 <button onclick="deleteCountry(\''.$country->id.'\')" class="btn btn-danger">
+                     <i class="zmdi zmdi-delete"></i> Delete  </button>
+
+
+                 </td>
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 </tr>';
+                $count++;
         }        
     }
     

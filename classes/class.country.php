@@ -40,7 +40,7 @@ class COUNTRY
 
 	
 
-    function save($name,$code, $createdBy, $modifiedBy)
+    function save($name,$code, $createdBy,)
 {
 		if($this->countryExists($code))
 		{
@@ -51,16 +51,15 @@ class COUNTRY
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare("INSERT INTO COUNTRY([NAME], [CODE], [CREATED_BY],[MODIFIED_BY] ,[STATUS]) 
-											VALUES(?,?,?,?,'new')");
+			$stmt = $Myconnection->prepare("INSERT INTO COUNTRY([NAME], [CODE], [CREATED_BY],[STATUS]) 
+											VALUES(?,?,?,'new')");
 			
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$code);
-			$stmt->bindParam(3,$createdBy);
-			$stmt->bindParam(4,$modifiedBy);			
+			$stmt->bindParam(3,$createdBy);			
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','SAVE',json_encode($_POST));
 			return true;
 		}
 		catch(Exception $e)
@@ -102,7 +101,7 @@ class COUNTRY
 
 
 
-	function edit($id, $name, $code,  $modifiedBy, $status)
+	function edit($id, $name, $code,  $modifiedBy, $status='edited')
 	{
 			if(!$this->safeToEdit($id,$code))
 			{
@@ -124,7 +123,7 @@ class COUNTRY
 			$stmt->bindParam(5,$id);
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','EDIT',json_encode($_POST));
 			return true;
 		}
 		catch(Exception $e)
@@ -202,12 +201,23 @@ class COUNTRY
 				$stmt = $Myconnection->prepare('DELETE FROM country WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'COUNTRY','DELETE',json_encode($_POST));
 				return true;
 			}
 			catch(Exception $e)
 			{
-				echo $e->getMessage();
+				if(strpos($e->getMessage(),'statement conflicted'))
+				{
+				
+				echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
+							<div class="card-body text-danger">
+								<strong>Oh snap!</strong> 
+								
+								This country can not be deleted at the moment. because the country is attached to other system records. 
+							
+							</div>
+						</div>';
+				}
 				return false;
 			}
 	}

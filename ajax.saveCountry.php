@@ -13,10 +13,10 @@ if(!isset($_SESSION['email']))
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
     extract($_POST);
-
+//print_r($_SERVER);
     $mycountry = new COUNTRY();
-
-    if($mycountry->save($name,$code,$createdBy,$modifiedBy))
+$createdBy=$_SESSION['email'];
+    if($mycountry->save($name,$code,$createdBy))
     {
          echo 'Country has been Saved';
     }

@@ -1,7 +1,8 @@
-<footer class="footer">
+
+<footer class="footer" style="position:relative">
   <div class="container">
     <div class="text-center">
-      Copyright © 2022 Copperbelt University
+      Copyright © <?php echo date('Y');?> Copperbelt University
     </div>
   </div>
 </footer>

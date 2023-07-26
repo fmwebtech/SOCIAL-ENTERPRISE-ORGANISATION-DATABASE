@@ -49,7 +49,7 @@ class BRANCH
 		}
 	}
 
-function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
+function save($seoId,$countryId, $name, $address,$createdBy,)
  {
     if ($this->branchExists($name, $address)) 
 	{
@@ -64,17 +64,16 @@ function save($seoId,$countryId, $name, $address,$createdBy,$modifiedBy)
     try 
 	{
         global $Myconnection;
-        $stmt = $Myconnection->prepare("INSERT INTO BRANCH( [SEO_ID], [COUNTRY_ID], [NAME], [ADDRESS], [CREATED_BY], [MODIFIED_BY], [STATUS]) 
+        $stmt = $Myconnection->prepare("INSERT INTO BRANCH( [SEO_ID], [COUNTRY_ID], [NAME], [ADDRESS], [CREATED_BY], [STATUS]) 
                                         VALUES (?, ?, ?, ?, ?, ?, 'new')");
         $stmt->bindParam(1, $seoId);
 		$stmt->bindParam(2, $countryId);
 		$stmt->bindParam(3, $name);
 		$stmt->bindParam(4, $address);
         $stmt->bindParam(5, $createdBy);
-        $stmt->bindParam(6, $modifiedBy);
         $stmt->execute();
 
-		(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','SAVE',json_encode($_POST));
+		(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','SAVE',json_encode($_POST));
 
 
         return true;
@@ -148,7 +147,7 @@ function edit($id, $seoId, $countryId, $name, $address, $modifiedBy, $status)
         $stmt->bindParam(7, $id);
         $stmt->execute();
 
-		(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','EDIT',json_encode($_POST));
+		(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','EDIT',json_encode($_POST));
 
         return true;
     }
@@ -267,12 +266,26 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'BRANCH','DELETE',json_encode($_POST));
 				return true;
 			
 			}
 			catch(Exception $e)
 			{
+
+				if(strpos($e->getMessage(),'statement conflicted'))
+				{
+				
+					echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
+							<div class="card-body text-danger">
+								<strong>Oh snap!</strong> 
+								
+								This user can not be deleted at the moment. because the user is attached to other system records. 
+							
+							</div>
+						</div>';
+				}
+
 				return false;
 			}
 	}
