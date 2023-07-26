@@ -63,7 +63,7 @@ class SERVICES {
 			$stmt->bindParam(5,$createdBy);			
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','SAVE',json_encode($_POST));
 
 			return true;
 		}
