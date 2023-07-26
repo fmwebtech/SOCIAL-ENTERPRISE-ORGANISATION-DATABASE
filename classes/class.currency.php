@@ -1,6 +1,6 @@
 <?php
 require_once('settings/connectionsetting.php'); 
-
+require_once('classes\class.logs.php');
 class CURRENCY 
 {
     var $id;
@@ -50,9 +50,9 @@ function save($name, $createdBy,)
     $stmt->bindParam(1, $name);
     $stmt->bindParam(2, $createdBy);
     $stmt->execute();
+    (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','SAVE',json_encode($_POST));
     return true;
 
-    (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','SAVE',json_encode($_POST));
 }
  catch (Exception $e)
   {
@@ -83,7 +83,7 @@ function save($name, $createdBy,)
        }
      }
 
-     function edit($id, $name, $modifiedBy, $status)
+     function edit($id, $name, $modifiedBy, $status='edited')
     {
         if (!$this->safeToEdit($id, $name))
          {
@@ -100,8 +100,9 @@ function save($name, $createdBy,)
           $stmt->bindParam(3, $status);
           $stmt->bindParam(4, $id);
           $stmt->execute();
-          return true;
           (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','EDIT',json_encode($_POST));
+
+          return true;
 
         }
         catch (Exception $e)
@@ -170,12 +171,25 @@ function save($name, $createdBy,)
             $stmt = $Myconnection->prepare('DELETE FROM CURRENCY WHERE ID=?');
             $stmt->bindParam(1, $id);
             $stmt->execute();
-            return true;
             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','DELETE',json_encode($_POST));
+
+            return true;
 
         }
          catch (Exception $e)
          {
+            if(strpos($e->getMessage(),'statement conflicted'))
+				{
+				
+				echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
+							<div class="card-body text-danger">
+								<strong>Oh snap!</strong> 
+								
+								This Currency can not be deleted at the moment. Because the currency is attached to other system records. 
+							
+							</div>
+						</div>';
+				}
             return false;
         }
     }

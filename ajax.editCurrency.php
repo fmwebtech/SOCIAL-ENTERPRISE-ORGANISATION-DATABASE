@@ -11,7 +11,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
 $myCurrency = new CURRENCY();
-if($myCurrency->edit($id, $name, $modifiedBy, $status))
+$modifiedBy=$_SESSION['email'];
+if($myCurrency->edit($id, $name, $modifiedBy,))
 {
     echo'Edit Successfully';
 }
