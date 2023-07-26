@@ -73,33 +73,32 @@
 	
 	
 	 <!--content comes here-->
-     <div class="row">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Country Table
-        <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Country Name</th>
-                <th scope="col">Country Code</th>
-                <th scope="col">Action</th>  
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  
+
+<div class="col-lg-12">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">COUNTRY NAME</th>
+								<th scope="col">COUNTRY CODE</th>
+								<th scope="col">ACTION</th>
+							
+							</tr>
+						</thead>
+						<tbody id=countriesTablepool>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-
 
 
 
@@ -113,6 +112,8 @@
 
 				<h4 class="modal-title text-dark">Add COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
 			</div>
+
+      <form id="createForm" class="form-horizontal">
 			<div class="modal-body">
 
 
@@ -133,13 +134,141 @@
 			</div>
 			<div class="modal-footer">
 
-				<button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
+				<button type="submit"  class="btn btn-info">Save</button>
 				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
 			</div>
+      </form>
 		</div>
 
 	</div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function()
+{
+
+ // createForm
+
+    $("#createForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveCountry.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							//openMessageModal('Infomation',r);
+							getProfiles();
+							// $("#createModal").modal("hide");
+							 $('#createForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+
+
+
+
+
+
+
+                    getCountries();
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getCountries()
+ {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+     {
+
+      document.getElementById("countriesTablepool").innerHTML =this.responseText;
+
+    }
+  };
+  xhttp.open("POST", "ajax.getCountry.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("");
+}
+
+
+
+
+
+
+
+
+
+
+function editCountry()
+{
+
+}
+
+
+
+function deleteCountry()
+{
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
 
 
 <!--content comes here-->
