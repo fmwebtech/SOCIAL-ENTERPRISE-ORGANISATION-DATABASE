@@ -98,7 +98,7 @@ class SERVICES {
 			$stmt->bindParam(7,$id);
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','EDIT',json_encode($_POST));
 
 			return true;
 		}
@@ -109,7 +109,7 @@ class SERVICES {
 		}
 	}
 
-	function getService($seoId)
+	function getServices($seoId)
 	{
 		try
 		{
@@ -133,7 +133,7 @@ class SERVICES {
 				$serviceArray[] =$service;
 			}
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','GETSERVICE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','GETSERVICE',json_encode($_POST));
 
 			return $serviceArray;
 		}
@@ -208,7 +208,7 @@ class SERVICES {
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','DELETE',json_encode($_POST));
 
 				return true;
 			}
