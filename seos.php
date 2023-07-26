@@ -1,16 +1,10 @@
 
 <?php
 	@session_start();
-
 	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
-
 	}
-
-            
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +58,7 @@
   <div class="container-fluid" id="mainContent">
 
     <div class="card mt-3">
-    <div class="card-content" style="overflow:hidden;">
+    <div class="card-content">
 	
 	
 	
@@ -72,215 +66,160 @@
 	
 	
 	
-	 <!--content comes here-->
-  
+	 <!--content seos table starts       -->
+   <div class="row">
 
-<div class="col-lg-12 ">
-		<div class="card ">
-			<div class="card-body">
-				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">COUNTRY NAME</th>
-								<th scope="col">COUNTRY CODE</th>
-								<th scope="col">ACTION</th>
-							
-							</tr>
-						</thead>
-						<tbody id=countriesTablepool>
-							
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="clearfix"></div>
-</div>
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">SEO list <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button></h5>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+            <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Established</th>
+              <th scope="col">Branches</th>
+              <th scope="col">Products</th>
+              <th scope="col">Services</th>
+              <th scope="col">Income per annum</th>
+              <th scope="col">Expenditure per annum</th>
+              <th scope="col">Founded in </th>
+              <th scope="col">HQ In</th>
+            </tr>
+          </thead>
+          <tbody id=seoTablepool>
+            
+            
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
 
-<!-- Modal add branch content-->
+
+
+
+<!-- add branch Modal -->
 <div class="modal fade text-dark" id="AddSEOModal" role="dialog">
-	<div class="modal-dialog">
+<div class="modal-dialog">
 
-		
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title text-dark">Add COUNTRY</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
-			</div>
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
 
-      <form id="createForm" class="form-horizontal">
-			<div class="modal-body">
+      <h4 class="modal-title text-dark">Add SEO</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
 
 
-				<div class="form-group">
-					<b class="col-6">Country Name</b>
-					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country name" />
-				</div>
+      <div class="form-group">
+        <b class="col-6">SEO name</b>
+        <input type="text" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter SEO name">
+      </div>
 
-				<div class="form-group">
-					<b class="col-6">Country Code</b>
-					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country code" />
-				</div>
+      <div class="form-group">
+        <b class="col-6">Established</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+      </div>
 
-				
-			</div>
-			<div class="modal-footer">
+      <div class="form-group">
+        <b class="col-6">Ownership</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Ownership">
+      </div>
 
-				<button type="submit"  class="btn btn-info">Save</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
-			</div>
-      </form>
-		</div>
+      <div class="form-group">
+        <b class="col-6">Governance</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter governance">
+      </div>
 
-	</div>
+      <div class="form-group">
+        <b class="col-6">Primary Country</b>
+        <select class="form-control form-control-rounded"> 
+
+          <option selected="" value="247">Zambia</option>
+          <option value="196">South Africa</option>
+          <option value="246">Yemen</option>
+          <option value="183">Samoa</option>
+          <option value="244">Wallis &amp; Futuna</option>
+          <option value="240">Vanuatu</option>
+          <option value="243">Vietnam</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <b class="col-6">Country Founded</b>
+        <select class="form-control form-control-rounded"> 
+
+          <option selected="" value="247">Zambia</option>
+          <option value="196">South Africa</option>
+          <option value="246">Yemen</option>
+          <option value="183">Samoa</option>
+          <option value="244">Wallis &amp; Futuna</option>
+          <option value="240">Vanuatu</option>
+          <option value="243">Vietnam</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <b class="col-6">HQ country</b>
+        <select class="form-control form-control-rounded"> 
+
+          <option selected="" value="247">Zambia</option>
+          <option value="196">South Africa</option>
+          <option value="246">Yemen</option>
+          <option value="183">Samoa</option>
+          <option value="244">Wallis &amp; Futuna</option>
+          <option value="240">Vanuatu</option>
+          <option value="243">Vietnam</option>
+        </select>
+      </div>
+
+
+
+      <div class="form-group">
+        <b class="col-6">Income per annum</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
+      </div>
+
+
+      <div class="form-group">
+        <b class="col-6">Expenditure per annum</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
+      </div>
+
+
+      <div class="form-group">
+        <b class="col-6">EXpenditure per annum</b>
+        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
+      </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
+      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+    </div>
+  </div>
+
 </div>
-<!-- Modal add branch content ends-->
-
-
-
-
-<!-- Modal edit content start-->
-
-<div class="modal fade text-dark" id="editCountryModal" role="dialog">
-	<div class="modal-dialog">
-
-		
-		<div class="modal-content">
-			<div class="modal-header">
-
-				<h4 class="modal-title text-dark">EDIT COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
-			</div>
-
-      <form id="editCountryForm" class="form-horizontal">
-			<div class="modal-body">
-
-
-				<div class="form-group">
-					<b class="col-6">Country Name</b>
-					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter country name">
-				</div>
-
-				<div class="form-group">
-					<b class="col-6">Country Code</b>
-					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="edit_code" placeholder="Enter country code">
-          <input  type="hidden" name = "id"  id = "edit_id"/>
-        </div>
-
-				
-
-
-
-			</div>
-			<div class="modal-footer">
-
-				<button type="submit"  class="btn btn-info">Save</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
-			</div>
-      </form>
-		</div>
-
-	</div>
 </div>
-<!-- Modal edit content ends-->
-
-
-<!-- Modal edit content start-->
-
-<div class="modal fade text-dark" id="editCountryModal" role="dialog">
-	<div class="modal-dialog">
-
-		
-		<div class="modal-content">
-			<div class="modal-header">
-
-				<h4 class="modal-title text-dark">EDIT COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
-			</div>
-
-      <form id="editCountryForm" class="form-horizontal">
-			<div class="modal-body">
-
-
-				<div class="form-group">
-					<b class="col-6">Country Name</b>
-					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter country name">
-				</div>
-
-				<div class="form-group">
-					<b class="col-6">Country Code</b>
-					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="edit_code" placeholder="Enter country code">
-          <input  type="hidden" name = "id"  id = "edit_id"/>
-        </div>
-
-				
+<!--content seos table ends       -->
 
 
 
-			</div>
-			<div class="modal-footer">
+<!--JQUERY CODE STARTS       -->
 
-				<button type="submit"  class="btn btn-info">Save</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
-			</div>
-      </form>
-		</div>
-
-	</div>
-</div>
-<!-- Modal edit content ends-->
-
-<!-- Modal DELETE content start-->
-
-<div class="modal fade text-dark" id="deleteCountryModal" role="dialog">
-	<div class="modal-dialog">
-
-		
-		<div class="modal-content">
-			<div class="modal-header">
-
-				<h4 class="modal-title text-dark">DELETE COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
-			</div>
-
-      <form id="deleteCountryForm" class="form-horizontal">
-			<div class="modal-body">
-
-
-				<div class="form-group">
-					<b class="col-6">Are you sure you want to Delete?</b>
-          <input  type="hidden" name = "id"  id = "delete_id"/>
-        </div>
-
-				
-
-
-
-			</div>
-			<div class="modal-footer">
-
-				<button type="submit"  class="btn btn-danger">Yes</button>
-				<button type="button" data-dismiss="modal" class="btn btn-info">No</button>
-			</div>
-      </form>
-		</div>
-
-	</div>
-</div>
-<!-- Modal DELETE content ends-->
-
-
-
-<!--JQUERY CODE-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
-
 <script>
 $(document).ready(function()
 {
@@ -374,10 +313,14 @@ $(document).ready(function()
 						  }          
 				});
 			 }));
-                    getCountries();
+                    getSeo();
 });
 
-function getCountries()
+
+
+
+
+function getSeo()
  {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() 
@@ -385,11 +328,11 @@ function getCountries()
     if (this.readyState == 4 && this.status == 200)
      {
 
-      document.getElementById("countriesTablepool").innerHTML =this.responseText;
+      document.getElementById("seoTablepool").innerHTML =this.responseText;
 
     }
   };
-  xhttp.open("POST", "ajax.getCountry.php", true);
+  xhttp.open("POST", "ajax.getSeo.php", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("");
 }
@@ -444,24 +387,27 @@ function openModal()
 
 }
 
-
-
-
-
-
-
-
-
-
-
 </script>
+<!--JQUERY CODE ENDS       -->
 
 
 
 
 
 
-<!--content comes here-->
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -539,7 +485,9 @@ function openModal()
 <script src="assets/js/app-script.js"></script>
 <!-- Chart js -->
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
