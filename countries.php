@@ -64,7 +64,7 @@
   <div class="container-fluid" id="mainContent">
 
     <div class="card mt-3">
-    <div class="card-content">
+    <div class="card-content" style="overflow:hidden;">
 	
 	
 	
@@ -75,10 +75,10 @@
 	 <!--content comes here-->
   
 
-<div class="col-lg-12">
-		<div class="card">
+<div class="col-lg-12 ">
+		<div class="card ">
 			<div class="card-body">
-				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
+				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
 				<div class="table-responsive">
 					<table class="table table-hover">
 						<thead>
@@ -99,18 +99,20 @@
 		</div>
 	</div>
 </div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
 
 
-
-<!-- add branch Modal -->
+<!-- Modal add branch content-->
 <div class="modal fade text-dark" id="AddSEOModal" role="dialog">
 	<div class="modal-dialog">
 
-		<!-- Modal content-->
+		
 		<div class="modal-content">
 			<div class="modal-header">
-
-				<h4 class="modal-title text-dark">Add COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				<h4 class="modal-title text-dark">Add COUNTRY</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
       <form id="createForm" class="form-horizontal">
@@ -119,12 +121,12 @@
 
 				<div class="form-group">
 					<b class="col-6">Country Name</b>
-					<input type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country name">
+					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country name" />
 				</div>
 
 				<div class="form-group">
 					<b class="col-6">Country Code</b>
-					<input type="text" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country code">
+					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter country code" />
 				</div>
 
 				
@@ -142,8 +144,141 @@
 
 	</div>
 </div>
+<!-- Modal add branch content ends-->
 
 
+
+
+<!-- Modal edit content start-->
+
+<div class="modal fade text-dark" id="editCountryModal" role="dialog">
+	<div class="modal-dialog">
+
+		
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title text-dark">EDIT COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+
+      <form id="editCountryForm" class="form-horizontal">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Country Name</b>
+					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter country name">
+				</div>
+
+				<div class="form-group">
+					<b class="col-6">Country Code</b>
+					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="edit_code" placeholder="Enter country code">
+          <input  type="hidden" name = "id"  id = "edit_id"/>
+        </div>
+
+				
+
+
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit"  class="btn btn-info">Save</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+      </form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal edit content ends-->
+
+
+<!-- Modal edit content start-->
+
+<div class="modal fade text-dark" id="editCountryModal" role="dialog">
+	<div class="modal-dialog">
+
+		
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title text-dark">EDIT COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+
+      <form id="editCountryForm" class="form-horizontal">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Country Name</b>
+					<input required  type="text" name = "name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter country name">
+				</div>
+
+				<div class="form-group">
+					<b class="col-6">Country Code</b>
+					<input required type="text" name = "code" class="form-control form-control-rounded" value="" id="edit_code" placeholder="Enter country code">
+          <input  type="hidden" name = "id"  id = "edit_id"/>
+        </div>
+
+				
+
+
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit"  class="btn btn-info">Save</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+      </form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal edit content ends-->
+
+<!-- Modal DELETE content start-->
+
+<div class="modal fade text-dark" id="deleteCountryModal" role="dialog">
+	<div class="modal-dialog">
+
+		
+		<div class="modal-content">
+			<div class="modal-header">
+
+				<h4 class="modal-title text-dark">DELETE COUNTRY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+
+      <form id="deleteCountryForm" class="form-horizontal">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Are you sure you want to Delete?</b>
+          <input  type="hidden" name = "id"  id = "delete_id"/>
+        </div>
+
+				
+
+
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit"  class="btn btn-danger">Yes</button>
+				<button type="button" data-dismiss="modal" class="btn btn-info">No</button>
+			</div>
+      </form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal DELETE content ends-->
+
+
+
+<!--JQUERY CODE-->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
@@ -152,9 +287,7 @@
 <script>
 $(document).ready(function()
 {
-
- // createForm
-
+ // createForm 
     $("#createForm").on('submit',(function(e)
     {
 			   e.preventDefault();
@@ -172,9 +305,71 @@ $(document).ready(function()
 					   success: function(r)
 						  {
 							openMessageModal('Infomation',r);
-							getProfiles();
+							getCountries();
 							$("#AddSEOModal").modal("hide");
 							 $('#createForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+      //editCountryForm
+    $("#editCountryForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editCountry.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getCountries();
+							$("#editCountryModal").modal("hide");
+							 $('#editCountryForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+
+
+      //deleteCountryForm
+
+      $("#deleteCountryForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteCountry.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getCountries();
+							$("#deleteCountryModal").modal("hide");
+							 $('#deleteCountryForm').trigger('reset');
 						  },
 						 error: function(e) 
 						  {
@@ -211,21 +406,46 @@ function getCountries()
 
 
 
-function editCountry()
+function editCountry(id)
 {
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+     {
+      var myObject = JSON.parse(this.responseText);
+      document.getElementById('edit_id').value=myObject.id;
+      document.getElementById('edit_name').value=myObject.name;
+      document.getElementById('edit_code').value=myObject.code;
+      //document.getElementById("countriesTablepool").innerHTML =this.responseText;
+      $("#editCountryModal").modal("show");
+    }
+  };
+  xhttp.open("POST", "ajax.getCountryObject.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("id="+id);
+
+
 
 }
 
 
 
-function deleteCountry()
+function deleteCountry(id)
 {
   
+  document.getElementById('delete_id').value=id;
+  $("#deleteCountryModal").modal("show");
 }
 
 
+function openModal()
+{
 
+  $("#AddSEOModal").modal("show");
 
+}
 
 
 

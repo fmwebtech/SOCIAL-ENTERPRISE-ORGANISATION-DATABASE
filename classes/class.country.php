@@ -101,7 +101,7 @@ class COUNTRY
 
 
 
-	function edit($id, $name, $code,  $modifiedBy, $status)
+	function edit($id, $name, $code,  $modifiedBy, $status='edited')
 	{
 			if(!$this->safeToEdit($id,$code))
 			{
@@ -206,7 +206,18 @@ class COUNTRY
 			}
 			catch(Exception $e)
 			{
-				echo $e->getMessage();
+				if(strpos($e->getMessage(),'statement conflicted'))
+				{
+				
+				echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
+							<div class="card-body text-danger">
+								<strong>Oh snap!</strong> 
+								
+								This country can not be deleted at the moment. because the country is attached to other system records. 
+							
+							</div>
+						</div>';
+				}
 				return false;
 			}
 	}

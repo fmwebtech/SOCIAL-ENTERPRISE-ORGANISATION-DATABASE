@@ -272,6 +272,20 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 			}
 			catch(Exception $e)
 			{
+
+				if(strpos($e->getMessage(),'statement conflicted'))
+				{
+				
+					echo  '<div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
+							<div class="card-body text-danger">
+								<strong>Oh snap!</strong> 
+								
+								This user can not be deleted at the moment. because the user is attached to other system records. 
+							
+							</div>
+						</div>';
+				}
+
 				return false;
 			}
 	}
