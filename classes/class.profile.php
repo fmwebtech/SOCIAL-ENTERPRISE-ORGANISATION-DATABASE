@@ -47,16 +47,17 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [PROFILE](NAME,STATUS) 
-											VALUES(?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO [PROFILE](NAME,STATUS) 
+											VALUES(?,'new')");
 			$stmt->bindParam(1,$name);
 			$stmt->execute();
 			
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILE','SAVE',json_encode($_POST));
 			
 			return true;
 		}catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
