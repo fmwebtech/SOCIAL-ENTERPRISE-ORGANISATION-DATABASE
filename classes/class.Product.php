@@ -102,7 +102,7 @@ class PRODUCTS
 			$stmt->bindParam(7,$id);
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','EDIT',json_encode($_POST));
 
 			return true;
 		}

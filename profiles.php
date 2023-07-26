@@ -68,7 +68,7 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Profiles <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add Profile</button></h5>
+      <h5 class="card-title">Profiles <button onclick="openModal()" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add Profile</button></h5>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -90,9 +90,9 @@
   </div>
 </div>
 </div>
+</div>
 
-
-<!-- add branch Modal -->
+<!-- add profile Modal -->
 <div class="modal fade text-dark" id="AddSEOModal" role="dialog">
 <div class="modal-dialog">
 
@@ -107,10 +107,52 @@
       <form id="createForm" class ="form-horizontal" >
       <div class="modal-body">
 
-
+      
       <div class="form-group">
         <b class="col-6">Name</b>
-        <input type="text" class="form-control form-control-rounded" name="name" value="" id="input-6" placeholder="Enter Name">
+        <input required type="text" class="form-control form-control-rounded" name="name" value="" id="input-6" placeholder="Enter Name">
+      </div>
+
+  
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="submit"   class="btn btn-info">Save</button>
+      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+
+    </div>
+    </form>
+  </div>
+
+</div>
+</div>
+
+ <!-- Modal ends here -->
+
+
+<!-- add editModal new model -->
+<!-- add profile Modal -->
+<div class="modal fade text-dark" id="editModal" role="dialog">
+<div class="modal-dialog">
+
+  <!-- Modal content-->
+
+ 
+      <div class="modal-content">
+      <div class="modal-header">
+
+      <h4 class="modal-title text-dark">edit Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">x</button>
+      </div> 
+      <form id="editprofileForm" class ="form-horizontal" >
+      <div class="modal-body">
+
+      
+      <div class="form-group">
+        <b class="col-6">Name</b>
+        <input required type="text" class="form-control form-control-rounded" name="name" value="" id="edit_name" placeholder="Enter Name">
+        <input required type="hidden" name="id" id= 'edit_id' >
+
       </div>
 
   
@@ -126,6 +168,51 @@
   </div>
 
 </div>
+</div>
+<!-- Modal ends here  -->
+
+
+
+<!-- add deleteModal new model -->
+<!-- add profile Modal -->
+<div class="modal fade text-dark" id="deleteModal" role="dialog">
+<div class="modal-dialog">
+
+  <!-- Modal content-->
+
+ 
+      <div class="modal-content">
+      <div class="modal-header">
+
+      <h4 class="modal-title text-dark">delete Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div> 
+      <form id="deleteProfileForm" class ="form-horizontal" >
+      <div class="modal-body">
+
+      
+      <div class="form-group">
+        <b class="col-6">Are you sure you Want to Delete </b>
+        <input required type="hidden" name="id" id= 'delete_id' >
+
+      </div>
+
+  
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="submit"   class="btn btn-danger">Yes</button>
+      <button type="button" data-dismiss="modal" class="btn btn-info">No</button>
+  </form>
+    
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Modal ends here  -->
+
 </div>
 
 
@@ -222,6 +309,8 @@
 
 $(document).ready( function (){
 		//create form
+    //editprofileForm
+
 
     $("#createForm").on('submit',(function(e) {
 			   e.preventDefault();
@@ -250,7 +339,66 @@ $(document).ready( function (){
 				});
 			 }));
 
-  getProfiles();
+
+      $("#editprofileForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveProfile.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							  openMessageModal('Infomation',r);
+							  getProfiles();
+							 $("#editModal").modal("hide");
+							 $('#editProfileForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+
+
+      $("#deleteProfileForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteProfile.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							  openMessageModal('Infomation',r);
+							  getProfiles();
+							 $("#deleteModal").modal("hide");
+							 $('#deleteProfileForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+  getProfiles(); 
     
 	});
 
@@ -273,15 +421,41 @@ function getProfiles()
 		  xhttp.send();
 	 }
 
-  function editProfile()
+  function editProfile(id)
   {
+    
+    //editModal
+
+    var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function()
+		  {
+			if (this.readyState == 4 && this.status == 200)
+				{
+					
+          var myObject=JSON.parse(this.responseText);
+
+          document.getElementById('edit_id').value=myObject.id;
+          document.getElementById('edit_name').value=myObject.name;
+					//document.getElementById('Profiles').innerHTML = this.responseText;
+					
+          $("#editModal").modal("show");
+
+				}
+		  };
+		  xhttp.open("POST", "ajax.getProfileObject.php", true);
+		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		  xhttp.send("id="+id);
 
   }
-  function deleteProfile()
+  function deleteProfile(id)
   {
-
+    document.getElementById('delete_id').value = id;
+    $("#deleteModal").modal("show");
   }
 
-
+  function openModal()
+  {
+    $("#AddSEOModal").modal("show");
+  }
 
 </script>

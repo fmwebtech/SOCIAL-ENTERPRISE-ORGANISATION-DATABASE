@@ -1,5 +1,6 @@
 <?php
 require_once('settings/connectionsetting.php');
+require_once('classes\class.logs.php');
 
 class SEOCOUNTRY
 {
@@ -46,8 +47,9 @@ class SEOCOUNTRY
             $stmt->bindParam(1, $countryId);
             $stmt->bindParam(2, $seoId);
             $stmt->execute();
-            return true;
             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','SAVE',json_encode($_POST));
+
+            return true;
 
         } 
         catch (Exception $e) 
@@ -77,8 +79,9 @@ class SEOCOUNTRY
             $stmt->bindParam(4, $modifiedBy);
             $stmt->bindParam(5, $id);
             $stmt->execute();
-            return true;
             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','EDIT',json_encode($_POST));
+
+            return true;
 
         } catch (Exception $e)
         {
@@ -227,8 +230,9 @@ class SEOCOUNTRY
             $stmt = $Myconnection->prepare('DELETE FROM SEO_COUNTRY WHERE ID=?');
             $stmt->bindParam(1, $id);
             $stmt->execute();
-            return true;
             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','DELETE',json_encode($_POST));
+
+            return true;
 
         }
          catch (Exception $e)

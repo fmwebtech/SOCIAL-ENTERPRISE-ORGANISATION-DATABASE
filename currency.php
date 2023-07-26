@@ -11,7 +11,7 @@
   <meta name="author" content=""/>
   <title>SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
   <!-- loader-->
-  <link href="assets/css/pace.min.css" rel="stylesheet"/s>
+  <link href="assets/css/pace.min.css" rel="stylesheet"/>
   <script src="assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
@@ -55,32 +55,32 @@
     <div class="card mt-3">
     <div class="card-content">
 	
-    <div class="row">
+<div class="row">
 
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">CURRENCY MANAGEMENT <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add CURRENCY</button></h5>
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Currency Name</th>
-              <th scope="col">Action</th>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">CURRENCY MANAGEMENT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add CURRENCY</button></h5>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Currency Name</th>
+                <th scope="col">Action</th>
 
-            </tr>
-          </thead>
-          <tbody id=CurrencyTablepool>
-            
-          </tbody>
+              </tr>
+            </thead>
+            <tbody id=CurrencyTablepool>
+              
+            </tbody>
 
 
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
  <!--content comes here-->
  
@@ -95,21 +95,64 @@
         
 
 				<h4 class="modal-title text-dark">ADD CURRENCY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+			  </div>
+        <form id="newCurrency">
+			    <div class="modal-body">
+
+
+				  <div class="form-group">
+					<b class="col-6">currency name</b>
+					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
+				  </div>
+          </div>
+			    <div class="modal-footer">
+
+				  <button type="submit" class="btn btn-info">Add</button>
+				  <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			    </div>
+          </form>
+		      </div>
+	</div>
+</div>
+
+		<!-- Modal ends here-->
+
+
+
+
+
+    
+
+
+		
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="editCurrency" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 class="modal-title text-dark">EDIT CURRENCY</h4><button onclick="$('#editCurrency').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-      <form id="newCurrency">
+      <form id="editCurrencyForm">
 			<div class="modal-body">
 
 
 				<div class="form-group">
 					<b class="col-6">currency name</b>
-					<input type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
-				</div>
+					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter Currency Name">
+          <input required type="hidden" name="id" id='edit_id'/>
+
+
+        </div>
 
 
 			</div>
 			<div class="modal-footer">
 
-				<button type="submit" class="btn btn-info">Add</button>
+				<button type="submit" class="btn btn-info">Edit</button>
 				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
 			</div>
 		</div>
@@ -117,16 +160,49 @@
 </form>
 	</div>
 </div>
+<!---MOodal ends here-->
 
 
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="deleteCurrency" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 class="modal-title text-dark">DELETE CURRENCY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+      <form id="deleteCurrencyForm">
+			<div class="modal-body">
 
 
+				<div class="form-group">
+					<b class="col-6">Are you sure you want to delete ?</b>
+          <input required type="hidden" name="id" id='delete_id'/>
+
+
+        </div>
+
+
+			</div>
+      <div class="modal-footer">
+
+<button type="submit" class="btn btn-info">Edit</button>
+<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+</div>
+
+</form>
+	</div>
+</div>
+<!---MOodal ends here-->
 
 
 
 	</div>
 	</div>
-    <!--start overlay-->
+    <!--tart overlay-->
     <div class="overlay toggle-menu"></div>
     <!--end overlay-->
 
@@ -186,9 +262,11 @@
 </html>
 
 <script>
-$(document).ready( function (){
+$(document).ready( function ()
+{
   //createForm
-	
+  //editCurrencyForm
+
   
   $("#newCurrency").on('submit',(function(e) {
 			   e.preventDefault();
@@ -207,7 +285,7 @@ $(document).ready( function (){
 						  {
 							 openMessageModal('Infomation',r);
 							 getCurrency();
-							// $("#createModal").modal("hide");
+							$("#AddSEOModal").modal("hide");
 							 $('#newCurrency').trigger('reset');
 						  },
 						 error: function(e) 
@@ -216,6 +294,61 @@ $(document).ready( function (){
 						  }          
 				});
 			 }));
+
+       $("#editCurrencyForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editCurrency.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getCurrency();
+							$("#editCurrency").modal("hide");
+							 $('#editCurrencyForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+       $("#deleteCurrencyForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteCurrency.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getCurrency();
+							$("#deleteCurrency").modal("hide");
+							 $('#deleteCurrencyForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
 
   getCurrency();
 		// code goes here ;
@@ -239,15 +372,36 @@ function getCurrency()
 		  xhttp.send();
 	 }
 
-   function editCurrency()
+   function editCurrency(id)
    {
+//editCurrency is my id
 
 
-   }
-  function deleteCurrency()
-  {
+  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function()
+		  {
+			if (this.readyState == 4 && this.status == 200)
+				{
+          var myObject=JSON.parse(this.responseText);
+          document.getElementById('edit_id').value=myObject.id;
+          document.getElementById('edit_name').value=myObject.name;
+					// document.getElementById('CurrencyTablepool').innerHTML = this.responseText;
+          $("#editCurrency").modal("show");
+				}
+		  };
+		  xhttp.open("POST", "ajax.getCurrencyObject.php", true);
+		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		  xhttp.send("id="+id);
 
-  
-  }
+    }
+  function deleteCurrency(id)
+    {
+      document.getElementById('delete_id').value=id;
+      $("#deleteCurrency").modal("show");
+    }
+function openModal()
+{
+  $("#AddSEOModal").modal("show");
 
+}
    </script>
