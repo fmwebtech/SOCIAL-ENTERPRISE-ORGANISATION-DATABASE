@@ -5,7 +5,7 @@
     </div>
   </div>
 </footer>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 
 function openMessageModal(title,message)
@@ -33,9 +33,7 @@ $('#generalAlertModel').modal('show');
 					
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
-			</div>
+	
 		</div>
 
 	</div>

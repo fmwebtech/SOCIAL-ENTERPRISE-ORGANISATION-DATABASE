@@ -102,7 +102,7 @@
 
 				<div class="form-group">
 					<b class="col-6">currency name</b>
-					<input type="text" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
+					<input type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
 				</div>
 
 
