@@ -113,7 +113,7 @@ class PRODUCTS
 		}
 	}
 
-	function getProduct($seoId)
+	function getProducts($seoId)
 	{
 		try
 		{
