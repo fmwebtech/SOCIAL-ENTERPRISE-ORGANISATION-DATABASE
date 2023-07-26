@@ -11,6 +11,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 {
     extract($_POST);
 $myCurrency = new CURRENCY();
+$createdBy=$_SESSION['email'];
+//echo $_SESSION['email'];
 if($myCurrency->save($name, $createdBy,))
 {
     echo 'The Currency Has Been Added';

@@ -47,7 +47,7 @@ class SEOCOUNTRY
             $stmt->bindParam(2, $seoId);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','SAVE',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','SAVE',json_encode($_POST));
 
         } 
         catch (Exception $e) 
@@ -78,7 +78,7 @@ class SEOCOUNTRY
             $stmt->bindParam(5, $id);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','EDIT',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','EDIT',json_encode($_POST));
 
         } catch (Exception $e)
         {
@@ -228,7 +228,7 @@ class SEOCOUNTRY
             $stmt->bindParam(1, $id);
             $stmt->execute();
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','DELETE',json_encode($_POST));
+            (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEOCOUNTRY','DELETE',json_encode($_POST));
 
         }
          catch (Exception $e)

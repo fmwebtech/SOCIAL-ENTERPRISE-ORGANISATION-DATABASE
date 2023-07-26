@@ -98,18 +98,19 @@
 
   <!-- Modal content-->
 
-  <form id ="Createform" class ="form-horizontal" >
+ 
       <div class="modal-content">
       <div class="modal-header">
 
       <h4 class="modal-title text-dark">Add Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
+      </div> 
+      <form id="createForm" class ="form-horizontal" >
       <div class="modal-body">
 
 
       <div class="form-group">
         <b class="col-6">Name</b>
-        <input type="text" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Name">
+        <input type="text" class="form-control form-control-rounded" name="name" value="" id="input-6" placeholder="Enter Name">
       </div>
 
   
@@ -190,8 +191,8 @@
 <script src="assets/js/app-script.js"></script>
 <!-- Chart js -->
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
@@ -225,7 +226,7 @@ $(document).ready( function (){
     $("#createForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.getProfile.php",
+					   url: "ajax.saveProfile.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -237,9 +238,9 @@ $(document).ready( function (){
 						   },
 					   success: function(r)
 						  {
-							//openMessageModal('Infomation',r);
-							getProfiles();
-							// $("#createModal").modal("hide");
+							  openMessageModal('Infomation',r);
+							  getProfiles();
+							 $("#AddSEOModal").modal("hide");
 							 $('#createForm').trigger('reset');
 						  },
 						 error: function(e) 
