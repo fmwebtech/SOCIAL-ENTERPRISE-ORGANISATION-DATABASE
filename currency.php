@@ -1,8 +1,6 @@
 
 <?php
-
-  
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,21 +71,19 @@
 
             </tr>
           </thead>
-          <tbody>
+          <tbody id=CurrencyTablepool>
             
           </tbody>
+
+
         </table>
       </div>
     </div>
   </div>
 </div>
 </div>
-	
-	
-	
-	
-	
-	 <!--content comes here-->
+ <!--content comes here-->
+ 
   
 <!-- add branch Modal -->
 <div class="modal fade text-dark" id="AddSEOModal" role="dialog">
@@ -96,9 +92,11 @@
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
+        
 
 				<h4 class="modal-title text-dark">ADD CURRENCY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
+      <form id="newCurrency">
 			<div class="modal-body">
 
 
@@ -111,11 +109,12 @@
 			</div>
 			<div class="modal-footer">
 
-				<button type="button" onclick="confirm('Save?');"  class="btn btn-info">Add</button>
+				<button type="submit" class="btn btn-info">Add</button>
 				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
 			</div>
 		</div>
 
+</form>
 	</div>
 </div>
 
@@ -159,8 +158,9 @@
 <!-- Custom scripts -->
 <script src="assets/js/app-script.js"></script>
 <!-- Chart js -->
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
@@ -184,3 +184,70 @@
 
 </body>
 </html>
+
+<script>
+$(document).ready( function (){
+  //createForm
+	
+  
+  $("#newCurrency").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveCurrency.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getCurrency();
+							// $("#createModal").modal("hide");
+							 $('#newCurrency').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+  getCurrency();
+		// code goes here ;
+	});
+
+function getCurrency()
+	 {
+		 
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function()
+		  {
+			if (this.readyState == 4 && this.status == 200)
+				{
+					
+					document.getElementById('CurrencyTablepool').innerHTML = this.responseText;
+					
+				}
+		  };
+		  xhttp.open("POST", "ajax.getCurrency.php", true);
+		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		  xhttp.send();
+	 }
+
+   function editCurrency()
+   {
+
+
+   }
+  function deleteCurrency()
+  {
+
+  
+  }
+
+   </script>
