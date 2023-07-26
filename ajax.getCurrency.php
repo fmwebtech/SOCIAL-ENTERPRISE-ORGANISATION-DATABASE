@@ -14,10 +14,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     $fetchedCurrency= array();
 
     $fetchedCurrency=$myCurrency->getCurrency();
-    
+    $count=1;
         foreach($fetchedCurrency as $currency)
         {
-                echo '<tr><td>'.$currency->name.'</td> <td>'.$currency->status.'</td> </tr>';
+                echo '<tr> <td>'.$count.'</td><td>'.$currency->name.'</td> 
+
+                <td><button onclick="editCurrency(\''.$currency->id.'\')" class="btn btn-success">
+												<i class="zmdi zmdi-edit"></i> Edit </button>
+											
+												
+												<button onclick="deleteCurrency(\''.$currency->id.'\')" class="btn btn-danger">
+													<i class="zmdi zmdi-delete"></i> Delete  </button>
+                                                    </td>
+                                                    
+                                                </tr>';
+                $count++;
         }       
    
 

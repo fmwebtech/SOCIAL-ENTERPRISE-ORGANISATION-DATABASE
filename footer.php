@@ -5,3 +5,39 @@
     </div>
   </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+function openMessageModal(title,message)
+{
+document.getElementById("messageBodyAlert").innerHTML=message;
+document.getElementById("messageTitleAlert").innerHTML=title;
+$('#generalAlertModel').modal('show');
+
+}
+</script>
+
+<div class="modal fade text-dark" id="generalAlertModel" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 id="messageTitleAlert" class="modal-title text-dark"></h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+     
+			<div class="modal-body">
+				<div id="messageBodyAlert" class="form-group">
+					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
