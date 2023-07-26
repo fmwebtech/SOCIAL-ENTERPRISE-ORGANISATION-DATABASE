@@ -72,7 +72,7 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">SEO list <button data-toggle="modal" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button></h5>
+      <h5 class="card-title">SEO list <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button></h5>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -85,8 +85,8 @@
               <th scope="col">Services</th>
               <th scope="col">Income per annum</th>
               <th scope="col">Expenditure per annum</th>
-              <th scope="col">Founded in </th>
               <th scope="col">HQ In</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody id=seoTablepool>
@@ -105,8 +105,8 @@
 
 
 
-<!-- add branch Modal -->
-<div class="modal fade text-dark" id="AddSEOModal" role="dialog">
+<!-- add Seo Modal -->
+<div class="modal fade text-dark" id="addSeoModal" role="dialog">
 <div class="modal-dialog">
 
   <!-- Modal content-->
@@ -117,15 +117,17 @@
     </div>
     <div class="modal-body">
 
-
+    <form id=" addSeoForm">
       <div class="form-group">
         <b class="col-6">SEO name</b>
-        <input type="text" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter SEO name">
+        <input type="" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+        
+      
       </div>
 
       <div class="form-group">
         <b class="col-6">Established</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+        <input type="number" name = "" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
       </div>
 
       <div class="form-group">
@@ -140,45 +142,42 @@
 
       <div class="form-group">
         <b class="col-6">Primary Country</b>
-        <select class="form-control form-control-rounded"> 
-
-          <option selected="" value="247">Zambia</option>
-          <option value="196">South Africa</option>
-          <option value="246">Yemen</option>
-          <option value="183">Samoa</option>
-          <option value="244">Wallis &amp; Futuna</option>
-          <option value="240">Vanuatu</option>
-          <option value="243">Vietnam</option>
+        <select class="form-control form-control-rounded" >
+          <?php
+            include_once('classes/class.country.php');
+            foreach((new COUNTRY())->getCountry() as $cou)
+            {
+                echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+            }
+          ?>
         </select>
       </div>
 
 
       <div class="form-group">
         <b class="col-6">Country Founded</b>
-        <select class="form-control form-control-rounded"> 
-
-          <option selected="" value="247">Zambia</option>
-          <option value="196">South Africa</option>
-          <option value="246">Yemen</option>
-          <option value="183">Samoa</option>
-          <option value="244">Wallis &amp; Futuna</option>
-          <option value="240">Vanuatu</option>
-          <option value="243">Vietnam</option>
+        <select class="form-control form-control-rounded" >
+          <?php
+            include_once('classes/class.country.php');
+            foreach((new COUNTRY())->getCountry() as $cou)
+            {
+                echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+            }
+          ?>
         </select>
       </div>
 
 
       <div class="form-group">
         <b class="col-6">HQ country</b>
-        <select class="form-control form-control-rounded"> 
-
-          <option selected="" value="247">Zambia</option>
-          <option value="196">South Africa</option>
-          <option value="246">Yemen</option>
-          <option value="183">Samoa</option>
-          <option value="244">Wallis &amp; Futuna</option>
-          <option value="240">Vanuatu</option>
-          <option value="243">Vietnam</option>
+        <select class="form-control form-control-rounded" >
+          <?php
+            include_once('classes/class.country.php');
+            foreach((new COUNTRY())->getCountry() as $cou)
+            {
+                echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+            }
+          ?>
         </select>
       </div>
 
@@ -209,6 +208,7 @@
       <button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
       <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
     </div>
+    </form>
   </div>
 
 </div>
@@ -242,7 +242,7 @@ $(document).ready(function()
 						  {
 							openMessageModal('Infomation',r);
 							getCountries();
-							$("#AddSEOModal").modal("hide");
+							$("#addSeoModal").modal("hide");
 							 $('#createForm').trigger('reset');
 						  },
 						 error: function(e) 
@@ -346,7 +346,7 @@ function getSeo()
 
 
 
-function editCountry(id)
+function editSeo(id)
 {
 
   var xhttp = new XMLHttpRequest();
@@ -372,7 +372,7 @@ function editCountry(id)
 
 
 
-function deleteCountry(id)
+function deleteSeo(id)
 {
   
   document.getElementById('delete_id').value=id;
@@ -383,7 +383,7 @@ function deleteCountry(id)
 function openModal()
 {
 
-  $("#AddSEOModal").modal("show");
+  $("#addSeoModal").modal("show");
 
 }
 

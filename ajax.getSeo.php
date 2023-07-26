@@ -28,16 +28,20 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                 echo '<tr>
                             <td>'.$count.'</td>
                             <td>'.$seo->name.'</td>
-                            <td>'.(new COUNTRY($seo->established))->name.'</td>
+                            <td>'.$seo->established.'</td>
                             <td>'.$brans.'</td>
                             <td>'.$pros.'</td>
                             <td>'. $services.'</td>
-                            <td>'.$seo->hqCountry.'</td>
-                            <td>'.$seo->countryFounded.'</td>
                             <td>'.$seo->incomePerAnnum.'</td>
                             <td>'.$seo->expenditurePerAnnum.'</td>
-                 
-                 
+                            <td>'.(new COUNTRY($seo->hqCountry))->name.'</td>                
+                            <td><button onclick="editSeo(\''.$seo->id.'\')" class="btn btn-success">
+                            <i class="zmdi zmdi-edit"></i> Edit </button>
+                        
+                            
+                            <button onclick="deleteSeo(\''.$seo->id.'\')" class="btn btn-danger">
+                                <i class="zmdi zmdi-delete"></i> Delete  </button>
+                                </td>
                  
                  
                  
