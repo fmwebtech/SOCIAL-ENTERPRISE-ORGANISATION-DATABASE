@@ -171,9 +171,9 @@ $(document).ready(function()
 						   },
 					   success: function(r)
 						  {
-							//openMessageModal('Infomation',r);
+							openMessageModal('Infomation',r);
 							getProfiles();
-							// $("#createModal").modal("hide");
+							$("#AddSEOModal").modal("hide");
 							 $('#createForm').trigger('reset');
 						  },
 						 error: function(e) 
@@ -182,35 +182,8 @@ $(document).ready(function()
 						  }          
 				});
 			 }));
-
-
-
-
-
-
-
-
-
                     getCountries();
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function getCountries()
  {
