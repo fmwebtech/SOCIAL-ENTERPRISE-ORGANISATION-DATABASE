@@ -280,7 +280,7 @@ function safeToEdit($id,$seoId, $address, $name, $countryId)
 							<div class="card-body text-danger">
 								<strong>Oh snap!</strong> 
 								
-								This user can not be deleted at the moment. because the user is attached to other system records. 
+								This country can not be deleted at the moment. because the country is attached to other system records. 
 							
 							</div>
 						</div>';
