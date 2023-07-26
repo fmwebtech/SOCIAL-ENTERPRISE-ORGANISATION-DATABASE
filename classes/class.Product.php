@@ -66,7 +66,7 @@ class PRODUCTS
 			$stmt->bindParam(5,$createdBy);			
 			$stmt->execute();
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','SAVE',json_encode($_POST));
 
 			return true;
 		}
@@ -137,7 +137,7 @@ class PRODUCTS
 				$productArray[] =$product;
 			}
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','GETPRODUCT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','GETPRODUCT',json_encode($_POST));
 
 			return $productArray;
 		}
@@ -208,7 +208,7 @@ class PRODUCTS
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
 
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','DELETE',json_encode($_POST));
 
 				return true;
 			}
