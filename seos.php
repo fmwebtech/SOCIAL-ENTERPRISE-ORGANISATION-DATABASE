@@ -219,21 +219,45 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">EDIT COMPANY</h4><button onclick="$('#editCurrency').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">EDIT COMPANY</h4><button onclick="$('#editSeo').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
       <form id="editSeoForm">
 			<div class="modal-body">
 
 
 				<div class="form-group">
-					<b class="col-6">currency name</b>
-					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter Currency Name">
-          <input required type="number" name="established" class="form-control form-control-rounded" value="" id="edit_established" placeholder="Enter Currency Name">
+					
+          <b class="col-6">Company name</b>
+            <input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter Currency Name">
+            
+            <b class="col-6">Established</b>
+            <input required type="number" name="established" class="form-control form-control-rounded" value="" id="edit_established" placeholder="Enter Established">
+          
+            <b class="col-6">Ownership</b>
+            <input required type="number" name="ownership" class="form-control form-control-rounded" value="" id="edit_ownership" placeholder="Enter Ownership">
+            
+            <b class="col-6">Primary Country</b>
+            <input required type="number" name="primaryCountry" class="form-control form-control-rounded" value="" id="edit_primaryCountry" placeholder="Enter Primary Country">
+            
+            <b class="col-6">Governance</b>
+            <input required type="number" name="governance" class="form-control form-control-rounded" value="" id="edit_governance" placeholder="Enter Governance">
+            
+            <b class="col-6">HQ Country</b>
+            <input required type="number" name="hqCountry" class="form-control form-control-rounded" value="" id="edit_hqCountry" placeholder="Enter hqcountry">
 
-          <input required type="hidden" name="id" id='edit_id'/>
+            <b class="col-6">Country Founded</b>
+            <input required type="number" name="countryFounded" class="form-control form-control-rounded" value="" id="edit_countryFounded" placeholder="Country Founded">
+            
+            <b class="col-6">Income per Annum</b>
+            <input required type="number" name="incomePerAnnum" class="form-control form-control-rounded" value="" id="incomePerAnnum" placeholder="incomePerAnnum">
+           
+            <b class="col-6">Expenditure per Annum</b>
+            <input required type="number" name="expenditurePerAnnum" class="form-control form-control-rounded" value="" id="expenditurePerAnnum" placeholder="expenditurePerAnnum">
+
+            <input required type="hidden" name="id" id='edit_id'/>
 
 
-        </div>
+          </div>
 
 
 			</div>
@@ -327,7 +351,7 @@ $(document).ready(function()
 				});
 			 }));
      
-    //   //editCountryForm
+    //   //editCompanyForm
     $("#editSeoForm").on('submit',(function(e)
     {
 			   e.preventDefault();
@@ -345,7 +369,7 @@ $(document).ready(function()
 					   success: function(r)
 						  {
 							openMessageModal('Infomation',r);
-							getCountries();
+							getSeo();
 							$("#editSeoModal").modal("hide");
 							 $('#editSeoForm').trigger('reset');
 						  },
@@ -359,7 +383,7 @@ $(document).ready(function()
 
 
 
-      //deleteCountryForm
+      //deleteCompanyForm
 
       $("#deleteSeoForm").on('submit',(function(e)
     {
@@ -432,7 +456,6 @@ function editSeo(id)
       var myObject = JSON.parse(this.responseText);
       document.getElementById('edit_id').value=myObject.id;
       document.getElementById('edit_name').value=myObject.name;
-      document.getElementById('edit_code').value=myObject.code;
       //document.getElementById("countriesTablepool").innerHTML =this.responseText;
       $("#editSeoModal").modal("show");
     }
