@@ -30,11 +30,11 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                             <td>'.$seo->name.'</td>
                             <td>'.$seo->established.'</td>
                             <td>'.$brans.'</td>
-                            <td>'.$pros.'</td>
-                            <td>'. $services.'</td>
+                            
+                            
                             <td>'.$seo->incomePerAnnum.'</td>
                             <td>'.$seo->expenditurePerAnnum.'</td>
-                            <td>'.(new COUNTRY($seo->hqCountry))->name.'</td>                
+                                       
                             <td><button onclick="editSeo(\''.$seo->id.'\')" class="btn btn-success">
                             <i class="zmdi zmdi-edit"></i> Edit </button>
                         

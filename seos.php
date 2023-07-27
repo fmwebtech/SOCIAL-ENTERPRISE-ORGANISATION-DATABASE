@@ -81,11 +81,8 @@
               <th scope="col">Name</th>
               <th scope="col">Established</th>
               <th scope="col">Branches</th>
-              <th scope="col">Products</th>
-              <th scope="col">Services</th>
               <th scope="col">Income per annum</th>
               <th scope="col">Expenditure per annum</th>
-              <th scope="col">HQ In</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -117,7 +114,7 @@
     </div>
     <div class="modal-body">
 
-    <form id=" addSeoForm">
+    <form id="addSeoForm">
       <div class="form-group">
         <b class="col-6">SEO name</b>
         <input type="" name = "name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
@@ -127,22 +124,22 @@
 
       <div class="form-group">
         <b class="col-6">Established</b>
-        <input type="number" name = "" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
+        <input type="number" name = "established" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Established year">
       </div>
 
       <div class="form-group">
         <b class="col-6">Ownership</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Ownership">
+        <input type="number" name = "ownership" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Ownership">
       </div>
 
       <div class="form-group">
         <b class="col-6">Governance</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter governance">
+        <input type="number" name = "governance" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter governance">
       </div>
 
       <div class="form-group">
         <b class="col-6">Primary Country</b>
-        <select class="form-control form-control-rounded" >
+        <select name ="primaryCountry" class="form-control form-control-rounded" >
           <?php
             include_once('classes/class.country.php');
             foreach((new COUNTRY())->getCountry() as $cou)
@@ -156,7 +153,7 @@
 
       <div class="form-group">
         <b class="col-6">Country Founded</b>
-        <select class="form-control form-control-rounded" >
+        <select name="countryFounded" class="form-control form-control-rounded" >
           <?php
             include_once('classes/class.country.php');
             foreach((new COUNTRY())->getCountry() as $cou)
@@ -170,7 +167,7 @@
 
       <div class="form-group">
         <b class="col-6">HQ country</b>
-        <select class="form-control form-control-rounded" >
+        <select name="hqCountry" class="form-control form-control-rounded" >
           <?php
             include_once('classes/class.country.php');
             foreach((new COUNTRY())->getCountry() as $cou)
@@ -185,27 +182,24 @@
 
       <div class="form-group">
         <b class="col-6">Income per annum</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
+        <input type="number" name = "incomePerAnnum" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
       </div>
 
 
       <div class="form-group">
         <b class="col-6">Expenditure per annum</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
+        <input type="number" name= "expenditurePerAnnum" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
       </div>
 
 
-      <div class="form-group">
-        <b class="col-6">EXpenditure per annum</b>
-        <input type="number" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Income per annum">
-      </div>
+      
 
 
 
     </div>
     <div class="modal-footer">
 
-      <button type="button" onclick="confirm('Save?');"  class="btn btn-info">Save</button>
+      <button type="submit"   class="btn btn-info">Save</button>
       <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
     </div>
     </form>
@@ -221,14 +215,16 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
 $(document).ready(function()
 {
- // createForm 
-    $("#createForm").on('submit',(function(e)
+ 
+ // addSeoForm 
+    $("#addSeoForm").on('submit',(function(e)
     {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.saveCountry.php",
+					   url: "ajax.saveSeo.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -241,9 +237,9 @@ $(document).ready(function()
 					   success: function(r)
 						  {
 							openMessageModal('Infomation',r);
-							getCountries();
+							getSeo();
 							$("#addSeoModal").modal("hide");
-							 $('#createForm').trigger('reset');
+							 $('#addSeoForm').trigger('reset');
 						  },
 						 error: function(e) 
 						  {
@@ -251,68 +247,68 @@ $(document).ready(function()
 						  }          
 				});
 			 }));
-
-      //editCountryForm
-    $("#editCountryForm").on('submit',(function(e)
-    {
-			   e.preventDefault();
-			   $.ajax({
-					   url: "ajax.editCountry.php",
-					   type: "POST",
-					   data:  new FormData(this),
-					   contentType: false,
-							 cache: false,
-					   processData:false,
-					   beforeSend : function()
-						   {
-							// put your check here :)
-						   },
-					   success: function(r)
-						  {
-							openMessageModal('Infomation',r);
-							getCountries();
-							$("#editCountryModal").modal("hide");
-							 $('#editCountryForm').trigger('reset');
-						  },
-						 error: function(e) 
-						  {
-							   alert(e);
-						  }          
-				});
-			 }));
-
-
+     
+    //   //editCountryForm
+    // $("#editCountryForm").on('submit',(function(e)
+    // {
+		// 	   e.preventDefault();
+		// 	   $.ajax({
+		// 			   url: "ajax.editCountry.php",
+		// 			   type: "POST",
+		// 			   data:  new FormData(this),
+		// 			   contentType: false,
+		// 					 cache: false,
+		// 			   processData:false,
+		// 			   beforeSend : function()
+		// 				   {
+		// 					// put your check here :)
+		// 				   },
+		// 			   success: function(r)
+		// 				  {
+		// 					openMessageModal('Infomation',r);
+		// 					getCountries();
+		// 					$("#editCountryModal").modal("hide");
+		// 					 $('#editCountryForm').trigger('reset');
+		// 				  },
+		// 				 error: function(e) 
+		// 				  {
+		// 					   alert(e);
+		// 				  }          
+		// 		});
+		// 	 }));
 
 
-      //deleteCountryForm
 
-      $("#deleteCountryForm").on('submit',(function(e)
-    {
-			   e.preventDefault();
-			   $.ajax({
-					   url: "ajax.deleteCountry.php",
-					   type: "POST",
-					   data:  new FormData(this),
-					   contentType: false,
-							 cache: false,
-					   processData:false,
-					   beforeSend : function()
-						   {
-							// put your check here :)
-						   },
-					   success: function(r)
-						  {
-							openMessageModal('Infomation',r);
-							getCountries();
-							$("#deleteCountryModal").modal("hide");
-							 $('#deleteCountryForm').trigger('reset');
-						  },
-						 error: function(e) 
-						  {
-							   alert(e);
-						  }          
-				});
-			 }));
+
+    //   //deleteCountryForm
+
+    //   $("#deleteCountryForm").on('submit',(function(e)
+    // {
+		// 	   e.preventDefault();
+		// 	   $.ajax({
+		// 			   url: "ajax.deleteCountry.php",
+		// 			   type: "POST",
+		// 			   data:  new FormData(this),
+		// 			   contentType: false,
+		// 					 cache: false,
+		// 			   processData:false,
+		// 			   beforeSend : function()
+		// 				   {
+		// 					// put your check here :)
+		// 				   },
+		// 			   success: function(r)
+		// 				  {
+		// 					openMessageModal('Infomation',r);
+		// 					getCountries();
+		// 					$("#deleteCountryModal").modal("hide");
+		// 					 $('#deleteCountryForm').trigger('reset');
+		// 				  },
+		// 				 error: function(e) 
+		// 				  {
+		// 					   alert(e);
+		// 				  }          
+		// 		});
+		// 	 }));
                     getSeo();
 });
 

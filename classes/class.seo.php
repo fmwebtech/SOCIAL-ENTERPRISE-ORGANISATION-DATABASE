@@ -1,6 +1,6 @@
 <?php
 require_once('settings\connectionsetting.php');
-
+require_once('classes\class.logs.php');
 class SEO
 {
     var $id;
@@ -10,10 +10,11 @@ class SEO
     var $primaryCountry;
     var $governance;
     var $hqCountry;
-    var $createdBy;
+    
     var $countryFounded;
     var $incomePerAnnum;
     var $expenditurePerAnnum;
+    var $createdBy;
     var $modifiedBy;
     var $status;
     var $regDate;
@@ -74,8 +75,9 @@ class SEO
              $stmt->bindParam(9, $createdBy);
              $stmt->bindParam(10,$ownership);
              $stmt->execute();
+             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','SAVE',json_encode($_POST));
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','SAVE',json_encode($_POST));
+            
 
         } catch (Exception $e)
          {
@@ -132,8 +134,9 @@ class SEO
             $stmt->bindParam(10, $status);
             $stmt->bindParam(11, $id);
             $stmt->execute();
+             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','EDIT',json_encode($_POST));
             return true;
-            (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','EDIT',json_encode($_POST));
+           
 
         }
          catch (Exception $e)
@@ -212,8 +215,9 @@ class SEO
             $stmt = $Myconnection->prepare('DELETE FROM SEO WHERE ID=?');
             $stmt->bindParam(1, $id);
             $stmt->execute();
-            return true;
             (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','DELETE',json_encode($_POST));
+            return true;
+            
 
         }
          catch (Exception $e)
