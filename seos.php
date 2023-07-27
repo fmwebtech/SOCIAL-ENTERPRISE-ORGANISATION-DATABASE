@@ -237,17 +237,42 @@
             <input required type="number" name="ownership" class="form-control form-control-rounded" value="" id="edit_ownership" placeholder="Enter Ownership">
             
             <b class="col-6">Primary Country</b>
-            <input required type="number" name="primaryCountry" class="form-control form-control-rounded" value="" id="edit_primaryCountry" placeholder="Enter Primary Country">
-            
+            <select name="primaryCountry" class="form-control form-control-rounded" value="" id="edit_primaryCountry">
+              <?php
+                include_once('classes/class.country.php');
+                foreach((new COUNTRY())->getCountry() as $cou)
+                {
+                    echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+                }
+              ?>
+            </select> 
+
             <b class="col-6">Governance</b>
             <input required type="number" name="governance" class="form-control form-control-rounded" value="" id="edit_governance" placeholder="Enter Governance">
             
             <b class="col-6">HQ Country</b>
-            <input required type="number" name="hqCountry" class="form-control form-control-rounded" value="" id="edit_hqCountry" placeholder="Enter hqcountry">
-
-            <b class="col-6">Country Founded</b>
-            <input required type="number" name="countryFounded" class="form-control form-control-rounded" value="" id="edit_countryFounded" placeholder="Country Founded">
             
+            <select name="hqCountry" class="form-control form-control-rounded" id="edit_hqCountry">
+            <?php
+                include_once('classes/class.country.php');
+                foreach((new COUNTRY())->getCountry() as $cou)
+                {
+                    echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+                }
+            ?>
+            </select>
+
+            <b class="col-6">Country Founded</b>            
+            <select name="countryFounded" class="form-control form-control-rounded" value="" id="edit_countryFounded">
+            <?php
+                include_once('classes/class.country.php');
+                foreach((new COUNTRY())->getCountry() as $cou)
+                {
+                    echo '<option value="'.$cou->id.'">'.$cou->name.'</option>';
+                }
+            ?>
+            </select>
+
             <b class="col-6">Income per Annum</b>
             <input required type="number" name="incomePerAnnum" class="form-control form-control-rounded" value="" id="incomePerAnnum" placeholder="incomePerAnnum">
            
@@ -439,12 +464,6 @@ function getSeo()
 
 
 
-
-
-
-
-
-
 function editSeo(id)
 {
 
@@ -456,7 +475,41 @@ function editSeo(id)
       var myObject = JSON.parse(this.responseText);
       document.getElementById('edit_id').value=myObject.id;
       document.getElementById('edit_name').value=myObject.name;
+      document.getElementById('edit_established').value=myObject.established;
+      document.getElementById('edit_ownership').value=myObject.ownership;
+      document.getElementById('edit_governance').value=myObject.governance;
+
       //document.getElementById("countriesTablepool").innerHTML =this.responseText;
+
+
+      var ele = document.getElementById("edit_countryFounded");
+      for(var i=0;i< ele.options.length;i++)
+					{
+						if(ele.options[i].value == myObject.countryFounded)
+						{ ele.options[i].selected = true;}
+            else { ele.options[i].selected = false;} 
+					}
+
+          var ele = document.getElementById("edit_primaryCountry");
+      for(var i=0;i< ele.options.length;i++)
+					{
+						if(ele.options[i].value == myObject.primaryCountry)
+						{ ele.options[i].selected = true;}
+            else { ele.options[i].selected = false;} 
+					}
+
+          var ele = document.getElementById("edit_hqCountry");
+      for(var i=0;i< ele.options.length;i++)
+					{
+						if(ele.options[i].value == myObject.hqCountry)
+						{ ele.options[i].selected = true;}
+            else { ele.options[i].selected = false;} 
+					}
+          
+
+
+
+
       $("#editSeoModal").modal("show");
     }
   };
@@ -492,15 +545,6 @@ window.location.assign("seosDetails.php?id="+id);
 
 </script>
 <!--JQUERY CODE ENDS       -->
-
-
-
-
-
-
-
-
-
 
 
 
