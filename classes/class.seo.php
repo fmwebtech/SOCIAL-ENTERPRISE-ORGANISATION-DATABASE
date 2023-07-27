@@ -24,6 +24,7 @@ class SEO
         if ($id != NULL)
          {
 
+
             // do nothing
             global $Myconnection;
             $stmt = $Myconnection->prepare('SELECT * FROM SEO WHERE ID=?');
@@ -110,7 +111,7 @@ class SEO
 		}
 	}
 
-    function edit($id, $name, $established, $ownership,$primaryCountry, $modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status) {
+    function edit($id, $name, $established, $ownership,$primaryCountry, $modifiedBy, $governance, $hqCountry, $countryFounded, $incomePerAnnum, $expenditurePerAnnum, $status='edited') {
         
         if (!$this->safeToEdit($id, $name)) 
         {
@@ -121,7 +122,7 @@ class SEO
         try
          {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,GOVERNANCE=?,INCOMEPERANNUM=?, PRIMARYCOUNTRY=?, EXPENDITUREPERANNUM=?, COUNTRYFOUNDED=?, ESTABLISHED=?, HQCOUNTRY=?,MODIFIED_BY=?,[STATUS]=? WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,GOVERNANCE=?,INCOMEPERANNUM=?, PRIMARYCOUNTRY=?, EXPENDITUREPERANNUM=?, COUNTRYFOUNDED=?, ESTABLISHED=?, HQCOUNTRY=?,MODIFIED_BY=?,WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
             $stmt->bindParam(3, $incomePerAnnum);
@@ -131,7 +132,7 @@ class SEO
             $stmt->bindParam(7, $established);
             $stmt->bindParam(8, $hqCountry);
             $stmt->bindParam(9, $modifiedBy);
-            $stmt->bindParam(10, $status);
+            $stmt->bindParam(10,$status);
             $stmt->bindParam(11, $id);
             $stmt->execute();
              (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SEO','EDIT',json_encode($_POST));
@@ -229,7 +230,7 @@ class SEO
 							<div class="card-body text-danger">
 								<strong>Oh snap!</strong> 
 								
-								This Currency can not be deleted at the moment. Because the currency is attached to other system records. 
+								This Company can not be deleted at the moment. Because the Company is attached to other system records. 
 							
 							</div>
 						</div>';
