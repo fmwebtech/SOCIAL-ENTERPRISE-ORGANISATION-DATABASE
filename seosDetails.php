@@ -2,8 +2,10 @@
 <?php
 	@session_start();
   require_once('classes\class.seo.php');
-
-
+  require_once('classes\class.Product.php');
+  require_once('classes\class.Service.php');
+  require_once('classes\class.branch.php');
+  require_once('classes\class.country.php');
 
 	if(!isset($_SESSION['email']))
 	{
@@ -13,6 +15,14 @@
     {
       extract($_GET);
       $myseosDetails = new SEO($id);
+      
+
+
+
+      $pros = sizeof((new PRODUCTS())->getProducts($myseosDetails->id));
+      $services = sizeof((new SERVICES())->getServices($myseosDetails->id));
+      $brans = sizeof((new BRANCH())->getBranchBySeo($myseosDetails->id));
+     
       // var_dump($myseosDetails);
     }
     else
@@ -91,7 +101,7 @@
   <div class="col-lg-6">
    <div class="card">
      <div class="card-body">
-       <div class="card-title"><?php echo $myseosDetails->name;  ?></div>
+       <div class="card-title" onclick="goToSeos()"> <i class="fa fa-arrow-left">      </i><?php echo "            "; echo $myseosDetails->name;  ?> </div>
        <hr>
        <form>
 
@@ -100,21 +110,21 @@
           <label class="col-6"><?php echo $myseosDetails->established;  ?></label>
         </div>
         <hr>
-        <div class="row" onclick="goTo('Views/seo_branches.php' , 'seo_specific_details_box')">
+        <div class="row" onclick="goTo('seobranches.php' , 'seo_specific_details_box')">
           <label class="col-6">Branches</label>
-          <label class="col-6"><i class="pull-right fa fa-arrow-right"></i> </label>
+          <label class="col-6"><i class="pull-right fa fa-arrow-right"></i><?php echo $brans ?></label>
         </div>
         <hr>
 
         <div class="row" onclick="goTo('Views/seo_products.php' , 'seo_specific_details_box')">
           <label class="col-6">Products</label>
-          <label class="col-6"> <i class="pull-right fa fa-arrow-right"></i></label>
+          <label class="col-6"> <i class="pull-right fa fa-arrow-right"></i><?php echo $pros ?></label>
         </div>
         <hr>
 
         <div class="row" onclick="goTo('Views/seo_services.php' , 'seo_specific_details_box')">
           <label class="col-6">Services</label>
-          <label class="col-6"><i class="pull-right fa fa-arrow-right"></i></label>
+          <label class="col-6"><i class="pull-right fa fa-arrow-right"></i><?php echo $services ?></label>
         </div>
         <hr>
         <div class="row">
@@ -139,19 +149,24 @@
         </div>
         <hr>
         <div class="row">
+          <label class="col-6">Governance</label>
+          <label class="col-6"><?php echo $myseosDetails->governance; ?></label>
+        </div>
+        <hr>
+        <div class="row">
           <label class="col-6">Founding Country</label>
-          <label class="col-6"><?php $myseosDetails->countryFounded  ?></label>
+          <label class="col-6"><?php echo (new COUNTRY($myseosDetails->countryFounded))->name;  ?></label>
         </div>
         <hr>
 
         <div class="row">
           <label class="col-6">Primary Country</label>
-          <label class="col-6"><?php echo $myseosDetails->primaryCountry;  ?></label>
+          <label class="col-6"><?php echo (new COUNTRY($myseosDetails->primaryCountry))->name;  ?></label>
         </div>
         <hr>
         <div class="row">
           <label class="col-6">HQ In</label>
-          <label class="col-6"><?php echo $myseosDetails->hqCountry;  ?></label>
+          <label class="col-6"><?php  echo (new COUNTRY($myseosDetails->hqCountry))->name;?></label>
           
         </div>
 
@@ -178,10 +193,12 @@
 
  <!--content SEO DETAILS END    -->
 
+<script>
+function goToSeos(){
+  window.location.href = 'seos.php';
+}
 
-
-
-
+</script>
 
 
 
