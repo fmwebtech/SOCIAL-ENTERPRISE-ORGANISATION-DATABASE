@@ -1,10 +1,27 @@
 
 <?php
 	@session_start();
+  require_once('classes\class.seo.php');
+
+
+
 	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
 	}
+    if(isset($_GET['id']))
+    {
+      extract($_GET);
+      $myseosDetails = new SEO($id);
+      // var_dump($myseosDetails);
+    }
+    else
+    {
+        header('location:seos.php');
+    }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,13 +91,13 @@
   <div class="col-lg-6">
    <div class="card">
      <div class="card-body">
-       <div class="card-title">Bana Peter's Chickens</div>
+       <div class="card-title"><?php echo $myseosDetails->name;  ?></div>
        <hr>
        <form>
 
          <div class="row">
           <label class="col-6">Established</label>
-          <label class="col-6"></label>
+          <label class="col-6"><?php echo $myseosDetails->established;  ?></label>
         </div>
         <hr>
         <div class="row" onclick="goTo('Views/seo_branches.php' , 'seo_specific_details_box')">
@@ -103,7 +120,7 @@
         <div class="row">
           <label class="col-6">Income per annum </label>
           <div class="col-6">
-            <input type="text" class="form-control form-control-rounded" id="input-6" placeholder="Enter service address" value="">
+            <input type="text" class="form-control form-control-rounded" id="input-6" placeholder="Enter service address" value="<?php echo $myseosDetails->incomePerAnnum;  ?>">
 
           </div>
         </div>
@@ -111,29 +128,30 @@
         <div class="row">
           <label class="col-6">Expenditure per annum</label>
           <div class="col-6">
-            <input type="text" class="form-control form-control-rounded" id="input-6" placeholder="Enter service address" value="">
+            <input type="text" class="form-control form-control-rounded" id="input-6" placeholder="Enter service address" value="<?php echo $myseosDetails->expenditurePerAnnum;  ?>">
 
           </div>
         </div>
         <hr>
         <div class="row">
-          <label class="col-6">Founded in</label>
-          <label class="col-6"></label>
+          <label class="col-6">Ownership</label>
+          <label class="col-6"><?php echo $myseosDetails->ownership; ?></label>
         </div>
         <hr>
         <div class="row">
           <label class="col-6">Founding Country</label>
-          <label class="col-6"></label>
+          <label class="col-6"><?php $myseosDetails->countryFounded  ?></label>
         </div>
         <hr>
 
         <div class="row">
           <label class="col-6">Primary Country</label>
-          <label class="col-6"></label>
+          <label class="col-6"><?php echo $myseosDetails->primaryCountry;  ?></label>
         </div>
         <hr>
         <div class="row">
           <label class="col-6">HQ In</label>
+          <label class="col-6"><?php echo $myseosDetails->hqCountry;  ?></label>
           
         </div>
 
