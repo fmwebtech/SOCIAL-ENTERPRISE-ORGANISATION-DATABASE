@@ -207,7 +207,47 @@
 
 </div>
 </div>
-<!--content seos table ends       -->
+
+
+<!---MOodal ends here-->
+
+
+<!-- My For deleting Company Moodal -->
+<div class="modal fade text-dark" id="deleteCompany" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 class="modal-title text-dark">DELETE COMPANY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+      <form id="deleteSeoForm">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Are you sure you want to delete ?</b>
+          <input required type="hidden" name="id" id='delete_id'/>
+
+
+        </div>
+
+
+			</div>
+      <div class="modal-footer">
+
+<button type="submit" class="btn btn-danger">Yes</button>
+<button type="button" data-dismiss="modal" class="btn btn-dark">No</button>
+</div>
+
+</form>
+	</div>
+</div>
+<!---MOodal ends here-->
+
+
 
 
 
@@ -280,35 +320,35 @@ $(document).ready(function()
 
 
 
-    //   //deleteCountryForm
+      //deleteCountryForm
 
-    //   $("#deleteCountryForm").on('submit',(function(e)
-    // {
-		// 	   e.preventDefault();
-		// 	   $.ajax({
-		// 			   url: "ajax.deleteCountry.php",
-		// 			   type: "POST",
-		// 			   data:  new FormData(this),
-		// 			   contentType: false,
-		// 					 cache: false,
-		// 			   processData:false,
-		// 			   beforeSend : function()
-		// 				   {
-		// 					// put your check here :)
-		// 				   },
-		// 			   success: function(r)
-		// 				  {
-		// 					openMessageModal('Infomation',r);
-		// 					getCountries();
-		// 					$("#deleteCountryModal").modal("hide");
-		// 					 $('#deleteCountryForm').trigger('reset');
-		// 				  },
-		// 				 error: function(e) 
-		// 				  {
-		// 					   alert(e);
-		// 				  }          
-		// 		});
-		// 	 }));
+      $("#deleteSeoForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteSeo.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getCountries();
+							$("#deleteSeoModal").modal("hide");
+							 $('#deleteSeoForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
                     getSeo();
 });
 
@@ -382,6 +422,11 @@ function openModal()
   $("#addSeoModal").modal("show");
 
 }
+function gotToSeo(id)
+{
+window.location.assign("seoDetails.php? id="+id);
+}
+
 
 </script>
 <!--JQUERY CODE ENDS       -->
