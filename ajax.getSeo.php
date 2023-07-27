@@ -21,7 +21,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         foreach($fetchedSeo as $seo)
         {
             $brans = sizeof((new BRANCH())->getBranchBySeo($seo->id));
-                echo '<tr>
+
+
+
+                echo '<tr onclick= "goToSeo('.$seo->id.')">
                             <td>'.$count.'</td>
                             <td>'.$seo->name.'</td>
                             <td>'.$seo->established.'</td>
