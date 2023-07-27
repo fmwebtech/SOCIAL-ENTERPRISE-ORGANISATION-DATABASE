@@ -50,15 +50,16 @@ var $regDate;
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO USERPROFILES(USERID,PROFILEID,STATUS) 
-											VALUES(?,?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO USERPROFILES(USERID,PROFILEID,STATUS) 
+											VALUES(?,?,'new')");
 			$stmt->bindParam(1,$userId);
 			$stmt->bindParam(2,$profileId);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
+			echo $e->getMessage();
 			return false;
 		}
 	}

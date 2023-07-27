@@ -23,7 +23,6 @@
 					<th scope="row">'.$count.'</th>
 					<td>'.(new USER($usprl->userId))->email.'</td>
 					<td>'.(new PROFILE($usprl->profileId))->name.'</td>
-					<td>'.$usprl->regDate.'</td>
 					<td>
 					<button onclick="editUserProfile(\''.$usprl->id.'\',\''.$usprl->userId.'\',\''.$usprl->profileId.'\')" class="btn btn-success">
 					<i class="las la-edit"></i> Edit </button>

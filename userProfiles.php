@@ -105,7 +105,7 @@
 
       <h4 class="modal-title text-dark">Add User Profile</h4><button type="button" onclick="close" class="close" data-dismiss="modal">&times;</button>
       </div> 
-      <form id="#createForm" class ="form-horizontal" >
+      <form id="createForm" class ="form-horizontal" >
       <div class="modal-body">
 
       
@@ -114,7 +114,7 @@
         <select name ="userId" class="form-control form-control-rounded" >
           <?php
             include_once('classes\class.user.php');
-            foreach((new USERPROFILES())->getUserProfiles() as $usprl)
+            foreach((new USER())->getUsers() as $usprl)
             {
                 echo '<option value="'.$usprl->id.'">'.$usprl->email.'</option>';
             }
@@ -127,9 +127,9 @@
         <select name ="profileId" class="form-control form-control-rounded" >
           <?php
             include_once('classes\class.profile.php');
-            foreach((new USERPROFILES())->getUserProfiles() as $usprl)
+            foreach((new PROFILE())->getProfiles() as $pr)
             {
-                echo '<option value="'.$usprl->id.'">'.$usprl->name.'</option>';
+                echo '<option value="'.$pr->id.'">'.$pr->name.'</option>';
             }
           ?>
         </select>
@@ -326,6 +326,9 @@
 </body>
 </html>
 
+
+
+ 
 <script>
 
 
@@ -333,12 +336,12 @@ $(document).ready( function (){
 		//create form
     //editprofileForm
   
-      alert('here i am');
+      
 
     $("#createForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.getUserProfiles.php",
+					   url: "ajax.saveUserProfile.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -361,12 +364,12 @@ $(document).ready( function (){
 						  }          
 				});
 			 }));
-           alert('end heade');
+           
  
       $("#editprofileForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.saveUserProfile.php",
+					   url: "ajax.editUserProfile.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -393,32 +396,32 @@ $(document).ready( function (){
 
 
 
-  //     $("#deleteProfileForm").on('submit',(function(e) {
-	// 		   e.preventDefault();
-	// 		   $.ajax({
-	// 				   url: "ajax.deleteUserProfile.php",
-	// 				   type: "POST",
-	// 				   data:  new FormData(this),
-	// 				   contentType: false,
-	// 						 cache: false,
-	// 				   processData:false,
-	// 				   beforeSend : function()
-	// 					   {
-	// 						// put your check here :)
-	// 					   },
-	// 				   success: function(r)
-	// 					  {
-	// 						  openMessageModal('Infomation',r);
-	// 						  getUserProfiles();
-	// 						 $("#deleteModal").modal("hide");
-	// 						 $('#deleteProfileForm').trigger('reset');
-	// 					  },
-	// 					 error: function(e) 
-	// 					  {
-	// 						   alert(e);
-	// 					  }          
-	// 			});
-	// 		 }));
+      $("#deleteProfileForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteUserProfile.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							  openMessageModal('Infomation',r);
+							  getUserProfiles();
+							 $("#deleteModal").modal("hide");
+							 $('#deleteProfileForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
 
 
 
