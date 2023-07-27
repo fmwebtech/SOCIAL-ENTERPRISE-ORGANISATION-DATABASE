@@ -1,6 +1,5 @@
  <?php
  session_start();
- require_once("context.php");
  require_once("classes/class.userprofiles.php");
   
  if(!isset($_SESSION['email'])) //check if this request is sent while logged in
@@ -21,7 +20,7 @@
 		  }
 		  else
 		  {
-			  echo 'Something went wrong, please try again later.';
+			  echo 'Something went wrong, try again later.';
 		  }
 	  }
 	  else
