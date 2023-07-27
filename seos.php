@@ -424,7 +424,7 @@ function openModal()
 }
 function goToSeo(id)
 {
-window.location.assign("seosDetails.php? id="+id);
+window.location.assign("seosDetails.php?id="+id);
 }
 
 
