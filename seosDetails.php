@@ -68,9 +68,7 @@
 	
 	 <!--content SEO DETAILS START      -->
 
-   <button onclick="goTo('Views/SEO_table.php' , 'mainContent')" type="button" class="btn btn-light btn-round px-5">
-  <!-- <i class="icon-lock"></i>  -->
-Go back</button>
+
 
 <div class="row mt-3">
   <div class="col-lg-6">
