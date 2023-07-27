@@ -34,7 +34,7 @@ class SEOCOUNTRY
 
     function save($countryId, $seoId)
      {
-        if ($this->seoCountryExists($seoId)) 
+        if ($this->seoCountryExists($countryId,$seoId)) 
         {
             echo 'This Records Exist';
             return false;
@@ -90,13 +90,14 @@ class SEOCOUNTRY
         }
     }
 
-    function seoCountryExists($seoId)
+    function seoCountryExists($countryId,$seoId)
      {
         try
-         {
+        {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=?');
+            $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY WHERE SEO_ID=? AND COUNTRY_ID=?');
             $stmt->bindParam(1, $seoId);
+            $stmt->bindParam(2, $countryId);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();

@@ -49,7 +49,7 @@ class BRANCH
 		}
 	}
 
-function save($seoId,$countryId, $name, $address,$createdBy,)
+function save($seoId,$countryId, $name, $address,$createdBy)
  {
     if ($this->branchExists($name, $address)) 
 	{
@@ -65,7 +65,7 @@ function save($seoId,$countryId, $name, $address,$createdBy,)
 	{
         global $Myconnection;
         $stmt = $Myconnection->prepare("INSERT INTO BRANCH( [SEO_ID], [COUNTRY_ID], [NAME], [ADDRESS], [CREATED_BY], [STATUS]) 
-                                        VALUES (?, ?, ?, ?, ?, ?, 'new')");
+                                        VALUES (?, ?, ?, ?, ?,'new')");
         $stmt->bindParam(1, $seoId);
 		$stmt->bindParam(2, $countryId);
 		$stmt->bindParam(3, $name);

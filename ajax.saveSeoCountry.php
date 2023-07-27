@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
 extract($_POST);
 $myseoCountry = new seoCountry();
-if($myseoCountry->save( $countryId, $seoId))
+if($myseoCountry->save($countryId, $seoId))
 {
     echo'Saved';
 }

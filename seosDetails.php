@@ -110,7 +110,7 @@
           <label class="col-6"><?php echo $myseosDetails->established;  ?></label>
         </div>
         <hr>
-        <div class="row" onclick="goTo('seobranches.php' , 'seo_specific_details_box')">
+        <div class="row" onclick="getSeoBranches(<?php echo $myseosDetails->id?>)">
           <label class="col-6">Branches</label>
           <label class="col-6"><i class="pull-right fa fa-arrow-right"></i><?php echo $brans ?></label>
         </div>
@@ -191,11 +191,210 @@
 </div>
 
 
- <!--content SEO DETAILS END    -->
+
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="addCountryModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Add Country</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form id='addseoCountryForm'>
+      <div class="modal-body">
+
+
+        <div class="form-group">
+          <b class="col-6">Select Country</b>
+          <input id='seoId' type="hidden" name='seoId' />
+          <select name='countryId' class="form-control form-control-rounded"> 
+
+               <?php
+               require_once('classes/class.country.php');
+               foreach((new COUNTRY())->getCountry() as $c)
+               {
+                  echo '<option value="'.$c->id.'">'.$c->name.'</option>';
+               }
+               ?>        
+                      
+                        
+          </select>
+        </div>
+ 
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit"  class="btn btn-info">Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+<script>
+  function addCountry(seoId)
+  {
+    //addCountryModal
+    document.getElementById('seoId').value =seoId;
+    $('#addCountryModal').modal('show');
+  }
+</script>
+
+
+
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="addBranchModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Add Branch</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form id='addBranchForm'>
+      <div class="modal-body">
+
+
+        <div class="form-group">
+          <b class="col-6">Branch name</b>
+          <input type="text" required class="form-control form-control-rounded" name="name" placeholder="Enter branch name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Address</b>
+          <input type="text" required class="form-control form-control-rounded"  name="address" placeholder="Enter branch address">
+          <input type='hidden' name='countryId' id='branch_countryId'>
+          <input type='hidden' name='seoId' id='branch_seoId'>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit"  class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+      </div>
+  </form>
+    </div>
+
+  </div>
+</div>
 
 <script>
-function goToSeos(){
+  function addBranch(countryId,seoId)
+  {
+   
+    document.getElementById('branch_countryId').value =countryId;
+    document.getElementById('branch_seoId').value =seoId;
+    $('#addBranchModal').modal('show');
+  }
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function()
+{
+ // createForm 
+    $("#addseoCountryForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveSeoCountry.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getSeoBranches(document.getElementById('seoId').value);
+							$("#addCountryModal").modal("hide");
+							 $('#addseoCountryForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+    $("#addBranchForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveBranch.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getSeoBranches(document.getElementById('branch_seoId').value);
+							$("#addBranchModal").modal("hide");
+							 $('#addBranchForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+    
+    
+      
+});
+
+
+
+
+function goToSeos()
+{
   window.location.href = 'seos.php';
+}
+
+function getSeoBranches(id)
+{
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+     {
+
+      document.getElementById("seo_specific_details_box").innerHTML =this.responseText;
+
+    }
+  };
+  xhttp.open("POST", "ajax.getSeoBranches.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("id="+id);
 }
 
 </script>
