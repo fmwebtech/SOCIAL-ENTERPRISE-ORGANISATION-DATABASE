@@ -94,7 +94,7 @@
 </div><!--End wrapper-->
 
 <!-- Bootstrap core JavaScript-->
-<script src="assets/js/jquery.min.js"></script>
+
 <script src="assets/js/popper.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 
@@ -102,18 +102,13 @@
 <script src="assets/plugins/simplebar/js/simplebar.js"></script>
 <!-- sidebar-menu js -->
 <script src="assets/js/sidebar-menu.js"></script>
-<!-- loader scripts -->
-<script src="assets/js/jquery.loading-indicator.js"></script>
-<!-- Custom scripts -->
-<script src="assets/js/app-script.js"></script>
-<!-- Chart js -->
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Index js -->
-<script src="assets/js/index.js"></script>
+
 
 <script type="text/javascript">
 
