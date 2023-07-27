@@ -137,8 +137,6 @@ class PRODUCTS
 				$productArray[] =$product;
 			}
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','GETPRODUCT',json_encode($_POST));
-
 			return $productArray;
 		}
 		catch(Exception $e)
