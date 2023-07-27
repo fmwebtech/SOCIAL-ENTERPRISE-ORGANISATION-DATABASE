@@ -3,8 +3,6 @@ session_start();
 require_once('classes\class.Seo.php');
 require_once('classes\class.country.php');
 require_once('classes\class.branch.php');
-require_once('classes\class.product.php');
-require_once('classes\class.service.php');
 if(!isset($_SESSION['email'])) //check if this request is sent while logged in
 	 {
 		 echo 'request failed';
