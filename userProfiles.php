@@ -103,33 +103,33 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">Add User Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">Add User Profile</h4><button type="button" onclick="close" class="close" data-dismiss="modal">&times;</button>
       </div> 
-      <form id="createForm" class ="form-horizontal" >
+      <form id="#createForm" class ="form-horizontal" >
       <div class="modal-body">
 
       
       <div class="form-group">
-        <b class="col-6">USERID</b>
+        <b class="col-6">USER</b>
         <select name ="userId" class="form-control form-control-rounded" >
           <?php
-            include_once('classes\class.userprofiles.php');
-            foreach((new USERPROFILES())->getUserProfiles() as $up)
+            include_once('classes\class.user.php');
+            foreach((new USERPROFILES())->getUserProfiles() as $usprl)
             {
-                echo '<option value="'.$up->id.'">'.$up->name.'</option>';
+                echo '<option value="'.$usprl->id.'">'.$usprl->email.'</option>';
             }
           ?>
         </select>
       </div>
 
       <div class="form-group">
-        <b class="col-6">PROFILEID</b>
+        <b class="col-6">PROFILE</b>
         <select name ="profileId" class="form-control form-control-rounded" >
           <?php
-            include_once('classes\class.userprofiles.php');
-            foreach((new USERPROFILES())->getUserProfiles() as $up)
+            include_once('classes\class.profile.php');
+            foreach((new USERPROFILES())->getUserProfiles() as $usprl)
             {
-                echo '<option value="'.$up->id.'">'.$up->name.'</option>';
+                echo '<option value="'.$usprl->id.'">'.$usprl->name.'</option>';
             }
           ?>
         </select>
@@ -166,7 +166,7 @@
 
       <h4 class="modal-title text-dark">edit user Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">x</button>
       </div> 
-      <form id="editprofileForm" class ="form-horizontal" >
+      <form id="#editprofileForm" class ="form-horizontal" >
       <div class="modal-body">
 
       
@@ -208,7 +208,7 @@
 
       <h4 class="modal-title text-dark">delete User Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
       </div> 
-      <form id="deleteProfileForm" class ="form-horizontal" >
+      <form id="#deleteProfileForm" class ="form-horizontal" >
       <div class="modal-body">
 
       
@@ -332,12 +332,13 @@
 $(document).ready( function (){
 		//create form
     //editprofileForm
-
+  
+      alert('here i am');
 
     $("#createForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.getUserProfile.php",
+					   url: "ajax.getUserProfiles.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -360,8 +361,8 @@ $(document).ready( function (){
 						  }          
 				});
 			 }));
-
-
+           alert('end heade');
+ 
       $("#editprofileForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
@@ -392,32 +393,36 @@ $(document).ready( function (){
 
 
 
-      $("#deleteProfileForm").on('submit',(function(e) {
-			   e.preventDefault();
-			   $.ajax({
-					   url: "ajax.deleteUserProfile.php",
-					   type: "POST",
-					   data:  new FormData(this),
-					   contentType: false,
-							 cache: false,
-					   processData:false,
-					   beforeSend : function()
-						   {
-							// put your check here :)
-						   },
-					   success: function(r)
-						  {
-							  openMessageModal('Infomation',r);
-							  getUserProfiles();
-							 $("#deleteModal").modal("hide");
-							 $('#deleteProfileForm').trigger('reset');
-						  },
-						 error: function(e) 
-						  {
-							   alert(e);
-						  }          
-				});
-			 }));
+  //     $("#deleteProfileForm").on('submit',(function(e) {
+	// 		   e.preventDefault();
+	// 		   $.ajax({
+	// 				   url: "ajax.deleteUserProfile.php",
+	// 				   type: "POST",
+	// 				   data:  new FormData(this),
+	// 				   contentType: false,
+	// 						 cache: false,
+	// 				   processData:false,
+	// 				   beforeSend : function()
+	// 					   {
+	// 						// put your check here :)
+	// 					   },
+	// 				   success: function(r)
+	// 					  {
+	// 						  openMessageModal('Infomation',r);
+	// 						  getUserProfiles();
+	// 						 $("#deleteModal").modal("hide");
+	// 						 $('#deleteProfileForm').trigger('reset');
+	// 					  },
+	// 					 error: function(e) 
+	// 					  {
+	// 						   alert(e);
+	// 					  }          
+	// 			});
+	// 		 }));
+
+
+
+
 
 
   getUserProfiles(); 
@@ -434,7 +439,7 @@ function getUserProfiles()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('User Profiles').innerHTML = this.responseText;
+					document.getElementById('userProfiles').innerHTML = this.responseText;
 					
 				}
 		  };
