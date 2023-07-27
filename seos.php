@@ -340,7 +340,7 @@ $(document).ready(function()
 						  {
 							openMessageModal('Infomation',r);
 							getCountries();
-							$("#deleteSeoModal").modal("hide");
+							$("#deleteCompany").modal("hide");
 							 $('#deleteSeoForm').trigger('reset');
 						  },
 						 error: function(e) 
@@ -382,29 +382,29 @@ function getSeo()
 
 
 
-function editSeo(id)
-{
+// function editSeo(id)
+// {
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() 
-  {
-    if (this.readyState == 4 && this.status == 200)
-     {
-      var myObject = JSON.parse(this.responseText);
-      document.getElementById('edit_id').value=myObject.id;
-      document.getElementById('edit_name').value=myObject.name;
-      document.getElementById('edit_code').value=myObject.code;
-      //document.getElementById("countriesTablepool").innerHTML =this.responseText;
-      $("#editCountryModal").modal("show");
-    }
-  };
-  xhttp.open("POST", "ajax.getCountryObject.php", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("id="+id);
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function() 
+//   {
+//     if (this.readyState == 4 && this.status == 200)
+//      {
+//       var myObject = JSON.parse(this.responseText);
+//       document.getElementById('edit_id').value=myObject.id;
+//       document.getElementById('edit_name').value=myObject.name;
+//       document.getElementById('edit_code').value=myObject.code;
+//       //document.getElementById("countriesTablepool").innerHTML =this.responseText;
+//       $("#editCountryModal").modal("show");
+//     }
+//   };
+//   xhttp.open("POST", "ajax.getCountryObject.php", true);
+//   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//   xhttp.send("id="+id);
 
 
 
-}
+// }
 
 
 
@@ -422,7 +422,7 @@ function openModal()
   $("#addSeoModal").modal("show");
 
 }
-function gotToSeo(id)
+function goToSeo(id)
 {
 window.location.assign("seoDetails.php? id="+id);
 }
