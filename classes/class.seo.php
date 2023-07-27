@@ -122,7 +122,7 @@ class SEO
         try
          {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,GOVERNANCE=?,INCOMEPERANNUM=?, PRIMARYCOUNTRY=?, EXPENDITUREPERANNUM=?, COUNTRYFOUNDED=?, ESTABLISHED=?, HQCOUNTRY=?,MODIFIED_BY=?,WHERE ID=?');
+            $stmt = $Myconnection->prepare('UPDATE SEO SET [NAME]= ?,GOVERNANCE=?,INCOMEPERANNUM=?, PRIMARYCOUNTRY=?, EXPENDITUREPERANNUM=?, COUNTRYFOUNDED=?, ESTABLISHED=?, HQCOUNTRY=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $governance);
             $stmt->bindParam(3, $incomePerAnnum);
@@ -141,8 +141,13 @@ class SEO
 
         }
          catch (Exception $e)
+
          {
+            echo $e->getMessage();
+
             return false;
+            
+
         }
     }
 
