@@ -21,8 +21,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         foreach($fetchedSeo as $seo)
         {
             $brans = sizeof((new BRANCH())->getBranchBySeo($seo->id));
-            $pros = sizeof((new PRODUCTS())->getProducts($seo->id));
-            $services = sizeof((new SERVICES())->getServices($seo->id));
+
                 echo '<tr>
                             <td>'.$count.'</td>
                             <td>'.$seo->name.'</td>
