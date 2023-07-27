@@ -133,8 +133,6 @@ class SERVICES {
 				$serviceArray[] =$service;
 			}
 
-			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'SERVICES','GETSERVICE',json_encode($_POST));
-
 			return $serviceArray;
 		}
 		catch(Exception $e)
