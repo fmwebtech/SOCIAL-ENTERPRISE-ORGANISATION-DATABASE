@@ -229,7 +229,7 @@ class SEO
 							<div class="card-body text-danger">
 								<strong>Oh snap!</strong> 
 								
-								This Currency can not be deleted at the moment. Because the currency is attached to other system records. 
+								This Company can not be deleted at the moment. Because the Company is attached to other system records. 
 							
 							</div>
 						</div>';

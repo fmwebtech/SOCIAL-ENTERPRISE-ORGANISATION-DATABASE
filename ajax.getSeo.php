@@ -24,16 +24,17 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
 
 
-                echo '<tr onclick= "goToSeo('.$seo->id.')">
-                            <td>'.$count.'</td>
-                            <td>'.$seo->name.'</td>
-                            <td>'.$seo->established.'</td>
+                echo '<tr >
+                            <span onclick= "goToSeo('.$seo->id.')">
+                            <td onclick= "goToSeo('.$seo->id.')">'.$count.'</td>
+                            <td  onclick= "goToSeo('.$seo->id.')">'.$seo->name.'</td>
+                            <td  onclick= "goToSeo('.$seo->id.')">'.$seo->established.'</td>
                             <td>'.$brans.'</td>
                             
                             
-                            <td>'.$seo->incomePerAnnum.'</td>
-                            <td>'.$seo->expenditurePerAnnum.'</td>
-                                       
+                            <td  onclick= "goToSeo('.$seo->id.')">'.$seo->incomePerAnnum.'</td>
+                            <td  onclick= "goToSeo('.$seo->id.')">'.$seo->expenditurePerAnnum.'</td>
+                              </span>         
                             <td><button onclick="editSeo(\''.$seo->id.'\')" class="btn btn-success">
                             <i class="zmdi zmdi-edit"></i> Edit </button>
                         

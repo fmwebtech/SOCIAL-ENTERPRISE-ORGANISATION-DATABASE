@@ -207,9 +207,48 @@
 
 </div>
 </div>
-
-
 <!---MOodal ends here-->
+
+
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="editSeoModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 class="modal-title text-dark">EDIT COMPANY</h4><button onclick="$('#editCurrency').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+      <form id="editSeoForm">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">currency name</b>
+					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter Currency Name">
+          <input required type="number" name="established" class="form-control form-control-rounded" value="" id="edit_established" placeholder="Enter Currency Name">
+
+          <input required type="hidden" name="id" id='edit_id'/>
+
+
+        </div>
+
+
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit" class="btn btn-info">Edit</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+		</div>
+
+</form>
+	</div>
+</div>
+<!---MOodal ends here-->
+
 
 
 <!-- My For deleting Company Moodal -->
@@ -289,33 +328,33 @@ $(document).ready(function()
 			 }));
      
     //   //editCountryForm
-    // $("#editCountryForm").on('submit',(function(e)
-    // {
-		// 	   e.preventDefault();
-		// 	   $.ajax({
-		// 			   url: "ajax.editCountry.php",
-		// 			   type: "POST",
-		// 			   data:  new FormData(this),
-		// 			   contentType: false,
-		// 					 cache: false,
-		// 			   processData:false,
-		// 			   beforeSend : function()
-		// 				   {
-		// 					// put your check here :)
-		// 				   },
-		// 			   success: function(r)
-		// 				  {
-		// 					openMessageModal('Infomation',r);
-		// 					getCountries();
-		// 					$("#editCountryModal").modal("hide");
-		// 					 $('#editCountryForm').trigger('reset');
-		// 				  },
-		// 				 error: function(e) 
-		// 				  {
-		// 					   alert(e);
-		// 				  }          
-		// 		});
-		// 	 }));
+    $("#editSeoForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editSeo.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getCountries();
+							$("#editSeoModal").modal("hide");
+							 $('#editSeoForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
 
 
 
@@ -339,7 +378,7 @@ $(document).ready(function()
 					   success: function(r)
 						  {
 							openMessageModal('Infomation',r);
-							getCountries();
+							getSeo();
 							$("#deleteCompany").modal("hide");
 							 $('#deleteSeoForm').trigger('reset');
 						  },
@@ -382,29 +421,29 @@ function getSeo()
 
 
 
-// function editSeo(id)
-// {
+function editSeo(id)
+{
 
-//   var xhttp = new XMLHttpRequest();
-//   xhttp.onreadystatechange = function() 
-//   {
-//     if (this.readyState == 4 && this.status == 200)
-//      {
-//       var myObject = JSON.parse(this.responseText);
-//       document.getElementById('edit_id').value=myObject.id;
-//       document.getElementById('edit_name').value=myObject.name;
-//       document.getElementById('edit_code').value=myObject.code;
-//       //document.getElementById("countriesTablepool").innerHTML =this.responseText;
-//       $("#editCountryModal").modal("show");
-//     }
-//   };
-//   xhttp.open("POST", "ajax.getCountryObject.php", true);
-//   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//   xhttp.send("id="+id);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+     {
+      var myObject = JSON.parse(this.responseText);
+      document.getElementById('edit_id').value=myObject.id;
+      document.getElementById('edit_name').value=myObject.name;
+      document.getElementById('edit_code').value=myObject.code;
+      //document.getElementById("countriesTablepool").innerHTML =this.responseText;
+      $("#editSeoModal").modal("show");
+    }
+  };
+  xhttp.open("POST", "ajax.getSeoObject.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("id="+id);
 
 
 
-// }
+}
 
 
 
@@ -412,7 +451,7 @@ function deleteSeo(id)
 {
   
   document.getElementById('delete_id').value=id;
-  $("#deleteCountryModal").modal("show");
+  $("#deleteCompany").modal("show");
 }
 
 
