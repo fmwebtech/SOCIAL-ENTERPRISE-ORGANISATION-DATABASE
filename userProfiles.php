@@ -396,32 +396,32 @@ $(document).ready( function (){
 
 
 
-      $("#deleteProfileForm").on('submit',(function(e) {
-			   e.preventDefault();
-			   $.ajax({
-					   url: "ajax.deleteUserProfile.php",
-					   type: "POST",
-					   data:  new FormData(this),
-					   contentType: false,
-							 cache: false,
-					   processData:false,
-					   beforeSend : function()
-						   {
-							// put your check here :)
-						   },
-					   success: function(r)
-						  {
-							  openMessageModal('Infomation',r);
-							  getUserProfiles();
-							 $("#deleteModal").modal("hide");
-							 $('#deleteProfileForm').trigger('reset');
-						  },
-						 error: function(e) 
-						  {
-							   alert(e);
-						  }          
-				});
-			 }));
+  //     $("#deleteProfileForm").on('submit',(function(e) {
+	// 		   e.preventDefault();
+	// 		   $.ajax({
+	// 				   url: "ajax.deleteUserProfile.php",
+	// 				   type: "POST",
+	// 				   data:  new FormData(this),
+	// 				   contentType: false,
+	// 						 cache: false,
+	// 				   processData:false,
+	// 				   beforeSend : function()
+	// 					   {
+	// 						// put your check here :)
+	// 					   },
+	// 				   success: function(r)
+	// 					  {
+	// 						  openMessageModal('Infomation',r);
+	// 						  getUserProfiles();
+	// 						 $("#deleteModal").modal("hide");
+	// 						 $('#deleteProfileForm').trigger('reset');
+	// 					  },
+	// 					 error: function(e) 
+	// 					  {
+	// 						   alert(e);
+	// 					  }          
+	// 			});
+	// 		 }));
 
 
 
