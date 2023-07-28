@@ -48,12 +48,12 @@ var $regDate;
 			}
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO PROFILEMODULES(PROFILEID,MODULEID,STATUS) 
-											VALUES(?,?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO PROFILEMODULES(PROFILEID,MODULEID,STATUS) 
+											VALUES(?,?,'new')");
 			$stmt->bindParam(1,$profileId);
 			$stmt->bindParam(2,$moduleId);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -84,7 +84,7 @@ var $regDate;
 			$stmt->bindParam(3,$status);
 			$stmt->bindParam(4,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','EDIT',json_encode($_POST));	
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','EDIT',json_encode($_POST));	
 					return true;
 		}catch(Exception $e)
 		{
@@ -210,7 +210,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM PROFILEMODULES WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PROFILEMODULES','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{

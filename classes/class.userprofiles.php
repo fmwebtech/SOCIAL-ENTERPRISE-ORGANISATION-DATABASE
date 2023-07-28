@@ -86,7 +86,7 @@ var $regDate;
 			$stmt->bindParam(3,$status);
 			$stmt->bindParam(4,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -186,7 +186,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM USERPROFILES WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USERPROFILES','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{
