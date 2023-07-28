@@ -303,6 +303,12 @@
 
 
 
+
+
+
+
+
+
 <!-- add branch Modal -->
 <div class="modal fade text-dark" id="AddProductModal" role="dialog">
   <div class="modal-dialog">
@@ -369,22 +375,74 @@
 
 
 
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="editProductModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Edit Product</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <form id="editProductForm">
+      <div class="modal-body">
+
+       
+        <div class="form-group">
+          <b class="col-6">Product name</b>
+          <input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter product name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Currency name</b>
+          <select name="currency" class="form-control form-control-rounded" id="edit_currency">
+              <?php
+                include_once('classes\class.currency.php');
+                foreach((new CURRENCY())->getCurrency() as $cu)
+                {
+                    echo '<option value="'.$cu->id.'">'.$cu->name.'</option>';
+                }
+              ?>
+            </select> 
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Product Price</b>
+          <input required type="number" name="price" class="form-control form-control-rounded" value="" id="edit_price" placeholder="Enter product price">
+          <input type='hidden' name='id' id='product_Id'>
+          <input type='hidden' name='seoId' id='product_seoId'>
+        </div>
+                   
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit"  class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+<script>
+  function editProduct(id,name,currency,price,seoId)
+  {
+   //
+    document.getElementById('product_Id').value =id;
+    document.getElementById('edit_name').value =name;
+    document.getElementById('edit_currency').value =currency;
+    document.getElementById('edit_price').value =price;
+    document.getElementById('product_seoId').value =seoId;
+    $('#editProductModal').modal('show');
+  }
+</script>
 
 
 
@@ -485,6 +543,35 @@ $(document).ready(function()
 						  }          
 				});
 			 }));
+
+
+      $("#editProductForm").on('submit',(function(e)
+      {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editProduct.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getProducts(document.getElementById('product_seoId').value);
+							$("#editProductModal").modal("hide");
+							 $('#editProductForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
       
 });
 
@@ -520,6 +607,11 @@ function getSeoBranches(id)
 
 
 
+
+
+
+
+
 function getProducts(id)
 {
   var xhttp = new XMLHttpRequest();
@@ -536,36 +628,7 @@ function getProducts(id)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("seoId="+id);
 }
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

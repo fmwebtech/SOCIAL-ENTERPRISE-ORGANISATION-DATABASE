@@ -29,7 +29,7 @@ $fetchedproduct= array();
 if(isset($_POST['seoId']))
 {
     
-    $fetchedproduct  = $myproduct->getProductS($seoId);
+    $fetchedproduct  = $myproduct->getProducts($seoId);
     
 }
 
@@ -44,11 +44,15 @@ else
     $count = 1;
 foreach($fetchedproduct as $product)
 {
+
+   
     $mycu = new CURRENCY($product->currency);
     echo '
     
     <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->name.' '.$product->price.'
-    <button  onclick="deleteBranch('.$product->id.')" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right"> <i class="fa fa-edit"></i> </button>
+    <i onclick="deleteproduct('.$product->id.')" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
+    <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
+    
     </td> </tr>
     
     ';

@@ -77,9 +77,9 @@ class PRODUCTS
 		}
 	}
 
-	function edit($id,$seoId,$name,$currency,$price,$modifiedBy ) 
+	function edit($id,$seoId,$name,$currency,$price,$modifiedBy,  $status='edited' ) 
 	{
-			if($this->safeToEdit($id,$seoId,$name)) 
+			if(!$this->safeToEdit($id,$seoId,$name)) 
 			{
 				echo 'The name you chose is already taken, choose a different name.';
 				return false;
@@ -91,15 +91,15 @@ class PRODUCTS
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('UPDATE PRODUCTS	SET SEO_ID=?,[NAME]=?,CURRENCY=?,PRICE=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
+			$stmt = $Myconnection->prepare('UPDATE PRODUCTS	SET [NAME]=?,CURRENCY=?,PRICE=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
 
-			$stmt->bindParam(1,$seoId);
-			$stmt->bindParam(2,$name);
-			$stmt->bindParam(3,$currency);
-			$stmt->bindParam(4,$price);
-		 	$stmt->bindparam(5,$modifiedBy);
-			$stmt->bindParam(6,$status);
-			$stmt->bindParam(7,$id);
+			
+			$stmt->bindParam(1,$name);
+			$stmt->bindParam(2,$currency);
+			$stmt->bindParam(3,$price);
+		 	$stmt->bindparam(4,$modifiedBy);
+			$stmt->bindParam(5,$status);
+			$stmt->bindParam(6,$id);
 			$stmt->execute();
 
 			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'PRODUCTS','EDIT',json_encode($_POST));
@@ -176,9 +176,9 @@ class PRODUCTS
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=? AND SEOID=? AND ID!=?');
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS WHERE [NAME]=? AND SEO_ID=? AND ID!=?');
 			$stmt->bindParam(1,$name);
-			$stmt->bindParam(2,$seoId);
+			$stmt->bindparam(2,$seoId);
 			$stmt->bindparam(3,$id);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);

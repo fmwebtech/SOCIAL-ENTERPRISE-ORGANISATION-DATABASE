@@ -3,18 +3,19 @@ session_start();
 require_once('classes\class.Product.php');
 
 if(!isset($_SESSION['email'])) //check if this request is sent while logged in
-	 {
-		 echo 'request failed';
-		 die();
-	 }
+{
+	echo 'request failed';
+	 die();
+
+}
 
 if ($_SERVER['REQUEST_METHOD']=='POST')
 {
 extract($_POST);
 
-$myeditProduct = new ProductS();
-
-if($myProduct->edit($name,$currency,$seoId,$price,$createdBy))
+$myProduct = new PRODUCTS();
+$modifiedBy= $_SESSION['email'];
+if($myProduct->edit($id,$seoId,$name,$currency,$price,$modifiedBy))
 {
     echo 'Product Has Been Edited !!';
 }
