@@ -1,6 +1,5 @@
  <?php
  session_start();
- require_once("context.php");
  require_once("classes/class.module.php");
   
  if(!isset($_SESSION['email'])) //check if this request is sent while logged in
@@ -23,7 +22,6 @@
 												<td> <i class="'.$mod->icon.'"></i></td>
 												<td>'.$mod->ordering.'</td>
 												<td>'.((new MODULE($mod->parentId))-> name).'</td>
-												<td>'.$mod->status.'</td>
 												<td>
 												<button onclick="editMenu(\''.$mod->id.'\',\''.$mod->name.'\',\''.$mod->url.'\',\''.$mod->icon.'\',\''.$mod->ordering.'\',\''.$mod->parentId.'\')" class="btn btn-success">
 												<i class="las la-edit"></i> Edit </button>

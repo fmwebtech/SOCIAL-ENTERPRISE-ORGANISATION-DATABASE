@@ -16,6 +16,11 @@ document.getElementById("messageTitleAlert").innerHTML=title;
 $('#generalAlertModel').modal('show');
 
 }
+
+function hideModal(modalId)
+{
+	$('#'+modalId).modal('hide');
+}
 </script>
 
 <div class="modal fade text-dark" id="generalAlertModel" role="dialog">
@@ -26,7 +31,7 @@ $('#generalAlertModel').modal('show');
 			<div class="modal-header">
         
 
-				<h4 id="messageTitleAlert" class="modal-title text-dark"></h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 id="messageTitleAlert" class="modal-title text-dark"></h4><button type="button" class="close" onclick="hideModal('generalAlertModel')">&times;</button>
 			</div>
      
 			<div class="modal-body">

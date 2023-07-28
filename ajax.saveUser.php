@@ -1,8 +1,7 @@
  <?php
  session_start();
- require_once("context.php");
  require_once("classes/class.user.php");
-  
+
  if(!isset($_SESSION['email'])) //check if this request is sent while logged in
  {
 	 echo 'request failed';
@@ -15,7 +14,7 @@
 	  if(!isset($_POST['id']))
 	  {
 		  $password = md5(time());
-		 if((new USER())->save($firstName,$lastName,$email,$password,$departmentId))
+		 if((new USER())->save($firstName,$lastName,$email,$password))
 		  {
 			  
 			   echo 'User saved';
@@ -27,7 +26,7 @@
 	  }
 	  else
 	  {
-		  if((new USER())->edit($id,$firstName,$lastName,$email,$departmentId,"edited"))
+		  if((new USER())->edit($id,$firstName,$lastName,$email,"edited"))
 		  {
 			   echo 'User saved';
 		  }

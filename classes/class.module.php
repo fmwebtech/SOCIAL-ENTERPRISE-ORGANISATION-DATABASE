@@ -54,15 +54,15 @@ var $regDate;
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [MODULE](NAME,URL,PARENTID,ICON,ORDERING,STATUS) 
-											VALUES(?,?,?,?,?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO [MODULE](NAME,URL,PARENTID,ICON,ORDERING,STATUS) 
+											VALUES(?,?,?,?,?,'new')");
 			$stmt->bindParam(1,$name);
 			$stmt->bindParam(2,$url);
 			$stmt->bindParam(3,$parentId);
 			$stmt->bindParam(4,$icon);
 			$stmt->bindParam(5,$ordering);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -96,7 +96,7 @@ var $regDate;
 			$stmt->bindParam(6,$status);
 			$stmt->bindParam(7,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -251,7 +251,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM [MODULE] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'MODULE','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{

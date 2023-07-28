@@ -51,19 +51,19 @@ var $regDate;
 			$password = MD5($password);
 		try{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO [USER](FIRSTNAME,LASTNAME,EMAIL,PASSWORD,STATUS) 
-											VALUES(?,?,?,?,"new")');
+			$stmt = $Myconnection->prepare("INSERT INTO [USER](FIRSTNAME,LASTNAME,EMAIL,PASSWORD,STATUS) 
+											VALUES(?,?,?,?,'new')");
 			$stmt->bindParam(1,$firstName);
 			$stmt->bindParam(2,$lastName);
 			$stmt->bindParam(3,$email);
 			$stmt->bindParam(4,$password);
 			$stmt->execute();
 			(new RESETKEY())->save($email,'resetpassword.php',"You have been registered as a user on social enterprise organisation database. kindly create your credentials to log into the system.");
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','SAVE',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
-			//echo $e->getMessage();
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -88,7 +88,7 @@ var $regDate;
 			$stmt->bindParam(4,$status);
 			$stmt->bindParam(5,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','EDIT',json_encode($_POST));
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','EDIT',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
 		{
@@ -105,7 +105,7 @@ var $regDate;
 			$stmt->bindParam(1,$password);
 			$stmt->bindParam(2,$email);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD','PASSWORD CHANGED');
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD','PASSWORD CHANGED');
 			return true;
 		}catch(Exception $e)
 		{
@@ -123,7 +123,7 @@ var $regDate;
 			$stmt->bindParam(1,$password);
 			$stmt->bindParam(2,$id);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD2','PASSWORD CHANGED');
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD2','PASSWORD CHANGED');
 			return true;
 		}catch(Exception $e)
 		{
@@ -193,13 +193,13 @@ var $regDate;
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','The user logged in successfuly');
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','The user logged in successfuly');
 
 				
 				return new USER($v['ID']);
 				break;
 			}
-			(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','Authentication failed.');
+			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','Authentication failed.');
 			return false;
 		}catch(Exception $e)
 		{
@@ -244,7 +244,7 @@ var $regDate;
 				$stmt = $Myconnection->prepare('DELETE FROM [USER] WHERE ID=?');
 				$stmt->bindParam(1,$id);
 				$stmt->execute();
-				(new LOGS())->save($_SESSION['email'],$_SERVER['REMOTE_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','DELETE',json_encode($_POST));
+				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','DELETE',json_encode($_POST));
 				return true;
 			}catch(Exception $e)
 			{
