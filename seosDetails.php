@@ -116,7 +116,7 @@
         </div>
         <hr>
 
-        <div class="row" onclick="goTo('Views/seo_products.php' , 'seo_specific_details_box')">
+        <div class="row" onclick="getProducts(<?php echo $myseosDetails->id?>)">
           <label class="col-6">Products</label>
           <label class="col-6"> <i class="pull-right fa fa-arrow-right"></i><?php echo $pros ?></label>
         </div>
@@ -300,6 +300,95 @@
 
 
 
+
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="AddProductModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Add Product</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <form id="addProductForm">
+      <div class="modal-body">
+
+       
+        <div class="form-group">
+          <b class="col-6">Product name</b>
+          <input required type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter product name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Currency name</b>
+          <select name="currency" class="form-control form-control-rounded" value="" id="save_currency">
+              <?php
+                include_once('classes\class.currency.php');
+                foreach((new CURRENCY())->getCurrency() as $cu)
+                {
+                    echo '<option value="'.$cu->id.'">'.$cu->name.'</option>';
+                }
+              ?>
+            </select> 
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Product Price</b>
+          <input required type="number" name="price" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter product price">
+          <input type='hidden' name='seoId' id='product_seoId'>
+        </div>
+                   
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit"  class="btn btn-info">Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- add product Modal -->
+
+<script>
+  function addProduct(seoId)
+  {
+   
+    document.getElementById('product_seoId').value =seoId;
+    $('#AddProductModal').modal('show');
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -368,7 +457,34 @@ $(document).ready(function()
 			 }));
 
     
-    
+    //addProductForm
+    $("#addProductForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveProduct.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getProducts(document.getElementById('product_seoId').value);
+							$("#AddProductModal").modal("hide");
+							 $('#addProductForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
       
 });
 
@@ -396,6 +512,39 @@ function getSeoBranches(id)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("id="+id);
 }
+
+
+
+
+
+
+
+
+function getProducts(id)
+{
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+     {
+
+      document.getElementById("seo_specific_details_box").innerHTML =this.responseText;
+
+    }
+  };
+  xhttp.open("POST", "ajax.getProduct.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("seoId="+id);
+}
+
+
+
+
+
+
+
+
+
 
 </script>
 
