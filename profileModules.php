@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>User Profiles || SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
+  <title>Profile Modules || SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
   <!-- loader-->
   <link href="assets/css/pace.min.css" rel="stylesheet"/>
   <script src="assets/js/pace.min.js"></script>
@@ -68,19 +68,19 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">User Profiles <button onclick="openModal()" data-target="#AddUserProfile" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User Profile</button></h5>
+      <h5 class="card-title"> Profile Modules <button onclick="openModal()" data-target="#AddProfileModule" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User Profile</button></h5>
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">USER</th>
               <th scope="col">PROFILE</th>
+			    <th scope="col">MODULE</th>
               <th scope="col">Action</th>
 
             </tr>
           </thead>
-          <tbody id="userProfiles">
+          <tbody id="profileModules">
           
             
            
@@ -94,7 +94,7 @@
 </div>
 
 <!-- add profile Modal -->
-<div class="modal fade text-dark" id="AddUserProfile" role="dialog">
+<div class="modal fade text-dark" id="AddProfileModule" role="dialog">
 <div class="modal-dialog">
 
   <!-- Modal content-->
@@ -103,24 +103,12 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">Add User Profile</h4><button type="button" onclick="hideModal('AddUserProfile')" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">Add Profile Module</h4><button type="button" onclick="hideModal('AddProfileModule')" class="close" data-dismiss="modal">&times;</button>
       </div> 
       <form id="createForm" class ="form-horizontal" >
       <div class="modal-body">
 
-      
-      <div class="form-group">
-        <b class="col-6">USER</b>
-        <select name ="userId" class="form-control form-control-rounded" >
-          <?php
-            include_once('classes\class.user.php');
-            foreach((new USER())->getUsers() as $usprl)
-            {
-                echo '<option value="'.$usprl->id.'">'.$usprl->email.'</option>';
-            }
-          ?>
-        </select>
-      </div>
+     
 
       <div class="form-group">
         <b class="col-6">PROFILE</b>
@@ -135,6 +123,20 @@
         </select>
       </div>
 
+
+ 
+      <div class="form-group">
+        <b class="col-6">MODULE</b>
+        <select name ="moduleId" class="form-control form-control-rounded" >
+          <?php
+            include_once('classes\class.module.php');
+            foreach((new MODULE())->getModules() as $mdls)
+            {
+                echo '<option value="'.$mdls->id.'">'.$mdls->name.'</option>';
+            }
+          ?>
+        </select>
+      </div>
 
 
     </div>
@@ -166,20 +168,6 @@
       <form id="editprofileForm" class ="form-horizontal" >
       <div class="modal-body">
 
-      
-       <div class="form-group">
-        <b class="col-6">USER</b>
-        <select name ="userId" id="edit_userId"  class="form-control form-control-rounded" >
-          <?php
-            include_once('classes\class.user.php');
-            foreach((new USER())->getUsers() as $usprl)
-            {
-                echo '<option value="'.$usprl->id.'">'.$usprl->email.'</option>';
-            }
-          ?>
-        </select>
-		<input type="hidden" name="id" id="edit_id">
-      </div>
 
       <div class="form-group">
         <b class="col-6">PROFILE</b>
@@ -194,6 +182,20 @@
         </select>
       </div>
   
+      
+       <div class="form-group">
+        <b class="col-6">MODULE</b>
+        <select name ="moduleId" id="edit_moduleId"  class="form-control form-control-rounded" >
+          <?php
+            include_once('classes\class.module.php');
+            foreach((new MODULE())->getModules() as $mdl)
+            {
+                echo '<option value="'.$mdl->id.'">'.$mdl->name.'</option>';
+            }
+          ?>
+        </select>
+		<input type="hidden" name="id" id="edit_id">
+      </div>
 
     </div>
     <div class="modal-footer">
@@ -234,7 +236,7 @@
 		<div class="modal-footer">
 
 		  <button type="submit"   class="btn btn-danger"> <i class="fa fa-check"></i> Yes</button>
-		  <button type="button" data-dismiss="modal" class="btn btn-info"><i class="fa fa-times"></i>No</button>
+		  <button type="button" onclick="hideModal('deleteModal')"><i class="fa fa-times"></i>No</button>
 	  </form>
     
     </div>
@@ -351,7 +353,7 @@ $(document).ready( function (){
     $("#createForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.saveUserProfile.php",
+					   url: "ajax.saveProfileModule.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -364,8 +366,8 @@ $(document).ready( function (){
 					   success: function(r)
 						  {
 							  openMessageModal('Infomation',r);
-							  getUserProfiles();
-							 $("#AddUserProfile").modal("hide");
+							  getProfileModules();
+							 $("#AddProfileModule").modal("hide");
 							 $('#createForm').trigger('reset');
 						  },
 						 error: function(e) 
@@ -380,7 +382,7 @@ $(document).ready( function (){
       $("#editprofileForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.saveUserProfile.php",
+					   url: "ajax.saveProfileModule.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -393,7 +395,7 @@ $(document).ready( function (){
 					   success: function(r)
 						  {
 							  openMessageModal('Infomation',r);
-							  getUserProfiles();
+							  getProfileModules();
 							 $("#editModal").modal("hide");
 							 $('#editProfileForm').trigger('reset');
 						  },
@@ -410,7 +412,7 @@ $(document).ready( function (){
       $("#deleteProfileForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.deleteUserProfile.php",
+					   url: "ajax.deleteProfileModule.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -423,7 +425,7 @@ $(document).ready( function (){
 					   success: function(r)
 						  {
 							 openMessageModal('Infomation',r);
-							 getUserProfiles();
+							 getProfileModules();
 							 $("#deleteModal").modal("hide");
 							 $('#deleteProfileForm').trigger('reset');
 						  },
@@ -439,12 +441,12 @@ $(document).ready( function (){
 
 
 
-  getUserProfiles(); 
+  getProfileModules(); 
     
 	});
 
 
-function getUserProfiles()
+function getProfileModules()
 	 {
 		 
 		  var xhttp = new XMLHttpRequest();
@@ -453,25 +455,25 @@ function getUserProfiles()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('userProfiles').innerHTML = this.responseText;
+					document.getElementById('profileModules').innerHTML = this.responseText;
 					
 				}
 		  };
-		  xhttp.open("POST", "ajax.getUserProfiles.php", true);
+		  xhttp.open("POST", "ajax.getProfileModules.php", true);
 		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		  xhttp.send();
 	 }
 
-  function editUserProfile(id,userId,profileId)
+  function editProfileModule(id,profileId,moduleId)
   {
     
 	document.getElementById('edit_id').value= id;
-    document.getElementById('edit_userId').value=userId;
     document.getElementById('edit_profileId').value=profileId;
+	document.getElementById('edit_moduleId').value=moduleId;
 	$('#editModal').modal('show');
 
   }
-  function deleteUserProfile(id)
+  function deleteProfileModule(id)
   {
     document.getElementById('delete_id').value = id;
     $("#deleteModal").modal("show");
@@ -479,7 +481,7 @@ function getUserProfiles()
 
   function openModal()
   {
-    $("#AddUserProfile").modal("show");
+    $("#AddProfileModule").modal("show");
   }
 
 </script>

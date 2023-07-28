@@ -1,6 +1,5 @@
  <?php
  session_start();
- require_once("context.php");
  require_once("classes/class.profilemodules.php");
  require_once("classes/class.profile.php");
  require_once("classes/class.module.php");
@@ -16,7 +15,7 @@
 	  extract($_POST);
 	  $prmd = new PROFILEMODULES();
 	  $count = 1;
-	  foreach($prmd->getProfileModules($profileId) as $pm)
+	  foreach($prmd->getProfileModules() as $pm)
 	  {
 		  
 		  
@@ -24,7 +23,7 @@
 					<th scope="row">'.$count.'</th>
 					<td>'.(new PROFILE($pm->profileId))->name.'</td>
 					<td>'.(new MODULE($pm->moduleId))->name.'</td>
-					<td>'.$pm->regDate.'</td>
+					
 					<td>
 					<button onclick="editProfileModule(\''.$pm->id.'\',\''.$pm->profileId.'\',\''.$pm->moduleId.'\')" class="btn btn-success">
 					<i class="las la-edit"></i> Edit </button>
