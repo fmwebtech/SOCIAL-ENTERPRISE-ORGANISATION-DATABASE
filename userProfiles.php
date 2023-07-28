@@ -157,26 +157,27 @@
 <!-- add profile Modal -->
 <div class="modal fade text-dark" id="editModal" role="dialog">
 <div class="modal-dialog">
-
+            
+        
   <!-- Modal content-->
 
  
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">edit user Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">x</button>
+      <h4 class="modal-title text-dark">edit user Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">&times;</button>
       </div> 
       <form id="#editprofileForm" class ="form-horizontal" >
       <div class="modal-body">
 
       
       <div class="form-group">
-        <b class="col-6">ID</b>
-        <input required type="text" class="form-control form-control-rounded" name="name" value="" id="edit_name" placeholder="Enter User">
-        <input required type="hidden" name="id" id= 'edit_id' >
-
+        <b class="col-6">USER</b>
       </div>
 
+      <div class="form-group">
+        <b class="col-6">PROFILE</b>
+      </div>
   
 
     </div>
@@ -210,7 +211,7 @@
       </div> 
       <form id="#deleteProfileForm" class ="form-horizontal" >
       <div class="modal-body">
-
+        
       
       <div class="form-group">
         <b class="col-6">Are you sure you Want to Delete </b>
@@ -366,6 +367,7 @@ $(document).ready( function (){
 			 }));
            
  
+
       $("#editprofileForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
@@ -393,7 +395,7 @@ $(document).ready( function (){
 				});
 			 }));
 
-
+    
 
 
   //     $("#deleteProfileForm").on('submit',(function(e) {
