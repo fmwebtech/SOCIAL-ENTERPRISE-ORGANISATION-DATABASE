@@ -42,7 +42,7 @@ class COUNTRY
 
     function save($name,$code, $createdBy,)
 {
-		if($this->countryExists($code))
+		if($this->countryExists($code, $name))
 		{
 			echo 'The name you chose is already taken, choose a different name.';
 			return false;
@@ -71,13 +71,14 @@ class COUNTRY
 
 
 
-	function countryExists($code) 
+	function countryExists($code,$name) 
 	{
 		try
 		 {
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE [CODE] = ? ');
-			$stmt->bindParam(1, $code);			
+			$stmt = $Myconnection->prepare('SELECT * FROM COUNTRY WHERE [CODE] = ? OR [NAME] =?');
+			$stmt->bindParam(1, $code);
+			$stmt->bindParam(2, $name);				
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();

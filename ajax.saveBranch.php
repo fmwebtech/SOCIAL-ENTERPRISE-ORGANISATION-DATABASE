@@ -6,7 +6,7 @@ require_once('classes\class.seoCountry.php');
 
 if(!isset($_SESSION['email'])) {
     echo 'request failed';
-     die();
+    die();
 }
 
 
