@@ -1,7 +1,7 @@
 
 <div class="card-title">Branches
- <button onclick="addCountry(<?php echo $_POST['id']?>)"  type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">
-      Add Country</button>
+ <button onclick="addBranch(<?php echo $_POST['id']?>)"  type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">
+      Add  Branch</button>
 </div>
 
 <div >
@@ -28,7 +28,6 @@ if($_SERVER['REQUEST_METHOD']=='POST')
       
       <tr> <td>'.strtoupper($myCountry->name).' </td>
       <td>
-      <button  onclick="addBranch(\''.$myCountry->id.'\',\''.$id.'\')" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right"> Add Branch </button>
       </td>
      </tr>
    

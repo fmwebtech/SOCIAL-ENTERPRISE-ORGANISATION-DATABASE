@@ -101,7 +101,7 @@
   <div class="col-lg-6">
    <div class="card">
      <div class="card-body">
-       <div class="card-title" onclick="goToSeos()"> <i class="fa fa-arrow-left">      </i><?php echo "            "; echo $myseosDetails->name;  ?> </div>
+       <div class="card-title" onclick="goToSeos()"> <i class="fa fa-arrow-left"></i><?php echo "            "; echo $myseosDetails->name;  ?> </div>
        <hr>
        <form>
 
@@ -120,12 +120,13 @@
           <label class="col-6">Products</label>
           <label class="col-6"> <i class="pull-right fa fa-arrow-right"></i><?php echo $pros ?></label>
         </div>
-        <hr>
 
-        <div class="row" onclick="goTo('Views/seo_services.php' , 'seo_specific_details_box')">
+        <hr>
+        <div class="row" onclick="getServices(<?php echo $myseosDetails->id?>)">
           <label class="col-6">Services</label>
           <label class="col-6"><i class="pull-right fa fa-arrow-right"></i><?php echo $services ?></label>
         </div>
+
         <hr>
         <div class="row">
           <label class="col-6">Income per annum </label>
@@ -273,8 +274,23 @@
         <div class="form-group">
           <b class="col-6">Address</b>
           <input type="text" required class="form-control form-control-rounded"  name="address" placeholder="Enter branch address">
-          <input type='hidden' name='countryId' id='branch_countryId'>
           <input type='hidden' name='seoId' id='branch_seoId'>
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Select Country</b>
+          <select name='countryId' class="form-control form-control-rounded"> 
+
+               <?php
+               require_once('classes/class.country.php');
+               foreach((new COUNTRY())->getCountry() as $c)
+               {
+                  echo '<option value="'.$c->id.'">'.$c->name.'</option>';
+               }
+               ?>        
+                      
+                        
+          </select>
         </div>
 
 
@@ -290,11 +306,9 @@
 </div>
 
 <script>
-  function addBranch(countryId,seoId)
+  function addBranch(seoId)
   {
-   
-    document.getElementById('branch_countryId').value =countryId;
-    document.getElementById('branch_seoId').value =seoId;
+       document.getElementById('branch_seoId').value =seoId;
     $('#addBranchModal').modal('show');
   }
 </script>
@@ -370,6 +384,142 @@
     $('#AddProductModal').modal('show');
   }
 </script>
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="editServiceModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Edit Service</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <form id="editServiceForm">
+      <div class="modal-body">
+
+       
+        <div class="form-group">
+          <b class="col-6">Service name</b>
+          <input required type="text" name="name" class="form-control form-control-rounded" value="" id="editService_name" placeholder="Enter product name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Currency name</b>
+          <select name="currency" class="form-control form-control-rounded" value="" id="editService_currency">
+              <?php
+                include_once('classes\class.currency.php');
+                foreach((new CURRENCY())->getCurrency() as $cu)
+                {
+                    echo '<option value="'.$cu->id.'">'.$cu->name.'  ('.$cu->code.')</option>';
+                }
+              ?>
+            </select> 
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Service Price</b>
+          <input required type="number" name="price" class="form-control form-control-rounded" value="" id="editService_price" placeholder="Enter Service price">
+          <input type='hidden' name='seoId' id='editService_seoId'>
+          <input type='hidden' name='id' id='editService_id'>
+        </div>
+                   
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit"  class="btn btn-info">Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!--jq starts here-->
+
+<script>
+  function deleteService(seoId)
+  {
+   
+    document.getElementById('service_seoId').value =seoId;
+    $('#deleteServiceModal').modal('show');
+  }
+</script>
+
+
+
+
+
+
+<!-- add branch Modal -->
+<div class="modal fade text-dark" id="AddServiceModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Add Service</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <form id="addServiceForm">
+      <div class="modal-body">
+
+       
+        <div class="form-group">
+          <b class="col-6">Service name</b>
+          <input required type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter product name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Currency name</b>
+          <select name="currency" class="form-control form-control-rounded" value="" id="save_currency">
+              <?php
+                include_once('classes\class.currency.php');
+                foreach((new CURRENCY())->getCurrency() as $cu)
+                {
+                    echo '<option value="'.$cu->id.'">'.$cu->name.'  ('.$cu->code.')</option>';
+                }
+              ?>
+            </select> 
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Service Price</b>
+          <input required type="number" name="price" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Service price">
+          <input type='hidden' name='seoId' id='service_seoId'>
+        </div>
+                   
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit"  class="btn btn-info">Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!--jq starts here-->
+
+<script>
+  function addService(seoId)
+  {
+   
+    document.getElementById('service_seoId').value =seoId;
+    $('#AddServiceModal').modal('show');
+  }
+</script>
+
+<!--jq starts here-->
+
 
 
 
@@ -466,6 +616,42 @@
     </form>
       </div>
     </div>
+   </div>
+
+    
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="deleteServiceModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            
+
+            <h4 class="modal-title text-dark">Delete Service<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+          </div>
+          <form id="deleteServiceForm">
+          <div class="modal-body">
+
+
+            <div class="form-group">
+              <b class="col-6">Are you sure you want to delete ?</b>
+              <input required type="hidden" name="id" id='deleteService_id'/>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+
+          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          </div>
+
+    </form>
+      </div>
+    </div>
+    </div>
+
 
 
 
@@ -483,13 +669,21 @@
   }
 </script>
 
-
-
+<!--JQUERY FOR SERVICES STARTS HERE--> 
+<script>
+  function editService(id,name,currency,price,seoId)
+    {
+      document.getElementById('editService_id').value =id;
+      document.getElementById('editService_seoId').value =seoId;
+      document.getElementById('editService_name').value =name;
+      document.getElementById('editService_currency').value =currency;
+      document.getElementById('editService_price').value =price;
+      $('#editServiceModal').modal('show');
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
 
 
 <script>
@@ -522,7 +716,7 @@ $(document).ready(function()
 							   alert(e);
 						  }          
 				});
-			 }));
+		  }));
 
 
     $("#addBranchForm").on('submit',(function(e)
@@ -551,7 +745,7 @@ $(document).ready(function()
 							   alert(e);
 						  }          
 				});
-			 }));
+			 }));
 
 
 //delete form starts here 
@@ -575,6 +769,34 @@ $("#deleteProductForm").on('submit',(function(e) {
 							 getProducts();
 							$("#deleteProductModal").modal("hide");
 							 $('#deleteProductForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+     //ends here
+
+     $("#deleteServiceForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteService.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getServices();
+							$("#deleteServiceModal").modal("hide");
+							 $('#deleteServiceForm').trigger('reset');
 						  },
 						 error: function(e) 
 						  {
@@ -613,7 +835,73 @@ $("#deleteProductForm").on('submit',(function(e) {
 							   alert(e);
 						  }          
 				});
-			 }));
+			 }));
+
+
+      //add form for services starts here
+
+      $("#addServiceForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.saveService.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getServices();
+							$("#AddServiceModal").modal("hide");
+							 $('addServiceForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+//form for editing services;
+
+$("#editServiceForm").on('submit',(function(e)
+      {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editService.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getServices();
+							$("#editServiceModal").modal("hide");
+							 $('#editServiceForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+    // form ends here 
+
+
+
 
 
       $("#editProductForm").on('submit',(function(e)
@@ -633,7 +921,7 @@ $("#deleteProductForm").on('submit',(function(e) {
 					   success: function(r)
 						  {
 							openMessageModal('Infomation',r);
-							getProducts(document.getElementById('product_seoId').value);
+							getProducts();
 							$("#editProductModal").modal("hide");
 							 $('#editProductForm').trigger('reset');
 						  },
@@ -642,11 +930,10 @@ $("#deleteProductForm").on('submit',(function(e) {
 							   alert(e);
 						  }          
 				});
-			 }));
+			 }));
 
       getProducts();
 });
-
 
 
 function goToSeos()
@@ -660,7 +947,7 @@ function getSeoBranches(id)
   xhttp.onreadystatechange = function() 
   {
     if (this.readyState == 4 && this.status == 200)
-     {
+    {
 
       document.getElementById("seo_specific_details_box").innerHTML =this.responseText;
 
@@ -670,6 +957,8 @@ function getSeoBranches(id)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("id="+id);
 }
+
+
 function getProducts(id)
 {
   var id= <?php echo $myseosDetails->id;?>;
@@ -688,12 +977,44 @@ function getProducts(id)
   xhttp.send("seoId="+id);
 }
 
+function getServices(id)
+{
+  var id= <?php echo $myseosDetails->id;?>;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() 
+  {
+    if (this.readyState == 4 && this.status == 200)
+    {
+
+      document.getElementById("seo_specific_details_box").innerHTML =this.responseText;
+
+    }
+  };
+  xhttp.open("POST", "ajax.getService.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("seoId="+id);
+ }
+// for ends here 
+
+
+
+
+
+
 
 function deleteProduct(id, seoId)
-    {
-      document.getElementById('deleteProduct_id').value=id;
-      $("#deleteProductModal").modal("show");
-    }
+{
+  document.getElementById('deleteProduct_id').value=id;
+  $("#deleteProductModal").modal("show");
+}
+
+
+        
+function deleteService(id, seoId)
+{
+  document.getElementById('deleteService_id').value=id;
+  $("#deleteServiceModal").modal("show");
+}
 
 
 function openModal(){
@@ -702,10 +1023,6 @@ function openModal(){
 
 }
 </script>
-
-
-
-
 
 
 	</div>
