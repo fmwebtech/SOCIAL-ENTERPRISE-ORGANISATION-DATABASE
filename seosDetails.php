@@ -436,7 +436,7 @@
 
 
 <!-- My Moodal -->
-<div class="modal fade text-dark" id="deleteProduct" role="dialog">
+<div class="modal fade text-dark" id="deleteProductModal" role="dialog">
 	<div class="modal-dialog">
 
 		<!-- Modal content-->
@@ -452,7 +452,7 @@
 
 				<div class="form-group">
 					<b class="col-6">Are you sure you want to delete ?</b>
-          <input required type="hidden" name="id" id='delete_id'/>
+          <input required type="hidden" name="id" id='deleteProduct_id'/>
 
 
         </div>
@@ -575,7 +575,7 @@ $("#deleteProductForm").on('submit',(function(e) {
 						  {
 							 openMessageModal('Infomation',r);
 							 getProducts();
-							$("#deleteProduct").modal("hide");
+							$("#deleteProductModal").modal("hide");
 							 $('#deleteProductForm').trigger('reset');
 						  },
 						 error: function(e) 
@@ -691,12 +691,16 @@ function getProducts(id)
 
 function deleteProduct(id)
     {
-      document.getElementById('delete_id').value=id;
-      $("#deleteProduct").modal("show");
+      document.getElementById('deleteProduct_id').value=id;
+      $("#deleteProductModal").modal("show");
     }
 
 
-function openModal()
+function openModal(){
+
+
+
+}
 </script>
 
 
