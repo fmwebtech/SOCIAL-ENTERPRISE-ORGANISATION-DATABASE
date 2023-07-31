@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     $count=1;
         foreach($fetchedCurrency as $currency)
         {
-                echo '<tr> <td>'.$count.'</td><td>'.$currency->name.'</td> 
+                echo '<tr> <td>'.$count.'</td><td>'.$currency->name.'</td> <td>'.$currency->code.'</td>
 
                 <td><button onclick="editCurrency(\''.$currency->id.'\')" class="btn btn-success">
 												<i class="zmdi zmdi-edit"></i> Edit </button>

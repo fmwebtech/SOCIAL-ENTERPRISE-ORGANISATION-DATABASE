@@ -336,7 +336,7 @@
                 include_once('classes\class.currency.php');
                 foreach((new CURRENCY())->getCurrency() as $cu)
                 {
-                    echo '<option value="'.$cu->id.'">'.$cu->name.'</option>';
+                    echo '<option value="'.$cu->id.'">'.$cu->name.'  ('.$cu->code.')</option>';
                 }
               ?>
             </select> 
