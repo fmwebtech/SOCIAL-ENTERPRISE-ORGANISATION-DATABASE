@@ -5,7 +5,7 @@ require_once('classes\class.Product.php');
 if(!isset($_SESSION['email'])) //check if this request is sent while logged in
 {
 	echo 'request failed';
-	 die();
+	die();
 
 }
 
