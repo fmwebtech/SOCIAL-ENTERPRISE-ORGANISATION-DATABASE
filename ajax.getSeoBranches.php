@@ -38,7 +38,9 @@ if($_SERVER['REQUEST_METHOD']=='POST')
           echo '
           
           <tr> <td style="padding-left:20px">'.$count.'. '.$br->name.'</td> <td>'.$br->address.'
-          <button  onclick="deleteBranch('.$br->id.')" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right"> <i class="fa fa-edit"></i> </button>
+          <i  onclick="deleteBranch('.$br->id.')" title="delete" style = "margin-left:10px" type="button" class="pull-right fa fa-trash"></i>
+          <i  onclick="deleteBranch('.$br->id.')" title="edit" type="button" class="pull-right fa fa-edit"></i>
+
           </td> </tr>
           
           ';
