@@ -5,7 +5,7 @@ require_once('classes\class.branch.php');
 
 if(!isset($_SESSION['email'])) {
     echo 'request failed';
-     die();
+    die();
 }
 
 

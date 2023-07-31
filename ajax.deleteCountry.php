@@ -9,7 +9,7 @@
     if(!isset($_SESSION['email']))
 	{
         echo 'request failed';
-		 die();
+		die();
     }
 
 

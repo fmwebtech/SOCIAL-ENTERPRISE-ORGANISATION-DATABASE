@@ -8,7 +8,7 @@ require_once('classes\class.seo.php');
     if(!isset($_SESSION['email']))
     {
         echo 'request failed';
-		 die;
+		die;
     }
 
 
