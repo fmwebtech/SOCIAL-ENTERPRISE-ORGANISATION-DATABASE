@@ -250,6 +250,7 @@
 
 
 
+
 <!-- add branch Modal -->
 <div class="modal fade text-dark" id="addBranchModal" role="dialog">
   <div class="modal-dialog">
@@ -361,8 +362,6 @@
   </div>
 </div>
 
-<!-- add product Modal -->
-
 <script>
   function addProduct(seoId)
   {
@@ -426,6 +425,48 @@
     </div>
 
   </div>
+</div>
+
+<!---MOodal ends here-->
+
+
+
+<!-- add product Modal -->
+
+
+
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="deleteProduct" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+        
+
+				<h4 class="modal-title text-dark">DELETE PRODUCT<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+			</div>
+      <form id="deleteProductForm">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">Are you sure you want to delete ?</b>
+          <input required type="hidden" name="id" id='delete_id'/>
+
+
+        </div>
+
+
+			</div>
+      <div class="modal-footer">
+
+<button type="submit" class="btn btn-danger">Yes</button>
+<button type="button" data-dismiss="modal" class="btn btn-dark">No</button>
+</div>
+
+</form>
+	</div>
 </div>
 
 
@@ -514,6 +555,38 @@ $(document).ready(function()
 				});
 			 }));
 
+
+//delete form starts here 
+      
+$("#deleteProductForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteProduct.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getProducts();
+							$("#deleteProduct").modal("hide");
+							 $('#deleteProductForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+     //ends here
+
+
     
     //addProductForm
     $("#addProductForm").on('submit',(function(e)
@@ -577,7 +650,6 @@ $(document).ready(function()
 
 
 
-
 function goToSeos()
 {
   window.location.href = 'seos.php';
@@ -599,19 +671,6 @@ function getSeoBranches(id)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("id="+id);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 function getProducts(id)
 {
   var xhttp = new XMLHttpRequest();
@@ -628,7 +687,20 @@ function getProducts(id)
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("seoId="+id);
 }
+
+
+function deleteProduct(id)
+    {
+      document.getElementById('delete_id').value=id;
+      $("#deleteProduct").modal("show");
+    }
+
+
+function openModal()
 </script>
+
+
+
 
 
 
