@@ -146,12 +146,12 @@ var $regDate;
 			$stmt=null;
 			if($userId==null)
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES');
+				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES ORDER BY USERID');
 				
 			}
 			else
 			{
-				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE USERID=?');
+				$stmt = $Myconnection->prepare('SELECT * FROM USERPROFILES WHERE USERID=? ORDER BY USERID');
 				$stmt->bindParam(1,$userId);
 			}
 			$ppsArray = array();
