@@ -1,6 +1,8 @@
 <?php
 
 require_once('settings\connectionsetting.php');
+require_once('classes\class.logs.php');
+
 class SERVICES {
 
     var $id;
@@ -74,7 +76,7 @@ class SERVICES {
 		}
 	}
 
-	function edit($id, $seoId,$name,$currency,$price,$status,$modifiedBy) 
+	function edit($id, $seoId,$name,$currency,$price,$modifiedBy, $status='edited') 
 	{
 			if(!$this->safeToEdit($id,$seoId,$name)) 
 			{

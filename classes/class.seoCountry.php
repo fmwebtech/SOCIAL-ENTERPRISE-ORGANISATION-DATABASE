@@ -36,7 +36,7 @@ class SEOCOUNTRY
      {
         if ($this->seoCountryExists($countryId,$seoId)) 
         {
-            echo 'This Records Exist';
+            // echo 'This Records Exist';
             return false;
         }
         try 
