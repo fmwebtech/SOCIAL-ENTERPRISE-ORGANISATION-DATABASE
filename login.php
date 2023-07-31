@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
  <div class="loader-wrapper bg-theme bg-theme11"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
 	<div class="card card-authentication1 mx-auto my-5 ">
 		<div class="text-center bg-white">
-		 		<img src="assets/images/logo-icon.png" alt="logo icon">
+		 		<img src="assets\images\favicon.ico" alt="logo icon">
 		 	</div>
 		<div class="card-body">
 		 <div class="card-content p-2">

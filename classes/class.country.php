@@ -44,7 +44,7 @@ class COUNTRY
 {
 		if($this->countryExists($code, $name))
 		{
-			echo 'The name you chose is already taken, choose a different name.';
+			echo 'The country name or code you chose is already taken, choose a different country name or code.';
 			return false;
 		}
 		
