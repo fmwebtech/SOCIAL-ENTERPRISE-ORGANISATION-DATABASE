@@ -50,7 +50,7 @@ foreach($fetchedproduct as $product)
     echo '
     
     <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->code.' '.$product->price.'
-    <i onclick="deleteproduct('.$product->id.')" title="Delete" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
+    <i onclick="deleteProduct('.$product->id.')" title="Delete" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
     <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" title="Edit" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
     
     </td> </tr>

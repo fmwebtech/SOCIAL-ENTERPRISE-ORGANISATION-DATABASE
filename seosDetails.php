@@ -436,38 +436,36 @@
 
 
 <!-- My Moodal -->
-<div class="modal fade text-dark" id="deleteProductModal" role="dialog">
-	<div class="modal-dialog">
+    <div class="modal fade text-dark" id="deleteProductModal" role="dialog">
+      <div class="modal-dialog">
 
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-        
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            
 
-				<h4 class="modal-title text-dark">DELETE PRODUCT<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
-			</div>
-      <form id="deleteProductForm">
-			<div class="modal-body">
-
-
-				<div class="form-group">
-					<b class="col-6">Are you sure you want to delete ?</b>
-          <input required type="hidden" name="id" id='deleteProduct_id'/>
+            <h4 class="modal-title text-dark">Delete Product<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+          </div>
+          <form id="deleteProductForm">
+          <div class="modal-body">
 
 
-        </div>
+            <div class="form-group">
+              <b class="col-6">Are you sure you want to delete ?</b>
+              <input required type="hidden" name="id" id='deleteProduct_id'/>
+            </div>
 
 
-			</div>
-      <div class="modal-footer">
+          </div>
+          <div class="modal-footer">
 
-<button type="submit" class="btn btn-danger">Yes</button>
-<button type="button" data-dismiss="modal" class="btn btn-dark">No</button>
-</div>
+          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          </div>
 
-</form>
-	</div>
-</div>
+    </form>
+      </div>
+    </div>
 
 
 
@@ -557,7 +555,7 @@ $(document).ready(function()
 
 
 //delete form starts here 
-      
+     
 $("#deleteProductForm").on('submit',(function(e) {
 			   e.preventDefault();
 			   $.ajax({
@@ -645,7 +643,8 @@ $("#deleteProductForm").on('submit',(function(e) {
 						  }          
 				});
 			 }));
-      
+
+      getProducts();
 });
 
 
@@ -673,6 +672,7 @@ function getSeoBranches(id)
 }
 function getProducts(id)
 {
+  var id= <?php echo $myseosDetails->id;?>;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() 
   {
@@ -689,7 +689,7 @@ function getProducts(id)
 }
 
 
-function deleteProduct(id)
+function deleteProduct(id, seoId)
     {
       document.getElementById('deleteProduct_id').value=id;
       $("#deleteProductModal").modal("show");
