@@ -67,6 +67,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Currency Name</th>
+				<th scope="col">Currency Code</th>
                 <th scope="col">Action</th>
 
               </tr>
@@ -101,8 +102,13 @@
 
 
 				  <div class="form-group">
-					<b class="col-6">currency name</b>
+					<b class="col-6">Currency Name</b>
 					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
+				  </div>
+
+				  <div class="form-group">
+					<b class="col-6">Currency Code</b>
+					<input required type="text" name="code" class="form-control form-control-rounded" value="" id="input-6" placeholder="Enter Currency Name">
 				  </div>
           </div>
 			    <div class="modal-footer">
@@ -142,8 +148,16 @@
 
 
 				<div class="form-group">
-					<b class="col-6">currency name</b>
+					<b class="col-6">Currency Name</b>
 					<input required type="text" name="name" class="form-control form-control-rounded" value="" id="edit_name" placeholder="Enter Currency Name">
+          
+
+
+        </div>
+
+		<div class="form-group">
+					<b class="col-6">Currency Code</b>
+					<input required type="text" name="code" class="form-control form-control-rounded" value="" id="edit_code" placeholder="Enter Currency Name">
           <input required type="hidden" name="id" id='edit_id'/>
 
 
@@ -190,8 +204,8 @@
 			</div>
       <div class="modal-footer">
 
-<button type="submit" class="btn btn-info">Edit</button>
-<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+<button type="submit" class="btn btn-danger">Delete</button>
+<button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
 </div>
 
 </form>
@@ -386,6 +400,7 @@ function getCurrency()
           var myObject=JSON.parse(this.responseText);
           document.getElementById('edit_id').value=myObject.id;
           document.getElementById('edit_name').value=myObject.name;
+		  document.getElementById('edit_code').value=myObject.code;
 					// document.getElementById('CurrencyTablepool').innerHTML = this.responseText;
           $("#editCurrency").modal("show");
 				}

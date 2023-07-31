@@ -49,9 +49,9 @@ foreach($fetchedproduct as $product)
     $mycu = new CURRENCY($product->currency);
     echo '
     
-    <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->name.' '.$product->price.'
-    <i onclick="deleteproduct('.$product->id.')" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
-    <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
+    <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->code.' '.$product->price.'
+    <i onclick="deleteproduct('.$product->id.')" title="Delete" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
+    <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" title="Edit" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
     
     </td> </tr>
     

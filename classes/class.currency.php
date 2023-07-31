@@ -5,6 +5,7 @@ class CURRENCY
 {
     var $id;
     var $name;
+    var $code;
     var $createdBy;
     var $modifiedBy;
     var $status;
@@ -26,6 +27,7 @@ class CURRENCY
             {
                 $this->id = $v['ID'];
                 $this->createdBy = $v['CREATED_BY'];
+                $this->code = $v['CODE'];
                 $this->name = $v['NAME'];
                 $this->modifiedBy = $v['MODIFIED_BY'];
                 $this->status = $v['STATUS'];
@@ -34,9 +36,9 @@ class CURRENCY
         }
     }
 
-function save($name, $createdBy,)
+function save($name, $code, $createdBy,)
 {
-    if ($this->currencyExists($name, $createdBy))
+    if ($this->currencyExists($code))
     {
         echo 'The name you chose is already taken, choose a different name.';
         return false;
@@ -46,9 +48,10 @@ function save($name, $createdBy,)
 {
 
     global $Myconnection;
-    $stmt = $Myconnection->prepare("INSERT INTO CURRENCY([NAME], CREATED_BY, STATUS) VALUES (?, ?, 'new')");
+    $stmt = $Myconnection->prepare("INSERT INTO CURRENCY([NAME], [CODE], CREATED_BY, STATUS) VALUES (?, ?, ?, 'new')");
     $stmt->bindParam(1, $name);
-    $stmt->bindParam(2, $createdBy);
+    $stmt->bindParam(2, $code);
+    $stmt->bindParam(3, $createdBy);
     $stmt->execute();
     (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','SAVE',json_encode($_POST));
     return true;
@@ -60,14 +63,13 @@ function save($name, $createdBy,)
     return false;   
   }  
 }
-    function currencyExists($name, $createdBy)
+    function currencyExists( $code)
      {
         try
          {
            global $Myconnection;
-        $stmt = $Myconnection->prepare('SELECT * FROM CURRENCY WHERE [NAME]=? AND CREATED_BY=?');
-        $stmt->bindParam(1, $name);
-        $stmt->bindParam(2, $createdBy);
+        $stmt = $Myconnection->prepare('SELECT * FROM CURRENCY WHERE CODE=?');
+        $stmt->bindParam(1, $code);
         $stmt->execute();         
         $stmt->setFetchMode(PDO::FETCH_ASSOC);         
         $results = $stmt->fetchAll();         
@@ -83,9 +85,9 @@ function save($name, $createdBy,)
        }
      }
 
-     function edit($id, $name, $modifiedBy, $status='edited')
+     function edit($id, $name, $code, $modifiedBy, $status='edited')
     {
-        if (!$this->safeToEdit($id, $name))
+        if (!$this->safeToEdit($code))
          {
              echo 'The name you chose is already taken, choose a different name.';
              return false;
@@ -94,11 +96,12 @@ function save($name, $createdBy,)
        try
         {
           global $Myconnection;
-          $stmt = $Myconnection->prepare('UPDATE CURRENCY SET [NAME]=?,MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
+          $stmt = $Myconnection->prepare('UPDATE CURRENCY SET [NAME]=?, [CODE]=?, MODIFIED_BY=?, [STATUS]=? WHERE ID=?');
           $stmt->bindParam(1, $name);
-          $stmt->bindParam(2, $modifiedBy);
-          $stmt->bindParam(3, $status);
-          $stmt->bindParam(4, $id);
+          $stmt->bindParam(2, $code);
+          $stmt->bindParam(3, $modifiedBy);
+          $stmt->bindParam(4, $status);
+          $stmt->bindParam(5, $id);
           $stmt->execute();
           (new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'CURRENCY','EDIT',json_encode($_POST));
 
@@ -112,14 +115,13 @@ function save($name, $createdBy,)
         }
     }
 
-    function safeToEdit($id, $name)
+    function safeToEdit($code)
     {
         try
         {
             global $Myconnection;
-            $stmt = $Myconnection->prepare('SELECT * FROM CURRENCY WHERE [NAME]=? AND ID<>?');
-            $stmt->bindParam(1, $name);
-            $stmt->bindParam(2, $id);
+            $stmt = $Myconnection->prepare('SELECT * FROM CURRENCY WHERE [CODE]=?');
+            $stmt->bindParam(1, $code);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $results = $stmt->fetchAll();
@@ -150,6 +152,7 @@ function save($name, $createdBy,)
                 $currency = new CURRENCY();
                 $currency->id = $v['ID'];
                 $currency->name = $v['NAME'];
+                $currency->code = $v['CODE'];
                 $currency->modifiedBy = $v['MODIFIED_BY'];
                 $currency->createdBy = $v['CREATED_BY'];
                 $currency->status = $v['STATUS'];
