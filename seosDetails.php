@@ -315,11 +315,103 @@
 
 
 
+<!-- EDIT branch Modal -->
+<div class="modal fade text-dark" id="editBranchModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title text-dark">Edit Branch</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form id='editBranchForm'>
+      <div class="modal-body">
+
+
+        <div class="form-group">
+          <b class="col-6">Branch name</b>
+          <input type="text" required class="form-control form-control-rounded" name="name" id= "editbranch_name" placeholder="Enter branch name">
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Address</b>
+          <input type="text" required class="form-control form-control-rounded"  name="address" id="editbranch_address" placeholder="Enter branch address">
+          <input type='hidden' name='seoId' id='editbranch_seoId'>
+          <input type='hidden' name='id' id='editbranch_id'>
+        </div>
+
+        <div class="form-group">
+          <b class="col-6">Select Country</b>
+          <select name='countryId' class="form-control form-control-rounded" id="editbranch_country"> 
+
+               <?php
+               require_once('classes/class.country.php');
+               foreach((new COUNTRY())->getCountry() as $c)
+               {
+                  echo '<option value="'.$c->id.'">'.$c->name.'</option>';
+               }
+               ?>        
+                      
+                        
+          </select>
+          
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit"  class="btn btn-info"><i class="fa fa-save"></i> Save</button>
+        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+      </div>
+  </form>
+    </div>
+
+  </div>
+</div>
 
 
 
+<!-- My Moodal -->
+<div class="modal fade text-dark" id="deleteBranchModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            
+
+            <h4 class="modal-title text-dark">Delete Branch <button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+          </div>
+          <form id="deleteBranchForm">
+          <div class="modal-body">
 
 
+            <div class="form-group">
+              <b class="col-6">Are you sure you want to delete ?</b>
+              <input required type="hidden" name="id" id='deletebranch_id'/>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+
+          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
+            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          </div>
+
+    </form>
+      </div>
+    </div>
+   </div>
+
+<script>
+   function deleteBranch(id, seoId)
+{
+  document.getElementById('deletebranch_id').value=id;
+  $("#deleteBranchModal").modal("show");
+}
+</script>
 
 
 
@@ -654,7 +746,18 @@
 
 
 
-
+    <script>
+  function editBranch(id,name,address,country,seoId)
+  {
+   //
+    document.getElementById('editbranch_id').value =id;
+    document.getElementById('editbranch_name').value =name;
+    document.getElementById('editbranch_address').value =address;
+    document.getElementById('editbranch_country').value =country;
+    document.getElementById('editbranch_seoId').value =seoId;
+    $('#editBranchModal').modal('show');
+  }
+</script>
 
 <script>
   function editProduct(id,name,currency,price,seoId)
@@ -747,6 +850,96 @@ $(document).ready(function()
 				});
 			 }));
 
+
+    $("#editBranchForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editBranch.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getSeoBranches(document.getElementById('editbranch_seoId').value);
+							$("#editBranchModal").modal("hide");
+							 $('#editBranchForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+       $("#deleteBranchForm").on('submit',(function(e) {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.deleteBranch.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							 openMessageModal('Infomation',r);
+							 getSeoBranches();
+							$("#deleteBranchModal").modal("hide");
+							 $('#deleteBranchForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+
+
+
+
+
+
+
+       $("#editBranchForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.editBranch.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							openMessageModal('Infomation',r);
+							getSeoBranches(document.getElementById('editbranch_seoId').value);
+							$("#editBranchModal").modal("hide");
+							 $('#editBranchForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
 
 //delete form starts here 
      
@@ -943,6 +1136,7 @@ function goToSeos()
 
 function getSeoBranches(id)
 {
+  var id= <?php echo $myseosDetails->id;?>;
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() 
   {
@@ -1004,7 +1198,7 @@ function getServices(id)
 
 function deleteProduct(id, seoId)
 {
-  document.getElementById('deleteProduct_id').value=id;
+  document.getElementById('deletebranch_id').value=id;
   $("#deleteProductModal").modal("show");
 }
 
@@ -1017,9 +1211,8 @@ function deleteService(id, seoId)
 }
 
 
-function openModal(){
-
-
+function openModal()
+{
 
 }
 </script>

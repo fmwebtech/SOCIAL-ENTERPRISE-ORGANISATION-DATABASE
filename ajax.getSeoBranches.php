@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
           
           <tr> <td style="padding-left:20px">'.$count.'. '.$br->name.'</td> <td>'.$br->address.'
           <i  onclick="deleteBranch('.$br->id.')" title="delete" style = "margin-left:10px" type="button" class="pull-right fa fa-trash"></i>
-          <i  onclick="deleteBranch('.$br->id.')" title="edit" type="button" class="pull-right fa fa-edit"></i>
+          <i  onclick="editBranch('.$br->id.',\''.$br->name.'\',\''.$br->address.'\',\''.$br->countryId.'\',\''.$br->seoId.'\')" title="edit" type="button" class="pull-right fa fa-edit"></i>
 
           </td> </tr>
           

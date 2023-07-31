@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once('classes\class.branch.php');
-
+require_once('classes\class.seoCountry.php');
 
 
 
@@ -17,10 +17,20 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 {
     extract($_POST);
 
-    $mybranch = new BRANCH();
-
-    if($mybranch->edit($id,$seoId,$countryId,$name,$address,$modifiedBy,$status))
+    $mybranch = new BRANCH($id);
+    $modifiedBy =$_SESSION['email'];
+    $myseoCountry = new seoCountry();
+    $myseoCountry->save($countryId, $seoId);
+    if($mybranch->edit($id,$seoId,$countryId,$name,$address,$modifiedBy,$status='edited'))
     {
+        if(sizeof($mybranch->getBranch($mybranch->seoId,$mybranch->countryId))==0)
+        {
+           $mySeoCountry =  (new SEOCOUNTRY())->getSeoCountryBySeoIdAndCountryId($mybranch->seoId,$mybranch->countryId)[0];
+           $mySeoCountry->delete($mySeoCountry->id);
+        }else
+        {
+           
+        } 
          echo 'Branch has been Edited';
     }
     else
