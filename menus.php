@@ -5,6 +5,12 @@
 	{
 		header('location:login.php');
 	}
+
+	require_once('classes/class.authorization.php');
+	if(!(new AUTHORIZATION($_SESSION['id'],(explode('/',$_SERVER['PHP_SELF'])[sizeof(explode('/',$_SERVER['PHP_SELF']))-1])))->authorize())
+	{
+		header('location:logout.php');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">

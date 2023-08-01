@@ -6,11 +6,23 @@
   require_once('classes\class.Service.php');
   require_once('classes\class.branch.php');
   require_once('classes\class.country.php');
-
+  require_once('classes/class.authorization.php');
+  
 	if(!isset($_SESSION['email']))
 	{
 		header('location:login.php');
 	}
+  
+	if(!(new AUTHORIZATION($_SESSION['id'],(explode('/',$_SERVER['PHP_SELF'])[sizeof(explode('/',$_SERVER['PHP_SELF']))-1])))->authorize())
+	{
+		header('location:logout.php');
+	}
+
+
+
+
+
+
     if(isset($_GET['id']))
     {
       extract($_GET);
