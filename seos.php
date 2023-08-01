@@ -122,7 +122,7 @@
   <div class="modal-content">
     <div class="modal-header">
 
-      <h4 class="modal-title text-dark">Add SEO</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">Add SEO</h4><button  onclick="hideModal('addSeoModal')" type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
      <form id="addSeoForm"> 
       <div class="modal-body">
@@ -224,7 +224,7 @@
     <div class="modal-footer">
 
       <button type="submit"   class="btn btn-info">Save</button>
-      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      <button type="button" data-dismiss="modal" class="btn btn-dark" onclick="hideModal('addSeoModal')">Close</button>
     </div>
     </form>
   </div>
@@ -243,7 +243,7 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">EDIT COMPANY</h4><button onclick="$('#editSeo').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">EDIT COMPANY</h4><button onclick="hideModal('editSeoModal')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
       <form id="editSeoForm">
 			<div class="modal-body">
@@ -313,7 +313,7 @@
 			<div class="modal-footer">
 
 				<button type="submit" class="btn btn-info">Edit</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark" onclick="hideModal('editSeoModal')">Close</button>
 			</div>
 		</div>
 
@@ -333,7 +333,7 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">DELETE COMPANY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				<h4 class="modal-title text-dark">DELETE COMPANY<button onclick="hideModal('deleteCompany')" type="button" class="close" data-dismiss="modal">&times;</button></h4>
 			</div>
       <form id="deleteSeoForm">
 			<div class="modal-body">
@@ -351,7 +351,7 @@
       <div class="modal-footer">
 
 <button type="submit" class="btn btn-danger">Yes</button>
-<button type="button" data-dismiss="modal" class="btn btn-dark">No</button>
+<button type="button" data-dismiss="modal" class="btn btn-dark"  onclick="hideModal('deleteCompany')">No</button>
 </div>
 
 </form>
