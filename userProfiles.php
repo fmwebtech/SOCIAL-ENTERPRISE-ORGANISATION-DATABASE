@@ -40,6 +40,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
   
 </head>
 
@@ -76,7 +78,7 @@
     <div class="card-body">
       <h5 class="card-title">User Profiles <button onclick="openModal()" data-target="#AddUserProfile" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User Profile</button></h5>
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover" id="myUserProfileTable">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -319,6 +321,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
 
@@ -461,6 +465,23 @@ function getUserProfiles()
 					
 					document.getElementById('userProfiles').innerHTML = this.responseText;
 					
+
+
+          var table = $('#myUserProfileTable').DataTable();
+              
+              new $.fn.dataTable.Buttons( table, {
+                  buttons: [
+                'copy', 'excel', 'pdf'
+              ]
+              } );
+
+                  table.buttons().container()
+              .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+
+                  getMenuParentOptions();
+
+
+
 				}
 		  };
 		  xhttp.open("POST", "ajax.getUserProfiles.php", true);
