@@ -41,6 +41,11 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+ 
+
+
   
 </head>
 
@@ -81,7 +86,7 @@
     <div class="card-body">
       <h5 class="card-title">SEO list <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add SEO</button></h5>
       <div class="table-responsive">
-        <table class="table table-hover">
+      <table id="mySeosTable" class="table table-hover">
           <thead>
             <tr>
             <th scope="col">#</th>
@@ -361,6 +366,7 @@
 <!--JQUERY CODE STARTS       --> 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 
 $(document).ready(function()
@@ -469,11 +475,25 @@ function getSeo()
   xhttp.onreadystatechange = function() 
   {
     if (this.readyState == 4 && this.status == 200)
-     {
+      {
+          
+        document.getElementById("seoTablepool").innerHTML =this.responseText;
 
-      document.getElementById("seoTablepool").innerHTML =this.responseText;
-
-    }
+            //new DataTable('#mySeosTable');
+            
+            var table = $('#mySeosTable').DataTable();
+  
+            new $.fn.dataTable.Buttons( table, {
+              buttons: [
+                'copy', 'excel', 'pdf'
+              ]
+            } );
+            
+            table.buttons().container()
+            .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+            
+            getMenuParentOptions();
+      }
   };
   xhttp.open("POST", "ajax.getSeo.php", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -578,44 +598,6 @@ window.location.assign("seosDetails.php?id="+id);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	</div>
 	</div>
     <!--start overlay-->
@@ -654,6 +636,10 @@ window.location.assign("seosDetails.php?id="+id);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+
+
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
