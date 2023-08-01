@@ -39,7 +39,9 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
-  
+   <!-- Table Style-->
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -75,7 +77,7 @@
     <div class="card-body">
       <h5 class="card-title">Profiles <button onclick="openModal()" data-target="#AddSEOModal" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add Profile</button></h5>
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover" id = "myProfileTable">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -286,10 +288,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+<script src="assets\plugins\DataTables\Buttons-2.4.1\js\buttons.print.min.js"></script>
 <!-- Index js -->
+
+
+
+
 <script src="assets/js/index.js"></script>
 
 <script type="text/javascript">
+
+  
 
   function goTo(url , id)
   {
@@ -417,8 +427,10 @@ function getProfiles()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('Profiles').innerHTML = this.responseText;
-					
+					//document.getElementById('Profiles').innerHTML = this.responseText;
+          makeTableData('myProfileTable',this.responseText);
+
+	
 				}
 		  };
 		  xhttp.open("POST", "ajax.getProfiles.php", true);
@@ -462,5 +474,43 @@ function getProfiles()
   {
     $("#AddSEOModal").modal("show");
   }
+
+
+  function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>

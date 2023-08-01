@@ -42,6 +42,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+
   
 </head>
 
@@ -75,7 +77,8 @@
       <div class="card-body">
         <h5 class="card-title">CURRENCY MANAGEMENT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add CURRENCY</button></h5>
         <div class="table-responsive">
-          <table class="table table-hover">
+		<table id="myCurrencyTable" class="table table-hover">
+
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -265,6 +268,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
@@ -391,7 +396,13 @@ function getCurrency()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('CurrencyTablepool').innerHTML = this.responseText;
+					document.getElementById('CurrencyTablepool').innerHTML = this.responseText;	{
+					
+					//new DataTable('#myCurrencyTable');
+					
+ 
+					makeTableData('myCurrencyTable',this.responseText);
+				}
 					
 				}
 		  };
@@ -433,4 +444,33 @@ function openModal()
   $("#AddSEOModal").modal("show");
 
 }
+
+
+function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
+
    </script>

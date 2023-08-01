@@ -45,6 +45,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+
   
 </head>
 
@@ -85,7 +87,7 @@
 			<div class="card-body">
 				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
 				<div class="table-responsive">
-					<table class="table table-hover">
+				<table id="myCountryTable" class="table table-hover">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
@@ -391,6 +393,14 @@ function getCountries()
      {
 
       document.getElementById("countriesTablepool").innerHTML =this.responseText;
+	  
+					
+					
+					
+					//new DataTable('#myCountryTable');
+					
+					makeTableData('myCountryTable',this.responseText);
+
 
     }
   };
@@ -450,63 +460,11 @@ function openModal()
 }
 
 
-
-
-
-
-
-
-
-
-
 </script>
 
 
 
-
-
-
 <!--content comes here-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	</div>
@@ -548,6 +506,8 @@ function openModal()
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -564,6 +524,36 @@ function openModal()
     }
   });
  }
+
+
+ function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
+
+
 </script>
 
 </body>

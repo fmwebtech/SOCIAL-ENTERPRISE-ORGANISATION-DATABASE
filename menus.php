@@ -426,18 +426,13 @@ $(document).ready( function (){
 					
 					document.getElementById('MenusPool').innerHTML = this.responseText;
 					//new DataTable('#myMenusTable');
-					
-					var table = $('#myMenusTable').DataTable();
  
-					new $.fn.dataTable.Buttons( table, {
-						buttons: [
-							'copy', 'excel', 'pdf'
-						]
-					} );
-					
-					table.buttons().container()
-					.appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
-					
+					$('#myMenusTable').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ]
+            } );
 					getMenuParentOptions();
 				}
 		  };
