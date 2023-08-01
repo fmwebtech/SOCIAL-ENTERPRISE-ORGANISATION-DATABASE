@@ -111,7 +111,7 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">ADD CURRENCY</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">ADD CURRENCY</h4><button onclick="hideModal('AddSEOModal')" type="button" class="close" data-dismiss="modal">&times;</button>
 			  </div>
         <form id="newCurrency">
 			    <div class="modal-body">
@@ -130,7 +130,7 @@
 			    <div class="modal-footer">
 
 				  <button type="submit" class="btn btn-info">Add</button>
-				  <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+				  <button type="button" data-dismiss="modal" class="btn btn-dark" onclick="hideModal('AddSEOModal')">Close</button>
 			    </div>
           </form>
 		      </div>
@@ -157,7 +157,7 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">EDIT CURRENCY</h4><button onclick="$('#editCurrency').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">EDIT CURRENCY</h4><button onclick="hideModal('editCurrency')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
       <form id="editCurrencyForm">
 			<div class="modal-body">
@@ -184,7 +184,7 @@
 			<div class="modal-footer">
 
 				<button type="submit" class="btn btn-info">Edit</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark" onclick="hideModal('editCurrency')">Close</button>
 			</div>
 		</div>
 
@@ -203,7 +203,7 @@
 			<div class="modal-header">
         
 
-				<h4 class="modal-title text-dark">DELETE CURRENCY<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				<h4 class="modal-title text-dark">DELETE CURRENCY<button  onclick="hideModal('deleteCurrency')" type="button" class="close" data-dismiss="modal">&times;</button></h4>
 			</div>
       <form id="deleteCurrencyForm">
 			<div class="modal-body">
@@ -221,7 +221,7 @@
       <div class="modal-footer">
 
 <button type="submit" class="btn btn-danger">Delete</button>
-<button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+<button type="button" data-dismiss="modal" class="btn btn-info" onclick="hideModal('deleteCurrency')">Close</button>
 </div>
 
 </form>
@@ -387,7 +387,7 @@ $(document).ready( function ()
 		// code goes here ;
 	});
 
-function getCurrency()
+	function getCurrency()
 	 {
 		 
 		  var xhttp = new XMLHttpRequest();

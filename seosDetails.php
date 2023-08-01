@@ -382,8 +382,6 @@
   </div>
 </div>
 
-
-
 <!-- My Moodal -->
 <div class="modal fade text-dark" id="deleteBranchModal" role="dialog">
       <div class="modal-dialog">
