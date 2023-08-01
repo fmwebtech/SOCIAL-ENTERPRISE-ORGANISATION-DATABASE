@@ -19,48 +19,48 @@ if(!isset($_SESSION['email'])) //check if this request is sent while logged in
 		die();
      }
 
-if ($_SERVER['REQUEST_METHOD']=='POST')
-{
-extract($_POST);
+        if ($_SERVER['REQUEST_METHOD']=='POST')
+        {
+                        extract($_POST);
 
-$myproduct = new PRODUCTS();
-$fetchedproduct= array();
+                        $myproduct = new PRODUCTS();
+                        $fetchedproduct= array();
 
-if(isset($_POST['seoId']))
-{
-    
-    $fetchedproduct  = $myproduct->getProducts($seoId);
-    
-}
+                        if(isset($_POST['seoId']))
+                        {
+                            
+                            $fetchedproduct  = $myproduct->getProducts($seoId);
+                            
+                        }
 
-else
-{
-    echo "Nothing is passed";
-}
-
-
+                        else
+                            {
+                                echo "Nothing is passed";
+                            }
 
 
-    $count = 1;
-foreach($fetchedproduct as $product)
-{
-
-   
-    $mycu = new CURRENCY($product->currency);
-    echo '
-    
-    <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->code.' '.$product->price.'
-    <i onclick="deleteProduct('.$product->id.')" title="Delete" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
-    <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" title="Edit" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
-    
-    </td> </tr>
-    
-    ';
-    $count++;
-}        
 
 
-}
+                            $count = 1;
+                        foreach($fetchedproduct as $product)
+                                    {
+
+                                    
+                                        $mycu = new CURRENCY($product->currency);
+                                        echo '
+                                        
+                                        <tr> <td style="padding-left:20px">'.$count.'. '.$product->name.'</td> <td>'.$mycu->code.' '.$product->price.'
+                                        <i onclick="deleteProduct('.$product->id.')" title="Delete" style = "margin-left:10px" type="button" class="pull-right"> <i class="fa fa-trash"></i> </i>
+                                        <i onclick="editProduct('.$product->id.',\''.$product->name.'\',\''.$product->currency.'\',\''.$product->price.'\',\''.$product->seoId.'\')" title="Edit" type="button" class="pull-right"> <i class="fa fa-edit"></i> </i>
+                                        
+                                        </td> </tr>
+                                        
+                                        ';
+                                        $count++;
+                                    }        
+
+
+        }
 else
 {
 echo 'Ooops something went wrong';

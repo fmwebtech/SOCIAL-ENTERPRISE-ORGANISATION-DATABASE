@@ -80,16 +80,16 @@
 <div class="col-lg-12 ">
 		<div class="card ">
 			<div class="card-body">
-				<h5 class="card-title">SEO BRANCH REPORT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">SELECT SEO</button></h5>
+				<h5 class="card-title">SEO PRODUCT REPORT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">SELECT SEO</button></h5>
 				<div class="table-responsive">
-				<table id="mySeoBranchTable" class="table table-hover">
+				<table id="seosProductTablepool" class="table table-hover">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
 								<th scope="col">SEO NAME</th>
-								<th scope="col">COUNTRY NAME</th>
-								<th scope="col">BRANCH NAME</th>
-                <th scope="col">ADDRESS</th>
+								<th scope="col">PRODUCT</th>
+								<th scope="col">CURRENCY</th>
+                <th scope="col">PRICE</th>
 							
 							</tr>
 						</thead>
@@ -109,7 +109,7 @@
 
 
 <!-- Modal add branch content-->
-<div class="modal fade text-dark" id="getSEOModal" role="dialog">
+<div class="modal fade text-dark" id="selectSEOModal" role="dialog">
 	<div class="modal-dialog">
 
 		
@@ -118,7 +118,7 @@
 				<h4 class="modal-title text-dark">SELECT SEO</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-      <form id="getSEOForm" class="form-horizontal">
+      <form id="selectSEOForm" class="form-horizontal">
 			<div class="modal-body">
 
 
@@ -165,11 +165,11 @@
 $(document).ready(function()
 {
 
-  $("#getSEOForm").on('submit',(function(e)
+  $("#selectSEOForm").on('submit',(function(e)
     {
 			   e.preventDefault();
 			   $.ajax({
-					   url: "ajax.getSeoBranchReport.php",
+					   url: "ajax.reportSeoProducts.php",
 					   type: "POST",
 					   data:  new FormData(this),
 					   contentType: false,
@@ -182,9 +182,9 @@ $(document).ready(function()
 					   success: function(r)
 						  {
 							
-                makeTableData('mySeoBranchTable',r);
-							$("#getSEOModal").modal("hide");
-							 $('#getSEOForm').trigger('reset');
+                makeTableData('seosProductTablepool',r);
+							$("#selectSEOModal").modal("hide");
+							 $('#selectSEOForm').trigger('reset');
 						  },
 						 error: function(e) 
 						  {
@@ -202,7 +202,7 @@ $(document).ready(function()
 function openModal()
 {
 
-  $("#getSEOModal").modal("show");
+  $("#selectSEOModal").modal("show");
 
 }
 
