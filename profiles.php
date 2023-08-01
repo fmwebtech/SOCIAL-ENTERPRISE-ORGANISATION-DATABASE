@@ -427,35 +427,10 @@ function getProfiles()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('Profiles').innerHTML = this.responseText;
+					//document.getElementById('Profiles').innerHTML = this.responseText;
+          makeTableData('myProfileTable',this.responseText);
 
-
-
-          // var table = $('#myProfileTable').DataTable();
- 
-          //  new $.fn.dataTable.Buttons( table, {
-          //   dom: 'Bfrtip',
-          //     buttons: [
-          //   'copy', 'excel', 'pdf'
-          //  ]
-          // } );
- 
-          //     table.buttons().container()
-          // .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
- 
-
-          $('#myProfileTable').DataTable( {
-    dom: 'Bfrtip',
-    buttons: [
-        'copy', 'excel', 'pdf'
-    ]
-} );
-              getMenuParentOptions();
-
-
-
-
-					
+	
 				}
 		  };
 		  xhttp.open("POST", "ajax.getProfiles.php", true);
@@ -499,5 +474,43 @@ function getProfiles()
   {
     $("#AddSEOModal").modal("show");
   }
+
+
+  function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>

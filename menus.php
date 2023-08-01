@@ -426,8 +426,6 @@ $(document).ready( function (){
 					
 					document.getElementById('MenusPool').innerHTML = this.responseText;
 					//new DataTable('#myMenusTable');
-					
-					
  
 					$('#myMenusTable').DataTable( {
                 dom: 'Bfrtip',
