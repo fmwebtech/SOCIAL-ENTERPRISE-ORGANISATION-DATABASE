@@ -54,7 +54,7 @@
 												<a class="side-menu__item side-menu__label" data-toggle="slide" href="#">
 													<small><i class="side-menu__icon '.$mdl->icon.'"></i></small>
 													<span class="side-menu__label">'.$mdl->name.'</span>
-													<i class="angle fe fe-chevron-down"></i>
+													<i class="angle fa fa-chevron-down"></i>
 												</a>';
 											foreach($mdl->getChildModules($mdl->id) as $item)
 											{
@@ -72,7 +72,7 @@
 														{
 															continue;
 														}
-															echo '<ul class="slide-menu">
+															echo '<ul class="">
 																	<li><a class="slide-item" href="'.$item->url.'"><i class="'.$item->icon.'"></i><span style="padding-left:5px;"></span>'.$item->name.'</a></li>
 																</ul>
 														';
