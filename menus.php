@@ -41,6 +41,10 @@
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
   
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+ 
+
+  
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -76,7 +80,7 @@
 			<div class="card-body">
 			  <h5 class="card-title">Menus <button onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add Menu</button></h5>
 			  <div class="table-responsive">
-				<table class="table table-hover">
+				<table id="myMenusTable" class="table table-hover">
 				  <thead>
 					<tr>
 					  <th scope="col">#</th>
@@ -306,7 +310,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
-
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
 
 
 </body>
@@ -421,6 +425,19 @@ $(document).ready( function (){
 				{
 					
 					document.getElementById('MenusPool').innerHTML = this.responseText;
+					//new DataTable('#myMenusTable');
+					
+					var table = $('#myMenusTable').DataTable();
+ 
+					new $.fn.dataTable.Buttons( table, {
+						buttons: [
+							'copy', 'excel', 'pdf'
+						]
+					} );
+					
+					table.buttons().container()
+					.appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+					
 					getMenuParentOptions();
 				}
 		  };
