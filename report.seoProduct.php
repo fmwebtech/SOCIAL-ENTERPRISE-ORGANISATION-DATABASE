@@ -5,16 +5,11 @@
 	{
 		header('location:login.php');
 	}
-
-	require_once('classes/class.authorization.php');
+  require_once('classes/class.authorization.php');
 	if(!(new AUTHORIZATION($_SESSION['id'],(explode('/',$_SERVER['PHP_SELF'])[sizeof(explode('/',$_SERVER['PHP_SELF']))-1])))->authorize())
 	{
 		header('location:logout.php');
 	}
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
+  <title>REPORT || SOCIAL ENTERPRISE ORGANISATION DATABASE</title>
   <!-- loader-->
   <link href="assets/css/pace.min.css" rel="stylesheet"/>
   <script src="assets/js/pace.min.js"></script>
@@ -44,6 +39,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
   
 </head>
 
@@ -70,49 +67,174 @@
     <div class="card mt-3">
     <div class="card-content">
 	
-	<div class="card-content">
 	
 	
 	
-	<!-- My table  -->
-    <div class="row">
+	
+	
+	
 
-		<div class="col-lg-12">
-		  <div class="card">
+  	 <!--content comes here-->
+  
+
+<div class="col-lg-12 ">
+		<div class="card ">
 			<div class="card-body">
-			  <h5 class="card-title">Report Seo Products  <button onclick="openModal()"  type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User Profile</button></h5>
-			  <div class="table-responsive">
-				<table class="table table-hover" id="myUserTable">
-				  <thead>
-					<tr>
-					  <th scope="col">#</th>
-					  <th scope="col">SEO</th>
-					  <th scope="col">Product</th>
-					  <th scope="col">Currency</th>
-
-					</tr>
-				  </thead>
-				  <tbody id="reportPool">
-				  
-					
-				   
-				  </tbody>
-				</table>
-			  </div>
+				<h5 class="card-title">SEO PRODUCT REPORT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">SELECT SEO</button></h5>
+				<div class="table-responsive">
+				<table id="seosProductTablepool" class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">SEO NAME</th>
+								<th scope="col">PRODUCT</th>
+								<th scope="col">CURRENCY</th>
+                <th scope="col">PRICE</th>
+							
+							</tr>
+						</thead>
+						<tbody id=seosTablepool>
+							
+						</tbody>
+					</table>
+				</div>
 			</div>
-		  </div>
 		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+
+
+<!-- Modal add branch content-->
+<div class="modal fade text-dark" id="selectSEOModal" role="dialog">
+	<div class="modal-dialog">
+
+		
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title text-dark">SELECT SEO</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+      <form id="selectSEOForm" class="form-horizontal">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">SEO Name</b>
+					<select name="id" class="form-control form-control-rounded" id="">
+              <?php
+                include_once('classes\class.seo.php');
+                foreach((new SEO())->getSeo() as $so)
+                {
+                    echo '<option value="'.$so->id.'">'.$so->name.'</option>';
+                }
+              ?>
+            </select> 
+
+
+				
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit"  class="btn btn-info">Submit</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+      </form>
 		</div>
-		</div>
-	
-	
-	
-	
-	
-	 <!--content comes here           hello         -->
+
+	</div>
+</div>
+<!-- Modal add branch content ends-->
 
 
 
+
+
+
+
+<!--JQUERY CODE-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+<script>
+$(document).ready(function()
+{
+
+  $("#selectSEOForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.reportSeoProducts.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							
+                makeTableData('seosProductTablepool',r);
+							$("#selectSEOModal").modal("hide");
+							 $('#selectSEOForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+                      
+});
+
+
+
+
+
+function openModal()
+{
+
+  $("#selectSEOModal").modal("show");
+
+}
+
+function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
+
+
+</script>
 
 
 
@@ -150,7 +272,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
 
 
 <script type="text/javascript">

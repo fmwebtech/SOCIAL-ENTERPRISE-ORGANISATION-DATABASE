@@ -109,7 +109,7 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">Add Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">Add Profile</h4><button type="button" class="close" onclick="hideModal('AddSEOModal')">&times;</button>
       </div> 
       <form id="createForm" class ="form-horizontal" >
       <div class="modal-body">
@@ -126,7 +126,7 @@
     <div class="modal-footer">
 
       <button type="submit"   class="btn btn-info">Save</button>
-      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      <button type="button" onclick="hideModal('AddSEOModal')" class="btn btn-dark">Close</button>
 
     </div>
     </form>
@@ -149,7 +149,7 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">edit Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">x</button>
+      <h4 class="modal-title text-dark">edit Profile</h4><button onclick="hideModal('editModal')"type="button" class="close" data-dismiss="modal">x</button>
       </div> 
       <form id="editprofileForm" class ="form-horizontal" >
       <div class="modal-body">
@@ -168,7 +168,7 @@
     <div class="modal-footer">
 
       <button type="submit"   class="btn btn-info">Save</button>
-      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      <button type="button" onclick="hideModal('editModal')" class="btn btn-dark">Close</button>
   </form>
     
     </div>
@@ -191,7 +191,7 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">delete Profile</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">delete Profile</h4><button type="button" class="close" onclick="hideModal('deleteModal')">&times;</button>
       </div> 
       <form id="deleteProfileForm" class ="form-horizontal" >
       <div class="modal-body">
@@ -209,7 +209,7 @@
     <div class="modal-footer">
 
       <button type="submit"   class="btn btn-danger">Yes</button>
-      <button type="button" data-dismiss="modal" class="btn btn-info">No</button>
+      <button type="button" onclick="hideModal('deleteModal')" class="btn btn-info">No</button>
   </form>
     
     </div>
@@ -429,6 +429,7 @@ function getProfiles()
 					
 					//document.getElementById('Profiles').innerHTML = this.responseText;
           makeTableData('myProfileTable',this.responseText);
+
 
 	
 				}

@@ -149,7 +149,7 @@
     <div class="modal-footer">
 
       <button type="submit"   class="btn btn-info">Save</button>
-      <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+      <button type="button"  class="btn btn-dark" onclick="hideModal('AddProfileModule')">Close</button>
 
     </div>
     </form>
@@ -169,7 +169,7 @@
       <div class="modal-content">
       <div class="modal-header">
 
-      <h4 class="modal-title text-dark">edit user Profile</h4><button onclick="$('editModal').modal('hide')"type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title text-dark">edit user Profile</h4><button onclick="hideModal('editModal')"type="button" class="close" data-dismiss="modal">&times;</button>
       </div> 
       <form id="editprofileForm" class ="form-horizontal" >
       <div class="modal-body">
