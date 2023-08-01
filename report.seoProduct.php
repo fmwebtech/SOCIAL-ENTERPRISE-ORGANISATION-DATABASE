@@ -115,7 +115,7 @@
 		
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title text-dark">SELECT SEO</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title text-dark">SELECT SEO</h4> <button  onclick="hideModal('selectSEOModal')"type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
       <form id="selectSEOForm" class="form-horizontal">
@@ -140,7 +140,7 @@
 			<div class="modal-footer">
 
 				<button type="submit"  class="btn btn-info">Submit</button>
-				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+				<button type="button"  onclick="hideModal('selectSEOModal')" class="btn btn-dark">Close</button>
 			</div>
       </form>
 		</div>
