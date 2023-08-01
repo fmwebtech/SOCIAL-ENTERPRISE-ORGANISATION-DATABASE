@@ -462,20 +462,8 @@ function getProfileModules()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('profileModules').innerHTML = this.responseText;
-
-                        var table = $('#myProfileModuleTable').DataTable();
-              
-              new $.fn.dataTable.Buttons( table, {
-                  buttons: [
-                'copy', 'excel', 'pdf'
-              ]
-              } );
-
-                  table.buttons().container()
-              .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
-
-                  getMenuParentOptions();
+					//document.getElementById('profileModules').innerHTML = this.responseText;
+          makeTableData('myProfileModuleTable',this.responseText);
 
 					
 				}
@@ -504,5 +492,33 @@ function getProfileModules()
   {
     $("#AddProfileModule").modal("show");
   }
+
+
+
+  function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
 
 </script>

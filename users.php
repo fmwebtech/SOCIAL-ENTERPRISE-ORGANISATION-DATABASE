@@ -395,18 +395,9 @@ function getUsers()
 			if (this.readyState == 4 && this.status == 200)
 				{
 					
-					document.getElementById('usersPool').innerHTML = this.responseText;
+					//document.getElementById('usersPool').innerHTML = this.responseText;
+          makeTableData('myUserTable',this.responseText);
 					
-
-					
-                      $('#myUserTable').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ]
-            } );
-
-                  getMenuParentOptions();
 
 
 				}
@@ -441,5 +432,32 @@ function getUsers()
   {
     $("#addUserModal").modal("hide");
   }
+
+
+  function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
 
 </script>
