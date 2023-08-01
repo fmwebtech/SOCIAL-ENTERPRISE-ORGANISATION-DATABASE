@@ -58,7 +58,7 @@ var $regDate;
 			$stmt->bindParam(3,$email);
 			$stmt->bindParam(4,$password);
 			$stmt->execute();
-			(new RESETKEY())->save($email,'reset-password.php',"You have been registered as a user on social enterprise organisation database. kindly create your credentials to log into the system.");
+			(new RESETKEY())->save($email,'createPassword.php',"You have been registered as a user on social enterprise organisation database. kindly create your credentials to log into the system.");
 			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','SAVE',json_encode($_POST));
 			return true;
 		}catch(Exception $e)
