@@ -39,12 +39,17 @@ var $regDate;
 	function save($email,$returnPath,$message)
 	{
 			$resetkey = md5($email.date_format(new DateTime(),'yiusd')); // generate new reset key
-			$appURL =  'http://'.$_SERVER['SERVER_ADDR'].'/'.explode('/',$_SERVER['PHP_SELF'])[1];
+			$serverAddress = $_SERVER['SERVER_ADDR'];
+			if($serverAddress=='::1')
+			{
+				$serverAddress ='localhost';
+			}
+			$appURL =  'http://'.$serverAddress.'/'.explode('/',$_SERVER['PHP_SELF'])[1];
 		try
 		{
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('INSERT INTO resetkey(EMAIL,RESETKEY) 
-											VALUES(?,?)');
+			$stmt = $Myconnection->prepare("INSERT INTO resetkey(EMAIL,RESETKEY,STATUS) 
+											VALUES(?,?,'new')");
 			$stmt->bindParam(1,$email);
 			$stmt->bindParam(2,$resetkey);
 			$stmt->execute();
@@ -54,13 +59,14 @@ var $regDate;
 		}
 		catch(Exception $e)
 		{
-			//echo $e->getMessage();
+			echo $e->getMessage();
 			return false;
 		}
 	}
 	
 	
-	function resetkeyExists($email,$resetkey){
+	function resetkeyExists($email,$resetkey)
+	{
 		try{
 			global $Myconnection;
 			$stmt = $Myconnection->prepare('SELECT * FROM RESETKEY WHERE EMAIL=? AND RESETKEY=?');
@@ -109,7 +115,29 @@ var $regDate;
 		}
 	}
 	
-
+	function userExists($email)
+	{
+		try
+		{
+			$resetkeyArray = array();
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM [USER] WHERE EMAIL=?');
+			$stmt->bindParam(1,$email);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				return true;
+			}
+			return false;
+		}
+		catch(Exception $e)
+		{
+			echo $e->getMessage();
+			return false;
+		}
+	}
 	
 
 	function delete($email)

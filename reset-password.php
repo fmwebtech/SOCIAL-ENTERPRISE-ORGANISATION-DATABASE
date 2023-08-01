@@ -1,4 +1,27 @@
 <!DOCTYPE html>
+<?php
+
+	$userResetAttemptMsg = "";
+	session_start();
+	include_once("classes/class.user.php");
+	require_once("classes/class.resetkey.php");
+	if($_SERVER['REQUEST_METHOD']=="POST")
+	{
+		$userkey = new RESETKEY();		
+		extract($_POST);
+		
+		if($userkey->userExists($email))
+		{
+			$userkey->save($email,'createPassword.php','You recenlty requested for change of password, follow the instrustions if its not you ignore this message');
+			
+			$userResetAttemptMsg ="An email has been sent to you to change your password, please check your email.";
+		}
+		else
+		{
+			$userResetAttemptMsg ="Opps! This email address does not exist.";
+		}
+	}
+?>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -33,23 +56,24 @@
 		 <div class="card-content p-2">
 		  <div class="card-title text-uppercase pb-2">Reset Password</div>
 		    <p class="pb-2">Please enter your email address. You will receive a link to create a new password via email.</p>
-		    <form>
+		    <form method='POST'>
 			  <div class="form-group">
 			  <label for="exampleInputEmailAddress" class="">Email Address</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="exampleInputEmailAddress" class="form-control input-shadow" placeholder="Email Address">
+				  <input type="email" name="email" required id="exampleInputEmailAddress" class="form-control input-shadow" placeholder="Email Address">
 				  <div class="form-control-position">
 					  <i class="icon-envelope-open"></i>
 				  </div>
 			   </div>
 			  </div>
 			 
-			  <button type="button" class="btn btn-light btn-block mt-3">Reset Password</button>
+			  <button type="submit" class="btn btn-light btn-block mt-3">Reset Password</button>
 			 </form>
 		   </div>
 		  </div>
 		   <div class="card-footer text-center py-3">
-		    <p class="text-warning mb-0">Return to the <a href="login.html"> Sign In</a></p>
+		   <p style="color:red"><?php echo $userResetAttemptMsg?></p>
+		    <p class="text-warning mb-0">Return to the <a href="login.php"> Sign In</a></p>
 		  </div>
 	     </div>
 	     </div>

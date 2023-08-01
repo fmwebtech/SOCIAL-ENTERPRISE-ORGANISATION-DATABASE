@@ -193,13 +193,13 @@ var $regDate;
 			$results = $stmt->fetchAll();
 			foreach($results as $k=>$v)
 			{
-				(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','The user logged in successfuly');
+				(new LOGS())->save($email,$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','The user logged in successfuly');
 
 				
 				return new USER($v['ID']);
 				break;
 			}
-			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','Authentication failed.');
+			(new LOGS())->save($email,$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','AUTHENTICATE','Authentication failed.');
 			return false;
 		}catch(Exception $e)
 		{
