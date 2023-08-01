@@ -289,7 +289,12 @@
 <script src="assets/plugins/Chart.js/Chart.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="assets/plugins/DataTables/datatables.min.js"></script>
+<script src="assets\plugins\DataTables\Buttons-2.4.1\js\buttons.print.min.js"></script>
 <!-- Index js -->
+
+
+
+
 <script src="assets/js/index.js"></script>
 
 <script type="text/javascript">
@@ -426,17 +431,25 @@ function getProfiles()
 
 
 
-          var table = $('#myProfileTable').DataTable();
+          // var table = $('#myProfileTable').DataTable();
  
-           new $.fn.dataTable.Buttons( table, {
-              buttons: [
-            'copy', 'excel', 'pdf'
-           ]
-          } );
+          //  new $.fn.dataTable.Buttons( table, {
+          //   dom: 'Bfrtip',
+          //     buttons: [
+          //   'copy', 'excel', 'pdf'
+          //  ]
+          // } );
  
-              table.buttons().container()
-          .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+          //     table.buttons().container()
+          // .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
  
+
+          $('#myProfileTable').DataTable( {
+    dom: 'Bfrtip',
+    buttons: [
+        'copy', 'excel', 'pdf'
+    ]
+} );
               getMenuParentOptions();
 
 
