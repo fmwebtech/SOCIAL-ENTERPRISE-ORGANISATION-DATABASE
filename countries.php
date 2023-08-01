@@ -45,6 +45,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
+
   
 </head>
 
@@ -85,7 +87,7 @@
 			<div class="card-body">
 				<h5 class="card-title">COUNTRY TABLE <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add COUNTRY</button></h5>
 				<div class="table-responsive">
-					<table class="table table-hover">
+				<table id="myCountryTable" class="table table-hover">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
@@ -391,6 +393,25 @@ function getCountries()
      {
 
       document.getElementById("countriesTablepool").innerHTML =this.responseText;
+	  
+					
+					
+					
+					//new DataTable('#myCountryTable');
+					
+					var table = $('#myCountryTable').DataTable();
+ 
+					new $.fn.dataTable.Buttons( table, {
+						buttons: [
+							'copy', 'excel', 'pdf'
+						]
+					} );
+					
+					table.buttons().container()
+					.appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+					
+					getMenuParentOptions();
+				
 
     }
   };
@@ -548,6 +569,8 @@ function openModal()
 
 <!-- Index js -->
 <script src="assets/js/index.js"></script>
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
+
 
 <script type="text/javascript">
 
