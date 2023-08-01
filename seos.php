@@ -480,19 +480,8 @@ function getSeo()
         document.getElementById("seoTablepool").innerHTML =this.responseText;
 
             //new DataTable('#mySeosTable');
-            
-            var table = $('#mySeosTable').DataTable();
+                        makeTableData('mySeosTable',this.responseText);
   
-            new $.fn.dataTable.Buttons( table, {
-              buttons: [
-                'copy', 'excel', 'pdf'
-              ]
-            } );
-            
-            table.buttons().container()
-            .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
-            
-            getMenuParentOptions();
       }
   };
   xhttp.open("POST", "ajax.getSeo.php", true);
@@ -659,6 +648,34 @@ window.location.assign("seosDetails.php?id="+id);
     }
   });
  }
+
+
+ function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
+
+
 </script>
 
 </body>

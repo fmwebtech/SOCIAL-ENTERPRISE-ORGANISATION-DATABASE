@@ -99,7 +99,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			  </div>
 			 </div>
 			 <div class="form-group col-6 text-right">
-			  <a href="reset-password.html">Reset Password</a>
+			  <a href="reset-password.php">Reset Password</a>
 			 </div>
 			</div>
 			

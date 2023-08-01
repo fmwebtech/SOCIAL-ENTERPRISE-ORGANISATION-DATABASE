@@ -1,62 +1,56 @@
 <?php
-require 'class.phpmailer.php';
-$mail = new PHPMailer();
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
 
+	use PHPMailer\PHPMailer\PHPMailer;
+	use PHPMailer\PHPMailer\Exception;
+	require_once('PHPMailer.php');
+	require_once('SMTP.php');
+    require_once('Exception.php');
+	
+	
+function sendmail($email,$subject,$message)
+{	
 
-
-function sendmail($toAddress , $subject ,$message){
-
-    
-$mail = new PHPMailer();
-$mail->IsSMTP();
- 
-$mail->SMTPDebug = 0; // debugging: 1 = errors and messages, 2 = messages only
- 
-$mail->SMTPAuth = true; // authentication enabled
-$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-$mail->Host = "smtp.gmail.com"; 
-$mail->Port = 465; // or 587
-$mail->IsHTML(true);
-$mail->Username = "procurearc@gmail.com"; //mepgqfedavkzdxyk
-$mail->Password = "mepgqfedavkzdxyk";
-
- 
-$mail->SetFrom("procurearc@gmail.com");
-$mail->Subject = $subject;
-$mail->Body = $message;  
-
-if (strpos($toAddress, ',') !== false) {
-        // If the email addresses contain a comma, split the string into an array and send an email to each address separately
-        $toAddresses = explode(',', $toAddress);
-        foreach ($toAddresses as $address) {
-            $mail->AddAddress(trim($address));
-        }
-    } else {
-        // If the email addresses do not contain a comma, send an email to the single address
-        $mail->AddAddress(trim($toAddress));
-    }
-
- 
-  
-if(!$mail->Send()) {
-			return true;
-}
-else
-{
-		return true;			
 		
+	try 
+	{
+		
+
+		//Create an instance; passing `true` enables exceptions
+		
+			$mail = new PHPMailer(true);
+			//Server settings
+			$mail->SMTPDebug =  0;//SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+			$mail->isSMTP();                                            //Send using SMTP
+			$mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+			$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+			$mail->Username   = 'procurearc@gmail.com';                     //SMTP username
+			$mail->Password   = 'mepgqfedavkzdxyk';                               //SMTP password
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+			$mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+			//Recipients
+			$mail->setFrom('procurearc@gmail.com', 'CBU-SEOD');
+			//$mail->addAddress('joe@example.net', 'CBU');     //Add a recipient
+			$mail->addAddress($email);               //Name is optional
+			//$mail->addReplyTo('info@example.com', 'Information');
+			//$mail->addCC('cc@example.com');
+			//$mail->addBCC('bcc@example.com');
+
+			//Attachments
+			//$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+			//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+			//Content
+			//$mail->isHTML(true);                                  //Set email format to HTML
+			$mail->Subject = $subject;
+			$mail->Body    = $message;//'This is the HTML message body <b>in bold!</b>';
+			//$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+			$mail->send();
+			//echo 'Message has been sent';
+		} catch (Exception $e) {
+			//echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 		}
-
-
-    
-
 }
- // create a new object
-  
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
