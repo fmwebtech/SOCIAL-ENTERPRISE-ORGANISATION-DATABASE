@@ -39,6 +39,8 @@
   <link href="assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="assets/css/app-style.css" rel="stylesheet"/>
+
+  <link href="assets/plugins/DataTables/datatables.min.css" rel="stylesheet">
   
 </head>
 
@@ -71,23 +73,27 @@
 	
 	
 	
-	 <!--content comes here           hello         -->
-   <div class="col-lg-12 ">
+
+  	 <!--content comes here-->
+  
+
+<div class="col-lg-12 ">
 		<div class="card ">
 			<div class="card-body">
-				<h5 class="card-title">SEO BRANCHES REPORT</h5>
+				<h5 class="card-title">SEO BRANCH REPORT <button data-toggle="modal" onclick="openModal()" type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">SELECT SEO</button></h5>
 				<div class="table-responsive">
-				<table id="myCountryTable" class="table table-hover">
+				<table id="mySeoBranchTable" class="table table-hover">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
+								<th scope="col">SEO NAME</th>
 								<th scope="col">COUNTRY NAME</th>
-								<th scope="col">COUNTRY CODE</th>
-								<th scope="col">ACTION</th>
+								<th scope="col">BRANCH NAME</th>
+                <th scope="col">ADDRESS</th>
 							
 							</tr>
 						</thead>
-						<tbody id=countriesTablepool>
+						<tbody id=seosTablepool>
 							
 						</tbody>
 					</table>
@@ -95,62 +101,141 @@
 			</div>
 		</div>
 	</div>
-
-<!-- add branch Modal -->
-<div class="modal fade text-dark" id="addBranchModal" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h4 class="modal-title text-dark">Add Branch</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form id='addBranchForm'>
-      <div class="modal-body">
-
-
-
-        <div class="form-group">
-          <b class="col-6">Select Country</b>
-          <select name='countryId' class="form-control form-control-rounded"> 
-
-               <?php
-               require_once('classes/class.country.php');
-               foreach((new COUNTRY())->getCountry() as $c)
-               {
-                  echo '<option value="'.$c->id.'">'.$c->name.'</option>';
-               }
-               ?>        
-                      
-                        
-          </select>
-        </div>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="submit"  class="btn btn-info"><i class="fa fa-save"></i> Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
-      </div>
-  </form>
-    </div>
-
-  </div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
 </div>
 
+
+<!-- Modal add branch content-->
+<div class="modal fade text-dark" id="getSEOModal" role="dialog">
+	<div class="modal-dialog">
+
+		
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title text-dark">SELECT SEO</h4> <button onclick="$('#AddSEOModal').modal('hide')" type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+      <form id="getSEOForm" class="form-horizontal">
+			<div class="modal-body">
+
+
+				<div class="form-group">
+					<b class="col-6">SEO Name</b>
+					<select name="id" class="form-control form-control-rounded" id="">
+              <?php
+                include_once('classes\class.seo.php');
+                foreach((new SEO())->getSeo() as $so)
+                {
+                    echo '<option value="'.$so->id.'">'.$so->name.'</option>';
+                }
+              ?>
+            </select> 
+
+
+				
+			</div>
+			<div class="modal-footer">
+
+				<button type="submit"  class="btn btn-info">Submit</button>
+				<button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+			</div>
+      </form>
+		</div>
+
+	</div>
+</div>
+<!-- Modal add branch content ends-->
+
+
+
+
+
+
+
+<!--JQUERY CODE-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
 <script>
+$(document).ready(function()
+{
 
-function openModal(){
+  $("#getSEOForm").on('submit',(function(e)
+    {
+			   e.preventDefault();
+			   $.ajax({
+					   url: "ajax.getSeoBranchReport.php",
+					   type: "POST",
+					   data:  new FormData(this),
+					   contentType: false,
+							 cache: false,
+					   processData:false,
+					   beforeSend : function()
+						   {
+							// put your check here :)
+						   },
+					   success: function(r)
+						  {
+							
+                makeTableData('mySeoBranchTable',r);
+							$("#getSEOModal").modal("hide");
+							 $('#getSEOForm').trigger('reset');
+						  },
+						 error: function(e) 
+						  {
+							   alert(e);
+						  }          
+				});
+			 }));
+                      
+});
 
-  $('#addCountryModal').modal('show');
+
+
+
+
+function openModal()
+{
+
+  $("#getSEOModal").modal("show");
 
 }
+
+function makeTableData(tt,data)
+	 {
+	
+					tt = '#'+tt;
+					if ($.fn.DataTable.isDataTable(tt)) {
+					$(tt).DataTable().destroy();
+					}
+					$(tt+' tbody').empty();
+					
+					$(tt+' tbody').html(data);
+					var table = $(tt).DataTable({
+						lengthChange: false,
+						buttons: [ 'copy', 'excel', 'pdf', 'colvis' ],
+						responsive: false,
+						language: {
+							searchPlaceholder: 'Search...',
+							sSearch: '',
+							lengthMenu: 'MENU ',
+							"bDestroy": true
+						}
+					});
+					table.buttons().container().appendTo( tt+'_wrapper .col-md-6:eq(0)' );		
+	
+	}
 
 
 
 
 </script>
+
 
 
 	</div>
@@ -187,7 +272,7 @@ function openModal(){
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="assets/plugins/DataTables/datatables.min.js"></script>
 
 
 <script type="text/javascript">
