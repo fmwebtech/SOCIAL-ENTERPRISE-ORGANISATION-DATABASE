@@ -51,9 +51,9 @@ class BRANCH
 
 function save($seoId,$countryId, $name, $address,$createdBy)
  {
-    if ($this->branchExists($name, $address)) 
+    if ($this->branchExists($seoId,$name, $address,$countryId)) 
 	{
-        echo 'The name you chose is already taken, choose a different name.';
+        echo 'The Branch  you chose is already available, choose a different Branch.';
         return false;
     } 
 	else 
@@ -87,14 +87,16 @@ function save($seoId,$countryId, $name, $address,$createdBy)
     }
 }
 	
-function branchExists($name, $address) 
+function branchExists($seoId, $name, $address,$countryId) 
 	{
 		try
 		 {
 			global $Myconnection;
-			$stmt = $Myconnection->prepare('SELECT * FROM branch WHERE [NAME] = ? AND [ADDRESS] = ?');
+			$stmt = $Myconnection->prepare('SELECT * FROM BRANCH WHERE [NAME] = ? AND [SEO_ID] = ? AND [ADDRESS]=? AND [COUNTRY_ID]=?');
 			$stmt->bindParam(1, $name);
-			$stmt->bindParam(2, $address);
+			$stmt->bindParam(2, $seoId);
+			$stmt->bindParam(3, $address);
+			$stmt->bindParam(4, $countryId);
 			$stmt->execute();
 			$stmt->setFetchMode(PDO::FETCH_ASSOC);
 			$results = $stmt->fetchAll();
