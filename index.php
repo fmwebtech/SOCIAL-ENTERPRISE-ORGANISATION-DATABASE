@@ -117,8 +117,8 @@
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                  require_once('classes\class.country.php');
-                  echo sizeof((new COUNTRY())->getCountry());
+                  require_once('classes\class.seoCountry.php');
+                  echo sizeof((new SEOCOUNTRY())->getAllSeoCountry());
 
                   
                   ?> <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
