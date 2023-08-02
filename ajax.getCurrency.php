@@ -19,11 +19,11 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         {
                 echo '<tr> <td>'.$count.'</td><td>'.$currency->name.'</td> <td>'.$currency->code.'</td>
 
-                <td><button onclick="editCurrency(\''.$currency->id.'\')" class="btn btn-success">
+                <td><button onclick="editCurrency(\''.$currency->id.'\')" class="btn btn-sm btn-success">
 												<i class="zmdi zmdi-edit"></i> Edit </button>
 											
 												
-												<button onclick="deleteCurrency(\''.$currency->id.'\')" class="btn btn-danger">
+												<button onclick="deleteCurrency(\''.$currency->id.'\')" class="btn btn-sm btn-danger">
 													<i class="zmdi zmdi-delete"></i> Delete  </button>
                                                     </td>
                                                     
