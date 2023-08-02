@@ -696,7 +696,7 @@
           <div class="modal-header">
             
 
-            <h4 class="modal-title text-dark">Delete Product<button onclick="hideModal('deleteProductModal')"  type="button" class="close" data-dismiss="modal">&times;</button></h4>
+            <h4 class="modal-title text-dark">Delete Product</h4><button onclick="hideModal('deleteProductModal')"  type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <form id="deleteProductForm">
           <div class="modal-body">

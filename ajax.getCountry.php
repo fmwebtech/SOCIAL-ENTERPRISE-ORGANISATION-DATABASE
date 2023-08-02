@@ -33,11 +33,11 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                  <td>'.$country->code.'</td> 
                  <td>
 
-                 <button onclick="editCountry(\''.$country->id.'\')" class="btn btn-success">
+                 <button onclick="editCountry(\''.$country->id.'\')" class="btn btn-sm btn-success">
                  <i class="zmdi zmdi-edit"></i> Edit </button>
              
                  
-                 <button onclick="deleteCountry(\''.$country->id.'\')" class="btn btn-danger">
+                 <button onclick="deleteCountry(\''.$country->id.'\')" class="btn btn-sm btn-danger">
                      <i class="zmdi zmdi-delete"></i> Delete  </button>
 
 

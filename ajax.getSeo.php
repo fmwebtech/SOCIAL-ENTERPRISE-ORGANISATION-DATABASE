@@ -35,11 +35,11 @@ if($_SERVER['REQUEST_METHOD']=='POST')
                             <td  onclick= "goToSeo('.$seo->id.')">'.$seo->incomePerAnnum.'</td>
                             <td  onclick= "goToSeo('.$seo->id.')">'.$seo->expenditurePerAnnum.'</td>
                               </span>         
-                            <td><button onclick="editSeo(\''.$seo->id.'\')" class="btn btn-success">
+                            <td><button onclick="editSeo(\''.$seo->id.'\')" class="btn btn-sm btn-success">
                             <i class="zmdi zmdi-edit"></i> Edit </button>
                         
                             
-                            <button onclick="deleteSeo(\''.$seo->id.'\')" class="btn btn-danger">
+                            <button onclick="deleteSeo(\''.$seo->id.'\')" class="btn btn-sm btn-danger">
                                 <i class="zmdi zmdi-delete"></i> Delete  </button>
                                 </td>
                  
