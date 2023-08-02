@@ -215,7 +215,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Add Country</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Add Country</h4><button  onclick="hideModal('addCountryModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <form id='addseoCountryForm'>
       <div class="modal-body">
@@ -243,7 +243,7 @@
       <div class="modal-footer">
 
         <button type="submit"  class="btn btn-info">Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+        <button onclick="hideModal('addCountryModal')" type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
       </div>
       </form>
     </div>
@@ -272,7 +272,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Add Branch</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Add Branch</h4><button onclick="hideModal('addBranchModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <form id='addBranchForm'>
       <div class="modal-body">
@@ -309,7 +309,7 @@
       </div>
       <div class="modal-footer">
         <button type="submit"  class="btn btn-info"><i class="fa fa-save"></i> Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+        <button  onclick="hideModal('addBranchModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
       </div>
   </form>
     </div>
@@ -335,7 +335,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Edit Branch</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Edit Branch</h4><button onclick="hideModal('editBranchModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <form id='editBranchForm'>
       <div class="modal-body">
@@ -374,7 +374,7 @@
       </div>
       <div class="modal-footer">
         <button type="submit"  class="btn btn-info"><i class="fa fa-save"></i> Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+        <button onclick="hideModal('editBranchModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
       </div>
   </form>
     </div>
@@ -391,7 +391,7 @@
           <div class="modal-header">
             
 
-            <h4 class="modal-title text-dark">Delete Branch <button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+            <h4 class="modal-title text-dark">Delete Branch <button onclick="hideModal('deleteBranchModal')" type="button" class="close" data-dismiss="modal">&times;</button></h4>
           </div>
           <form id="deleteBranchForm">
           <div class="modal-body">
@@ -407,7 +407,7 @@
           <div class="modal-footer">
 
           <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+            <button onclick="hideModal('deleteBranchModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>
@@ -434,7 +434,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Add Product</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Add Product</h4><button onclick="hideModal('AddProductModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <form id="addProductForm">
@@ -470,7 +470,7 @@
       <div class="modal-footer">
 
         <button type="submit"  class="btn btn-info">Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+        <button onclick="hideModal('AddProductModal')"  type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
       </div>
       </form>
     </div>
@@ -496,7 +496,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Edit Service</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Edit Service</h4><button onclick="hideModal('editServiceModal')"  type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <form id="editServiceForm">
@@ -533,7 +533,7 @@
       <div class="modal-footer">
 
         <button type="submit"  class="btn btn-info">Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+        <button onclick="hideModal('editServiceModal')" type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
       </div>
       </form>
     </div>
@@ -565,7 +565,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Add Service</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Add Service</h4><button onclick="hideModal('AddServiceModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <form id="addServiceForm">
@@ -601,7 +601,7 @@
       <div class="modal-footer">
 
         <button type="submit"  class="btn btn-info">Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
+        <button onclick="hideModal('AddServiceModal')" type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
       </div>
       </form>
     </div>
@@ -634,7 +634,7 @@
     <div class="modal-content">
       <div class="modal-header">
 
-        <h4 class="modal-title text-dark">Edit Product</h4><button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-dark">Edit Product</h4><button onclick="hideModal('editProductModal')" type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <form id="editProductForm">
@@ -671,7 +671,7 @@
       <div class="modal-footer">
 
         <button type="submit"  class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
-        <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
+        <button onclick="hideModal('editProductModal')"  type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i> Close</button>
       </div>
       </form>
     </div>
@@ -696,7 +696,7 @@
           <div class="modal-header">
             
 
-            <h4 class="modal-title text-dark">Delete Product<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+            <h4 class="modal-title text-dark">Delete Product<button onclick="hideModal('deleteProductModal')"  type="button" class="close" data-dismiss="modal">&times;</button></h4>
           </div>
           <form id="deleteProductForm">
           <div class="modal-body">
@@ -712,7 +712,7 @@
           <div class="modal-footer">
 
           <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+            <button onclick="hideModal('deleteProductModal')"  type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>
@@ -730,7 +730,7 @@
           <div class="modal-header">
             
 
-            <h4 class="modal-title text-dark">Delete Service<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+            <h4 class="modal-title text-dark">Delete Service<button onclick="hideModal('deleteServiceModal')"  type="button" class="close" data-dismiss="modal">&times;</button></h4>
           </div>
           <form id="deleteServiceForm">
           <div class="modal-body">
@@ -746,7 +746,7 @@
           <div class="modal-footer">
 
           <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+            <button onclick="hideModal('deleteServiceModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>

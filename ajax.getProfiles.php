@@ -21,12 +21,12 @@
 												
 									
 												<td>
-												<button onclick="editProfile(\''.$pro->id.'\')" class="btn btn-success">
-												<i class="zmdi zmdi-edit"></i> Edit </button>
+												<button onclick="editProfile(\''.$pro->id.'\')" class="btn-sm btn btn-success">
+												<i class="fa fa-edit"></i> Edit </button>
 											
 												
-												<button onclick="deleteProfile(\''.$pro->id.'\')" class="btn btn-danger">
-													<i class="zmdi zmdi-delete"></i> Delete  </button>
+												<button onclick="deleteProfile(\''.$pro->id.'\')" class="btn-sm btn btn-danger">
+													<i class="fa fa-trash"></i> Delete  </button>
 													
 												</td>
 											</tr>';

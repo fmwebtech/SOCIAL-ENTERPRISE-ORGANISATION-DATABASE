@@ -24,12 +24,12 @@
 					<td>'.(new USER($usprl->userId))->email.'</td>
 					<td>'.(new PROFILE($usprl->profileId))->name.'</td>
 					<td>
-					<button onclick="editUserProfile(\''.$usprl->id.'\',\''.$usprl->userId.'\',\''.$usprl->profileId.'\')" class="btn btn-success">
-					<i class="las la-edit"></i> Edit </button>
+					<button onclick="editUserProfile(\''.$usprl->id.'\',\''.$usprl->userId.'\',\''.$usprl->profileId.'\')" class="btn-sm btn btn-success">
+					<i class="fa fa-edit"></i> Edit </button>
 				
 					
-					<button onclick="deleteUserProfile(\''.$usprl->id.'\')" class="btn btn-danger">
-						<i class="las la-trash"></i> Delete  </button>
+					<button onclick="deleteUserProfile(\''.$usprl->id.'\')" class="btn-sm btn btn-danger">
+						<i class="fa fa-trash"></i> Delete  </button>
 						
 					</td>
 				</tr>';
