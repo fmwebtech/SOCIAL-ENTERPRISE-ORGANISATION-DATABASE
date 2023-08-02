@@ -25,7 +25,7 @@
 						<i class="fa fa-edit"></i> Edit </button>
 					
 						<button onclick="deleteUser(\''.$us->id.'\')" class="btn-sm btn btn-danger">
-							<i class="fa fa-trash-alt "></i> Delete  </button>
+							<i class="fa fa-trash "></i> Delete  </button>
 							
 						</td>
 					</tr>';

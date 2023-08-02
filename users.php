@@ -75,7 +75,7 @@
 		<div class="col-lg-12">
 		  <div class="card">
 			<div class="card-body">
-			  <h5 class="card-title">Users <button onclick="openModal()"  type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User Profile</button></h5>
+			  <h5 class="card-title">Users <button onclick="openModal()"  type="button" class="btn btn-light btn-round btn-sm px-5 pull-right">Add User</button></h5>
 			  <div class="table-responsive">
 				<table class="table table-hover" id="myUserTable">
 				  <thead>
