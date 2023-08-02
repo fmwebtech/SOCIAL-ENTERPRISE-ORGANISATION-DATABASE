@@ -18,7 +18,7 @@
 		}
 		else
 		{
-			$userResetAttemptMsg ="Opps! This email address does not exist.";
+			$userResetAttemptMsg ="Opps! This email address does not exist in the system.";
 		}
 	}
 ?>
@@ -72,7 +72,7 @@
 		   </div>
 		  </div>
 		   <div class="card-footer text-center py-3">
-		   <p style="color:red"><?php echo $userResetAttemptMsg?></p>
+		   <p class="text-warning mb-0"><?php echo $userResetAttemptMsg?></p>
 		    <p class="text-warning mb-0">Return to the <a href="login.php"> Sign In</a></p>
 		  </div>
 	     </div>
