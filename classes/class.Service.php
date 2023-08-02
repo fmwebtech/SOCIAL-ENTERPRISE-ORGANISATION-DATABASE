@@ -143,6 +143,37 @@ class SERVICES {
 		}
 	}
 
+
+	function getAllServices()
+	{
+		try
+		{
+			$serviceArray = array();
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM [SERVICES]');
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				$service = new SERVICES();
+				$service->id = $v['ID'];
+                $service->seoId= $v['SEO_ID'];
+				$service->name = $v['NAME'];
+				$service->currency = $v['CURRENCY'];
+				$service->price = $v['PRICE'];			
+				$service->status = $v['STATUS'];
+				$service->regDate = $v['REGDATE'];
+				$serviceArray[] =$service;
+			}
+
+			return $serviceArray;
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+	}
     // issues which this function due to the unknown operation
 
 	function serviceExists($seoId,$name)
