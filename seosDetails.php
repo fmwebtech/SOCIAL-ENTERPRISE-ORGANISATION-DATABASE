@@ -406,8 +406,8 @@
           </div>
           <div class="modal-footer">
 
-          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button onclick="hideModal('deleteBranchModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          <button type="submit"  class="btn btn-danger"> <i class="fa fa-trash"></i>Yes</button>
+            <button onclick="hideModal('deleteBranchModal')" type="button" data-dismiss="modal" class="btn btn-info"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>
@@ -532,7 +532,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="submit"  class="btn btn-info">Save</button>
+        <button type="submit"  class="btn btn-danger" class ="fa fa-trash">Save</button>
         <button onclick="hideModal('editServiceModal')" type="button" data-dismiss="modal" class="btn btn-dark">Close</button>
       </div>
       </form>
@@ -711,8 +711,8 @@
           </div>
           <div class="modal-footer">
 
-          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button onclick="hideModal('deleteProductModal')"  type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          <button type="submit"  class="btn btn-danger"> <i class="fa fa-trash"></i>Yes</button>
+            <button onclick="hideModal('deleteProductModal')"  type="button" data-dismiss="modal" class="btn btn-info"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>
@@ -745,8 +745,8 @@
           </div>
           <div class="modal-footer">
 
-          <button type="submit"  class="btn btn-info"> <i class="fa fa-dangaer"></i>Yes</button>
-            <button onclick="hideModal('deleteServiceModal')" type="button" data-dismiss="modal" class="btn btn-dark"> <i class="fa fa-times"></i>No</button>
+          <button type="submit"  class="btn btn-danger"> <i class="fa fa-trash"></i>Yes</button>
+            <button onclick="hideModal('deleteServiceModal')" type="button" data-dismiss="modal" class="btn btn-info"> <i class="fa fa-times"></i>No</button>
           </div>
 
     </form>
