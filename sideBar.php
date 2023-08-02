@@ -7,6 +7,35 @@
 	include_once("classes/class.profilemodules.php");
 	$user = new USER($_SESSION['id']);
 ?>
+	
+	<style>
+.collapsible {
+
+}
+
+.active, .collapsible:hover {
+  
+}
+
+.collapsible:after {
+
+
+}
+
+.active:after {
+
+  
+}
+
+.content {
+
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  
+}
+</style>
+
 
 <!--Start sidebar-wrapper-->
     <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
@@ -50,12 +79,12 @@
 								if(($mdl->parentId==0) && ($mdl->parentId!=null))
 								{
 									 echo 
-									    '<li class="slide">
+									    '<li class="slide collapsible" onclick="toglethis('.$mdl->id.')">
 												<a class="side-menu__item side-menu__label" data-toggle="slide" href="#">
 													<small><i class="side-menu__icon '.$mdl->icon.'"></i></small>
 													<span class="side-menu__label">'.$mdl->name.'</span>
-													<i class="angle fa fa-chevron-down"></i>
-												</a>';
+													<i  id="'.$mdl->id.'i" class=""></i>
+												</a><div id="'.$mdl->id.'" class="content"><div>';
 											foreach($mdl->getChildModules($mdl->id) as $item)
 											{
 												
@@ -81,7 +110,7 @@
 												
 											}
 										
-										echo '</li>';
+										echo '</div></div></li>';
 								}
 							}
 						}
@@ -89,77 +118,33 @@
  
  
  
-<!--    <li>
-      <a href="#" onclick="goTo('Views/SEO_table.php' , 'mainContent')" >
-        <i class="zmdi zmdi-view-dashboard"></i> <span>Social Enterprises</span>
-      </a>
-    </li>
 
-
-    <li>
-      <a href="#">
-        <i class="zmdi zmdi-format-list-bulleted"></i> <span>Services</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#">
-        <i class="zmdi zmdi-format-list-bulleted"></i> <span>Products</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#" onclick="goTo('Views/users.php' , 'mainContent')">
-        <i class="zmdi zmdi-male-female"></i> <span>Users</span>
-      </a>
-    </li>
-
-      <!-- 
-      <li>
-        <a href="calendar.html">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>
-   
-    <li>
-      <a href="#" onclick="goTo('Views/profile.php' , 'mainContent')">
-        <i class="zmdi zmdi-face"></i> <span>Profile</span>
-      </a>
-    </li>
-
-
-     <li>
-      <a href="#" onclick="goTo('Views/home.php' , 'mainContent')">
-        <i class="zmdi zmdi-face"></i> <span>Reports</span>
-      </a>
-    </li>
-
-
-
-    <li>
-      <a href="login.html" target="_blank">
-        <i class="zmdi zmdi-lock"></i> <span>Login</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="#" target="_blank">
-        <i class="zmdi zmdi-lock"></i> <span>Log out</span>
-      </a>
-    </li>
- -->
-      <!--  <li>
-        <a href="register.html" target="_blank">
-          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
-        </a>
-      </li> -->
-
-     <!--  <li class="sidebar-header">LABELS</li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li> -->
 
     </ul>
 
+
+<script>
+function toglethis(id)
+{
+	
+	var cont  = document.getElementById(id+"");
+	var conti  = document.getElementById(id+"i");
+	//cont.style.maxHeight= 0;
+	
+	if(cont.style.maxHeight=='0px')
+	{
+		
+		//conti.classList.toggle("fa-chevron-down");
+		cont.style.maxHeight = cont.scrollHeight+'px';
+	}
+	else
+	{
+		//conti.classList.toggle("fa-chevron-right");
+		//conti.classList.toggle("fa-chevron-right");
+		cont.style.maxHeight = '0px';
+	}
+	
+	//cont.style.maxHeight = '10';
+}
+</script>
   </div>

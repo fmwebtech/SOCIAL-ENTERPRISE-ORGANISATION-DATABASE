@@ -105,7 +105,7 @@ var $regDate;
 			$stmt->bindParam(1,$password);
 			$stmt->bindParam(2,$email);
 			$stmt->execute();
-			(new LOGS())->save($_SESSION['email'],$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD','PASSWORD CHANGED');
+			(new LOGS())->save($email,$_SERVER['HTTP_HOST']."(".$_SERVER['REMOTE_ADDR'].")",'USER','UPDATEPASSWORD','PASSWORD CHANGED');
 			return true;
 		}catch(Exception $e)
 		{

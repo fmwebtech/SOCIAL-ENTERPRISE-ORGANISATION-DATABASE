@@ -8,8 +8,16 @@
 	$email = '';
 	if($_SERVER['REQUEST_METHOD']=="POST" AND isset($_SESSION['resetValue']))
 	{
-		$user = new USER();
+		
 		extract($_POST);
+		$resetkeyObject =(new RESETKEY())->getResetKey($_SESSION['resetValue']);
+		if($resetkeyObject)
+		{
+			$email = $resetkeyObject[0]->email;
+		}
+		
+		$user = new USER();
+		
 		if($user->updatepassword($email,$password))
 		{
 			unset($_SESSION['resetValue']);
@@ -43,12 +51,12 @@
 			}
 			else
 			{
-				header('location:signin.php');
+				header('location:login.php');
 			}
 		}
 		else
 		{
-			header('location:signin.php');
+			header('location:login.php');
 		}
 		
 	}
@@ -91,8 +99,7 @@
 			  <div class="form-group">
 			  <label for="exampleInputEmailAddress" class="">New Password</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="password" name="email" required id="firstpassword" class="form-control input-shadow" placeholder="Enter Password">
-				 <input type='hidden' value='<?php echo $email?>' name='email'>
+				  <input type="password" name="password" required id="firstpassword" class="form-control input-shadow" placeholder="Enter Password">
 				 <div class="form-control-position">
 					  <i class="icon-lock-open"></i>
 				  </div>
