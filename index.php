@@ -57,24 +57,61 @@
 <div class="content-wrapper">
   <div class="container-fluid" id="mainContent">
 
-    <div class="card mt-3">
+ 
+		<div class="card mt-3">
     <div class="card-content">
-	
-	
-	
-	
-	
-	
-	
-	 <!--content comes here           hello         -->
-
-
-
-
-
-
-	</div>
-	</div>
+        <div class="row row-group m-0">
+            <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0">9526 <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
+                    <div class="progress my-3" style="height:3px;">
+                       <div class="progress-bar" style="width:55%"></div>
+                    </div>
+                  <p class="mb-0 text-white small-font">Registered SEO's
+                   <!-- <span class="float-right">+4.2% <i class="zmdi zmdi-long-arrow-up"></i></span> -->
+                 </p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0">8323 
+                    <span class="float-right"><i class="zmdi zmdi-book"></i></span>
+                  </h5>
+                    <div class="progress my-3" style="height:3px;">
+                       <div class="progress-bar" style="width:55%"></div>
+                    </div>
+                  <p class="mb-0 text-white small-font">Services Offered
+                   <!-- <span class="float-right">+1.2% <i class="zmdi zmdi-long-arrow-up"></i></span> -->
+                 </p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0">6200 <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
+                    <div class="progress my-3" style="height:3px;">
+                       <div class="progress-bar" style="width:55%"></div>
+                    </div>
+                  <p class="mb-0 text-white small-font">Products Offered
+                   <!-- <span class="float-right">+5.2% <i class="zmdi zmdi-long-arrow-up"></i></span> -->
+                 </p>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-3 border-light">
+                <div class="card-body">
+                  <h5 class="text-white mb-0">5630 <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
+                    <div class="progress my-3" style="height:3px;">
+                       <div class="progress-bar" style="width:55%"></div>
+                    </div>
+                  <p class="mb-0 text-white small-font">Countires
+                   <!-- <span class="float-right">+2.2% <i class="zmdi zmdi-long-arrow-up"></i></span> -->
+                 </p>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div> 
+ 
+ 
     <!--start overlay-->
     <div class="overlay toggle-menu"></div>
     <!--end overlay-->
