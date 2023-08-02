@@ -98,7 +98,14 @@
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
-                  <h5 class="text-white mb-0">6200 <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
+                  <h5 class="text-white mb-0">
+                    
+                  <?php
+                  require_once('classes\class.Product.php');
+                  echo sizeof((new PRODUCTS())->getAllProducts());
+                  ?>
+                  
+                  <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
@@ -109,7 +116,12 @@
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
-                  <h5 class="text-white mb-0">5630 <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
+                  <h5 class="text-white mb-0"><?php
+                  require_once('classes\class.seoCountry.php');
+                  echo sizeof((new SEOCOUNTRY())->getAllSeoCountry());
+
+                  
+                  ?> <span class="float-right"><i class="zmdi zmdi-book"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>

@@ -145,6 +145,37 @@ class PRODUCTS
 		}
 	}
 
+	function getAllProducts()
+	{
+		try
+		{
+			$productArray = array();
+			global $Myconnection;
+			$stmt = $Myconnection->prepare('SELECT * FROM PRODUCTS');
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_ASSOC);
+			$results = $stmt->fetchAll();
+			foreach($results as $k=>$v)
+			{
+				$product = new PRODUCTS();
+				$product->id = $v['ID'];
+                $product->seoId= $v['SEO_ID'];
+				$product->name = $v['NAME'];
+				$product->currency = $v['CURRENCY'];
+				$product->price = $v['PRICE'];			
+				$product->status = $v['STATUS'];
+				$product->regDate = $v['REGDATE'];
+				$productArray[] =$product;
+			}
+
+			return $productArray;
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+	}
+
     // issues which this function due to the unknown operation
 
 	function productExists($name, $seoId)

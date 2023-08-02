@@ -223,6 +223,36 @@ class SEOCOUNTRY
             return false;
         }
     }
+
+    function getAllSeoCountry()
+    {
+       try
+        {
+           $seoCountryArray = array();
+           global $Myconnection;
+           $stmt = $Myconnection->prepare('SELECT * FROM SEO_COUNTRY');
+           $stmt->execute();
+           $stmt->setFetchMode(PDO::FETCH_ASSOC);
+           $results = $stmt->fetchAll();
+           foreach ($results as $k => $v)
+           {
+               $seoCountry = new SEOCOUNTRY();
+               $seoCountry->id = $v['ID'];
+               $seoCountry->countryId = $v['COUNTRY_ID'];
+               $seoCountry->seoId = $v['SEO_ID'];
+               $seoCountry->status = $v['STATUS'];
+               $seoCountry->regDate = $v['REGDATE'];
+               $seoCountryArray[] = $seoCountry;
+           }
+           return $seoCountryArray;
+       }
+        catch (Exception $e)
+       {
+           return false;
+       }
+   }
+
+
     function delete($id)
     {
         try
