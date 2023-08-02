@@ -21,11 +21,11 @@
 						<td>'.$us->lastName.'</td>
 						<td>'.$us->email.'</td>
 						<td>
-						<button onclick="editUser(\''.$us->id.'\',\''.$us->firstName.'\',\''.$us->lastName.'\',\''.$us->email.'\')" class="btn btn-success">
-						<i class="las la-edit"></i> Edit </button>
+						<button onclick="editUser(\''.$us->id.'\',\''.$us->firstName.'\',\''.$us->lastName.'\',\''.$us->email.'\')" class="btn-sm btn btn-success">
+						<i class="fa fa-edit"></i> Edit </button>
 					
-						<button onclick="deleteUser(\''.$us->id.'\')" class="btn btn-danger">
-							<i class="las la-trash-alt "></i> Delete  </button>
+						<button onclick="deleteUser(\''.$us->id.'\')" class="btn-sm btn btn-danger">
+							<i class="fa fa-trash-alt "></i> Delete  </button>
 							
 						</td>
 					</tr>';

@@ -25,12 +25,12 @@
 					<td>'.(new MODULE($pm->moduleId))->name.'</td>
 					
 					<td>
-					<button onclick="editProfileModule(\''.$pm->id.'\',\''.$pm->profileId.'\',\''.$pm->moduleId.'\')" class="btn btn-success">
-					<i class="las la-edit"></i> Edit </button>
+					<button onclick="editProfileModule(\''.$pm->id.'\',\''.$pm->profileId.'\',\''.$pm->moduleId.'\')" class=" btn-sm btn btn-success">
+					<i class="fa fa-edit"></i> Edit </button>
 				
 					
-					<button onclick="deleteProfileModule(\''.$pm->id.'\')" class="btn btn-danger">
-						<i class="las la-trash"></i> Delete  </button>
+					<button onclick="deleteProfileModule(\''.$pm->id.'\')" class=" btn-sm btn btn-danger">
+						<i class="fa fa-trash"></i> Delete  </button>
 						
 					</td>
 				</tr>';
