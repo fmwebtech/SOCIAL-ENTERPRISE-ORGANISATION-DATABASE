@@ -131,7 +131,7 @@ function toglethis(id)
 	var conti  = document.getElementById(id+"i");
 	//cont.style.maxHeight= 0;
 	
-	if(cont.style.maxHeight=='0px')
+	if(cont.style.maxHeight=='0px' || cont.style.maxHeight=="")
 	{
 		
 		//conti.classList.toggle("fa-chevron-down");
